@@ -1,17 +1,13 @@
 package org.tsofen.mentorim;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.google.gson.JsonObject;
+import android.support.v7.app.AppCompatActivity;
 
 import org.tsofen.model.APIManager;
+import org.tsofen.model.Callbacks;
+import org.tsofen.model.classes.User;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,16 +16,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Map<String,Object> objectMap = new HashMap<>();
-//        objectMap.put("param1","value");
-//        objectMap.put("param2",20);
-//        APIManager.getInstance().test(null, new APIManager.InnerCallback() {
-//            @Override
-//            public void callback(JsonObject json, IOException execption) {
-//
-//                if (execption == null ) Log.i("main",json.toString());
-//                else execption.printStackTrace();
-//            }
-//        });
+
+
+
+    }
+
+    // Use-case example:
+    void login(){
+        APIManager.getInstance().login("demo@email.com", "password123", new Callbacks.Auth() {
+            @Override
+            public void make(User user, String token, IOException ex) {
+                if (ex == null){
+                    //we got user and token
+
+                }else
+                    ex.printStackTrace();
+            }
+        });
     }
 }
