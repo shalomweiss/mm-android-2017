@@ -15,23 +15,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
     }
 
     // Use-case example:
     void login(){
-        APIManager.getInstance().login("demo@email.com", "password123", new Callbacks.Auth() {
-            @Override
-            public void make(User user, String token, IOException ex) {
-                if (ex == null){
-                    //we got user and token
-
-                }else
-                    ex.printStackTrace();
-            }
+        APIManager.getInstance().login("demo@email.com", "password123", (user, token, ex) -> {
+            if (ex == null){
+                //we got user and token
+            }else
+                ex.printStackTrace();
         });
     }
 }

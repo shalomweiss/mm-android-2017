@@ -52,25 +52,23 @@ public final class APIManager {
      * @param callback The callback function.
      */
     public void login(String email,String password,final Callbacks.Auth callback){
-        Map<String,Object> map = new HashMap<>();
-        map.put("email",email);
-        map.put("password",password);
 
-        makeRequest(Constants.Routes.login(), map, new Callbacks.Inner() {
-            @Override
-            public void make(JsonObject json, IOException ex) {
-                if (ex == null) {
-                    //OK
+        Map<String,Object> params = new HashMap<>();
+        params.put("email",email);
+        params.put("password",password);
 
-                    //TODO: parse json to User
-                    User user = new User();
-                    String token = json.get("token").getAsString();
+        makeRequest(Constants.Routes.login(), params, (json, ex) -> {
+            if (ex == null) {
+                //OK
 
-                    callback.make(user,token,null);
+                //TODO: parse json to User
+                User user = new User();
+                String token = json.get("token").getAsString();
 
-                }else{
-                    callback.make(null,null,ex);
-                }
+                callback.make(user,token,null);
+
+            }else{
+                callback.make(null,null,ex);
             }
         });
     }
