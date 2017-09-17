@@ -2,6 +2,7 @@ package org.tsofen.mentorim;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 
 import org.tsofen.model.APIManager;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        login();
     }
 
     // Use-case example:
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         APIManager.getInstance().login("demo@email.com", "password123", (user, token, ex) -> {
             if (ex == null){
                 //we got user and token
+                Log.i("MAIN",""+user);
+                Log.i("MAIN",token);
 
             }else
                 ex.printStackTrace();

@@ -64,20 +64,27 @@ public final class APIManager {
                 //OK
 
                 //TODO: parse json to User
-               User user = new User();
-                String token = json.get("token").getAsString();
+//               User user = new User();
+
                 int code=json.get("code").getAsInt();
+                String message=json.get("message").getAsString();
                 if(code==200){//Success
-                    //Convert jasonObject To User Object
-                    JsonParser parser = new JsonParser();
-                    JsonElement obj=parser.parse("user");
-                    Gson gson=new Gson();
-                    user=gson.fromJson(obj,User.class);
+                    //Convert jasonObject To User Objec
+                    JsonObject jsonUser = json.getAsJsonObject("user");
+
+                    User user=new User(jsonUser);
+                    //fetch token
+                    String token = json.get("token").getAsString();
+
+                    callback.make(user,token,null);
 
                 }else{//Failed
+                    //ToDo : handle Code reurn Specifec Exception
+                    ServerException e = new ServerException(message,code);
+                    callback.make(null,null,e);
 
                 }
-                callback.make(user,token,null);
+
 
             }else{
                 callback.make(null,null,ex);

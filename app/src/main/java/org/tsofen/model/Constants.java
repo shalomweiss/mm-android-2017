@@ -14,7 +14,7 @@ final public class Constants {
     /**
      * Address
      */
-    public final static String address = "127.0.0.1";
+    public final static String address = "192.168.38.16";
 
     /**
      * Port
@@ -36,5 +36,10 @@ final public class Constants {
         public static String login(){
             return getAddress() + "/login";
         }
+    }
+    public static class Codes{
+        public static final int SUCCESS=200;
+        public static final int MISSING_PARAMETERS=401;
+
     }
 }
