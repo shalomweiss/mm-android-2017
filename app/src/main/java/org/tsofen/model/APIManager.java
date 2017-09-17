@@ -1,5 +1,7 @@
 package org.tsofen.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -62,9 +64,19 @@ public final class APIManager {
                 //OK
 
                 //TODO: parse json to User
-                User user = new User();
+               User user = new User();
                 String token = json.get("token").getAsString();
+                int code=json.get("code").getAsInt();
+                if(code==200){//Success
+                    //Convert jasonObject To User Object
+                    JsonParser parser = new JsonParser();
+                    JsonElement obj=parser.parse("user");
+                    Gson gson=new Gson();
+                    user=gson.fromJson(obj,User.class);
 
+                }else{//Failed
+
+                }
                 callback.make(user,token,null);
 
             }else{

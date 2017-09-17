@@ -12,4 +12,23 @@ public class User {
     private String phoneNumber;
     private String address;
 
+    public int getId(){
+        return this.id;
+    }
+    public String getFirstName(){
+        return this.firstName;
+    }
+    public String getLastName(){
+        return this.lastName;
+    }
+    public String getEmail(){
+        return this.email;
+    }
+    public String getPhoneNumber(){
+        return this.phoneNumber;
+    }
+    public String getAddress(){
+        return this.address;
+    }
+
 }

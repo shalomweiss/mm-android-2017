@@ -16,10 +16,10 @@ public final class Callbacks {
      * Inner callback, used only by the API Manager internally.
      */
     interface Inner{
-        void make(JsonObject json, IOException ex);
+        void make(JsonObject json, Exception ex);
     }
 
     public interface Auth {
-        void make(User user,String token,IOException ex);
+        void make(User user,String token,Exception ex);
     }
 }
