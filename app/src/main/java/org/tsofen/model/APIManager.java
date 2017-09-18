@@ -132,6 +132,47 @@ public final class APIManager {
         });
 
     }
+    public void updateUserProfile(int id, String token, User user, final Callbacks.GetProfile callback){
+        Map<String,Object> params = new HashMap<>(user.getHashedUser());
+        params.put("id", id);
+        params.put("token", token);
+
+
+
+        makeRequest(Constants.Routes.getProfile(), params, (json, ex) -> {
+            if (ex == null) {
+                //OK
+
+                int code=json.get("code").getAsInt();
+                String message=json.get("message").getAsString();
+
+                if(code == Constants.Codes.SUCCESS){
+                    //Success
+
+                    //Convert jasonObject To User Object
+                    JsonObject jsonUser = json.getAsJsonObject("user");
+                    User updatedUser = new User(jsonUser);
+
+                    //fetch token
+
+                    callback.make(updatedUser, null);
+
+                }else{
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(message,code);
+                    callback.make(null,e);
+
+                }
+
+
+            }else{
+                callback.make(null ,ex);
+            }
+
+        });
+
+    }
 
 
     /**

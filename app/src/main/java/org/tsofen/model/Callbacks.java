@@ -26,4 +26,8 @@ public final class Callbacks {
     public interface GetProfile {
         void make(User user, Exception ex);
     }
+
+    public interface UpdateProfile {
+        void make(User user, Exception ex);
+    }
 }
