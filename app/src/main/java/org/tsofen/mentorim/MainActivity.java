@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import org.tsofen.model.APIManager;
 import org.tsofen.model.Callbacks;
+import org.tsofen.model.DataManager;
 import org.tsofen.model.classes.User;
 
 import java.io.IOException;
@@ -18,19 +19,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //create data manager instance
+        final DataManager manager = DataManager.getInstance(this);
+
+        //fetch token
+        String token = manager.getToken();
+
+        //check if token exists
+        if (token == null)
+            goToLogin();
+        else
+            loadData();
+    }
+
+    private void loadData(){
+        //TODO: Load meetings from server.
+    }
+
+    private void goToLogin(){
         startActivity(new Intent(MainActivity.this,LoginActivity.class));
     }
 
-    // Use-case example:
-    void login(){
-        APIManager.getInstance().login("demo@email.com", "password123", (user, token, ex) -> {
-            if (ex == null){
-                //we got user and token
-                Log.i("MAIN",""+user);
-                Log.i("MAIN",token);
-
-            }else
-                ex.printStackTrace();
-        });
-    }
 }

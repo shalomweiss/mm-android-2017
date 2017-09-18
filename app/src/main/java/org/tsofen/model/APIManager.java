@@ -63,23 +63,23 @@ public final class APIManager {
             if (ex == null) {
                 //OK
 
-                //TODO: parse json to User
-//               User user = new User();
-
                 int code=json.get("code").getAsInt();
                 String message=json.get("message").getAsString();
-                if(code==200){//Success
-                    //Convert jasonObject To User Objec
-                    JsonObject jsonUser = json.getAsJsonObject("user");
+                if(code==200){
+                    //Success
 
+                    //Convert jasonObject To User Object
+                    JsonObject jsonUser = json.getAsJsonObject("user");
                     User user=new User(jsonUser);
+
                     //fetch token
                     String token = json.get("token").getAsString();
 
                     callback.make(user,token,null);
 
-                }else{//Failed
-                    //ToDo : handle Code reurn Specifec Exception
+                }else{
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(message,code);
                     callback.make(null,null,e);
 

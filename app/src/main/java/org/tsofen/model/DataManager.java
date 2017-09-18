@@ -1,8 +1,9 @@
 package org.tsofen.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+
+import org.tsofen.model.classes.User;
 
 /**
  * Created by minitour on 17/09/2017.
@@ -10,7 +11,9 @@ import android.content.SharedPreferences;
 
 public final class DataManager {
 
-
+    /**
+     * Singleton.
+     */
     private static DataManager instance;
     public static DataManager getInstance(Context context){
 
@@ -19,11 +22,17 @@ public final class DataManager {
         else
             instance.setContext(context);
 
-
-        return new DataManager(context);
+        return instance;
     }
 
-    private SharedPreferences sharedpreferences;
+    /**
+     * Shared Preferences object.
+     */
+    private SharedPreferences preferences;
+
+    /**
+     * Current Context.
+     */
     private Context context;
 
     private DataManager(Context context){
@@ -31,46 +40,88 @@ public final class DataManager {
         setSharedPreferences(context);
     }
 
+    /**
+     * Get the stored session token.
+     * @return The session token if exists. Else null.
+     */
     public String getToken(){
-        return sharedpreferences.getString(Keys.TOKEN,null);
+        return preferences.getString(Keys.TOKEN,null);
     }
 
+    /**
+     * Store the session token.
+     * @param token The token received from the server.
+     */
     public void setToken(String token){
         storeData(token,Keys.TOKEN);
     }
 
-    private Context getContext() {
-        return context;
+    /**
+     * Methods that gets the current user stored on disk.
+     * @return The current user.
+     */
+    public User getUser(){
+        //TODO: Complete this method
+        return null;
     }
 
+    /**
+     * Method that stores user object to disk.
+     * @param user The user to store.
+     */
+    public void setUser(User user){
+        //TODO: Complete this method
+    }
+
+    /**
+     * A method that is used to store data in shared preferences.
+     *
+     * @param o The data (value).
+     *          Only accepts the following types: Boolean,Float,Integer,Long,String. As well as the primitive data types.
+     *          Use `null` value to remove key.
+     *
+     * @param key The key that is used to access the data.
+     */
     private void storeData(Object o,String key){
-        SharedPreferences.Editor editor = sharedpreferences.edit();
+        SharedPreferences.Editor editor = preferences.edit();
 
-        if (o instanceof Boolean)
-            editor.putBoolean(key,(Boolean) o);
+        if (o == null) {
+            editor.remove(key);
+        }else {
+            if (o instanceof Boolean)
+                editor.putBoolean(key,(Boolean) o);
 
-        if (o instanceof Float)
-            editor.putFloat(key,(Float) o);
+            if (o instanceof Float)
+                editor.putFloat(key,(Float) o);
 
-        if (o instanceof Integer)
-            editor.putInt(key,(Integer) o);
+            if (o instanceof Integer)
+                editor.putInt(key,(Integer) o);
 
-        if (o instanceof Long)
-            editor.putLong(key,(Long) o);
+            if (o instanceof Long)
+                editor.putLong(key,(Long) o);
 
-        if (o instanceof String)
-            editor.putString(key, (String) o);
+            if (o instanceof String)
+                editor.putString(key, (String) o);
+        }
 
         editor.apply();
     }
 
-    public void setContext(Context context) {
+    /**
+     * A method used to updating the context. Only used from `getInstance(context:)`
+     * @param context
+     */
+    private void setContext(Context context) {
         this.context = context;
         setSharedPreferences(context);
     }
 
+    /**
+     * Recreate shared preferences from existing context.
+     * @param context The new context.
+     */
     private void setSharedPreferences(Context context) {
-        sharedpreferences = context.getSharedPreferences(Keys.PREFERENCES, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(Keys.PREFERENCES, Context.MODE_PRIVATE);
     }
 
     private static class Keys {
