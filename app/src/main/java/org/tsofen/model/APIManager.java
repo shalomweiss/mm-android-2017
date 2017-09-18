@@ -63,10 +63,9 @@ public final class APIManager {
             if (ex == null) {
                 //OK
 
-                int code=json.get("code").getAsInt();
-                String message=json.get("message").getAsString();
+                ServerResponse serverResponse = new ServerResponse(json.get("code").getAsInt(), json.get("message").getAsString());
 
-                if(code == Constants.Codes.SUCCESS){
+                if(serverResponse.getCode() == Constants.Codes.SUCCESS){
                     //Success
 
                     //Convert jasonObject To User Object
@@ -81,7 +80,7 @@ public final class APIManager {
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(message,code);
+                    ServerException e = new ServerException(serverResponse.getMessage(),serverResponse.getCode());
                     callback.make(null,null,e);
 
                 }
@@ -93,6 +92,12 @@ public final class APIManager {
         });
     }
 
+    /**
+     *
+     * @param id
+     * @param token
+     * @param callback
+     */
     public void getUserProfile(int id, String token, final Callbacks.GetProfile callback){
         Map<String,Object> params = new HashMap<>();
         params.put("id", id);
@@ -102,24 +107,20 @@ public final class APIManager {
             if (ex == null) {
                 //OK
 
-                int code=json.get("code").getAsInt();
-                String message=json.get("message").getAsString();
+                ServerResponse serverResponse = new ServerResponse(json.get("code").getAsInt(), json.get("message").getAsString());
 
-                if(code == Constants.Codes.SUCCESS){
+                if(serverResponse.getCode() == Constants.Codes.SUCCESS){
                     //Success
 
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User user=new User(jsonUser);
-
-                    //fetch token
-
                     callback.make(user, null);
 
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(message,code);
+                    ServerException e = new ServerException(serverResponse.getMessage(), serverResponse.getCode());
                     callback.make(null,e);
 
                 }
@@ -132,44 +133,43 @@ public final class APIManager {
         });
 
     }
+
+    /**
+     *
+     * @param id
+     * @param token
+     * @param user must send it updated
+     * @param callback
+     */
     public void updateUserProfile(int id, String token, User user, final Callbacks.GetProfile callback){
         Map<String,Object> params = new HashMap<>(user.getHashedUser());
         params.put("id", id);
         params.put("token", token);
 
-
-
         makeRequest(Constants.Routes.getProfile(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
 
-                int code=json.get("code").getAsInt();
-                String message=json.get("message").getAsString();
+                ServerResponse serverResponse = new ServerResponse(json.get("code").getAsInt(), json.get("message").getAsString());
 
-                if(code == Constants.Codes.SUCCESS){
+                if(serverResponse.getCode() == Constants.Codes.SUCCESS){
                     //Success
 
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User updatedUser = new User(jsonUser);
 
-                    //fetch token
-
                     callback.make(updatedUser, null);
 
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(message,code);
+                    ServerException e = new ServerException(serverResponse.getMessage(), serverResponse.getCode());
                     callback.make(null,e);
-
                 }
-
-
             }else{
                 callback.make(null ,ex);
             }
-
         });
 
     }
