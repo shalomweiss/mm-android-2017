@@ -65,7 +65,8 @@ public final class APIManager {
 
                 int code=json.get("code").getAsInt();
                 String message=json.get("message").getAsString();
-                if(code==200){
+
+                if(code == Constants.Codes.SUCCESS){
                     //Success
 
                     //Convert jasonObject To User Object
@@ -90,6 +91,46 @@ public final class APIManager {
                 callback.make(null,null,ex);
             }
         });
+    }
+
+    public void getUserProfile(int id, String token, final Callbacks.GetProfile callback){
+        Map<String,Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("token", token);
+
+        makeRequest(Constants.Routes.getProfile(), params, (json, ex) -> {
+            if (ex == null) {
+                //OK
+
+                int code=json.get("code").getAsInt();
+                String message=json.get("message").getAsString();
+
+                if(code == Constants.Codes.SUCCESS){
+                    //Success
+
+                    //Convert jasonObject To User Object
+                    JsonObject jsonUser = json.getAsJsonObject("user");
+                    User user=new User(jsonUser);
+
+                    //fetch token
+
+                    callback.make(user, null);
+
+                }else{
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(message,code);
+                    callback.make(null,e);
+
+                }
+
+
+            }else{
+                callback.make(null ,ex);
+            }
+
+        });
+
     }
 
 

@@ -20,6 +20,10 @@ public final class Callbacks {
     }
 
     public interface Auth {
-        void make(User user,String token,Exception ex);
+        void make(User user, String token, Exception ex);
+    }
+
+    public interface GetProfile {
+        void make(User user, Exception ex);
     }
 }

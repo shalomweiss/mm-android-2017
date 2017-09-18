@@ -36,6 +36,9 @@ final public class Constants {
         public static String login(){
             return getAddress() + "/login";
         }
+        public static String getProfile(){
+            return getAddress() + "/getProfile";
+        }
     }
     public static class Codes{
         public static final int SUCCESS=200;

@@ -14,6 +14,10 @@ public class User {
     private String phoneNumber;
     private String address;
 
+    public User(){
+
+    };
+
     public User(JsonObject jsonUser) {
         if(jsonUser.get("id")!=null){
             setId(jsonUser.get("id").getAsInt());

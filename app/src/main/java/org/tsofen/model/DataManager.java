@@ -61,7 +61,13 @@ public final class DataManager {
      * @return The current user.
      */
     public User getUser(){
-        //TODO: Complete this method
+        User user = new User();
+        user.setFirstName(preferences.getString(Keys.FIRSTNAME,null));
+        user.setLastName(preferences.getString(Keys.LASTNAME,null));
+        user.setAddress(preferences.getString(Keys.ADDRESS,null));
+        user.setEmail(preferences.getString(Keys.EMAIL,null));
+        user.setPhoneNumber(preferences.getString(Keys.PHONENUMBER,null));
+        user.setId(preferences.getInt(Keys.ID, 0));
         return null;
     }
 
@@ -70,7 +76,12 @@ public final class DataManager {
      * @param user The user to store.
      */
     public void setUser(User user){
-        //TODO: Complete this method
+        storeData(user.getFirstName(),Keys.FIRSTNAME);
+        storeData(user.getLastName(),Keys.LASTNAME);
+        storeData(user.getAddress(),Keys.ADDRESS);
+        storeData(user.getEmail(), Keys.EMAIL);
+        storeData(user.getId(), Keys.ID);
+        storeData(user.getPhoneNumber(), Keys.PHONENUMBER);
     }
 
     /**
@@ -128,5 +139,12 @@ public final class DataManager {
         private static final String PREFERENCES = "MM_PREFERENCES";
 
         private static final String TOKEN = "TOKEN";
+        private static final String FIRSTNAME = "FIRSTNAME";
+        private static final String LASTNAME = "LASTNAME";
+        private static final String ADDRESS = "ADDRESS";
+        private static final String EMAIL = "EMAIL";
+        private static final String PHONENUMBER = "PHONENUMBER";
+        private static final String ID = "ID";
+
     }
 }
