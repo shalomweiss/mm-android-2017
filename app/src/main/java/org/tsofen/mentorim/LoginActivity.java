@@ -1,15 +1,11 @@
 package org.tsofen.mentorim;
 
-import android.support.annotation.XmlRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 
 import org.tsofen.model.APIManager;
-import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
-import org.tsofen.model.classes.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().setTitle(getString(R.string.signin));
+        getSupportActionBar().setTitle(getString(R.string.signIn));
 
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtPassword = (EditText) findViewById(R.id.edtPassword);

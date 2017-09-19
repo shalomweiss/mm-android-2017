@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="@string/contactdetails"
+                    android:text="@string/contactDetails"
                     android:textSize="25sp" />
 
                 <android.support.v7.widget.CardView
@@ -51,7 +51,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="@string/fullname"
+                            android:text="@string/fullName"
                             android:textSize="12sp" />
 
                         <TextView
@@ -59,7 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="@string/fullname"
+                            android:text="@string/fullName"
                             android:textColor="@android:color/black"
                             android:textSize="20sp" />
 
@@ -67,7 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="@string/emailadress"
+                            android:text="@string/emailAddress"
                             android:textSize="12sp" />
 
                         <TextView
@@ -83,7 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="@string/phonenumber"
+                            android:text="@string/phoneNumber"
                             android:textSize="12sp" />
 
                         <TextView
@@ -266,7 +266,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="28dp"
-                            android:text="@string/joineddate" />
+                            android:text="@string/joinedDate" />
 
                         <TextView
                             android:id="@+id/tvJoinedDate"
