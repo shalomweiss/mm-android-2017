@@ -11,4 +11,8 @@ public class ServerException extends Exception {
             this.code=code;
     }
 
+    public ServerException(ServerResponse response) {
+        this(response.getMessage(),response.getCode());
+    }
+
 }

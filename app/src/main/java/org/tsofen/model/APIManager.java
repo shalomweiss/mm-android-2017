@@ -63,24 +63,24 @@ public final class APIManager {
             if (ex == null) {
                 //OK
 
-                ServerResponse serverResponse = new ServerResponse(json.get("code").getAsInt(), json.get("message").getAsString());
+                ServerResponse response = new ServerResponse(json);
 
-                if(serverResponse.getCode() == Constants.Codes.SUCCESS){
+                if(response.getCode() == Constants.Codes.SUCCESS){
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User user=new User(jsonUser);
                     //fetch token
                     String token = json.get("token").getAsString();
-                    callback.make(user,token,null);
+                    callback.make(response,user,token,null);
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(serverResponse.getMessage(),serverResponse.getCode());
-                    callback.make(null,null,e);
+                    ServerException e = new ServerException(response.getMessage(),response.getCode());
+                    callback.make(response,null,null,e);
                 }
             }else{
-                callback.make(null,null,ex);
+                callback.make(null,null,null,ex);
             }
         });
     }
@@ -100,27 +100,25 @@ public final class APIManager {
             if (ex == null) {
                 //OK
 
-                ServerResponse serverResponse = new ServerResponse(json.get("code").getAsInt(), json.get("message").getAsString());
+                ServerResponse response = new ServerResponse(json);
 
-                if(serverResponse.getCode() == Constants.Codes.SUCCESS){
+                if(response.getCode() == Constants.Codes.SUCCESS){
                     //Success
 
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User user=new User(jsonUser);
-                    callback.make(user, null);
+                    callback.make(response,user, null);
 
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(serverResponse.getMessage(), serverResponse.getCode());
-                    callback.make(null,e);
+                    ServerException e = new ServerException(response.getMessage(), response.getCode());
+                    callback.make(response,null,e);
 
                 }
-
-
             }else{
-                callback.make(null ,ex);
+                callback.make(null,null ,ex);
             }
 
         });
@@ -146,9 +144,8 @@ public final class APIManager {
         makeRequest(Constants.Routes.getMeetings(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
-                int code = json.get("code").getAsInt();
-                String message = json.get("message").getAsString();
-                if (code == Constants.Codes.SUCCESS) {   //Success
+                ServerResponse response = new ServerResponse(json);
+                if (response.getCode() == Constants.Codes.SUCCESS) {   //Success
                     //Convert jasonObject To User Object
                     JsonArray obj = json.getAsJsonObject("meetings").getAsJsonArray();
                     ArrayList<Meeting> meetings = new ArrayList<>();
@@ -156,15 +153,15 @@ public final class APIManager {
                         Meeting m = new Meeting(o);
                         meetings.add(m);
                     }
-                    callback.make(meetings, null);
+                    callback.make(response,meetings, null);
                 } else {
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(message, code);
-                    callback.make(null, e);
+                    ServerException e = new ServerException(response);
+                    callback.make(response,null, e);
                 }
             } else {
-                callback.make(null, ex);
+                callback.make(null,null, ex);
             }
         });
     }
@@ -185,11 +182,9 @@ public final class APIManager {
 
             if (ex == null) {//OK
 
-                int code = json.get("code").getAsInt();
+                ServerResponse response = new ServerResponse(json);
 
-                String message = json.get("message").getAsString();
-
-                if (code == Constants.Codes.SUCCESS) {
+                if (response.getCode() == Constants.Codes.SUCCESS) {
 
                     //Success
 
@@ -229,7 +224,7 @@ public final class APIManager {
 
                     Meeting m = new Meeting(meeting);
 
-                    callback.make(m, null);
+                    callback.make(response,m, null);
 
                 } else {
 
@@ -237,22 +232,21 @@ public final class APIManager {
 
                     //ToDo : handle Code return Specifec Exception
 
-                    ServerException e = new ServerException(message, code);
+                    ServerException e = new ServerException(response);
 
-                    callback.make(null, e);
+                    callback.make(response,null, e);
 
                 }
 
             } else {
 
-                callback.make(null, ex);
+                callback.make(null,null, ex);
 
             }
 
         });
 
     }
-
 
     /**
      *
@@ -270,30 +264,29 @@ public final class APIManager {
             if (ex == null) {
                 //OK
 
-                ServerResponse serverResponse = new ServerResponse(json.get("code").getAsInt(), json.get("message").getAsString());
+                ServerResponse response = new ServerResponse(json);
 
-                if(serverResponse.getCode() == Constants.Codes.SUCCESS){
+                if(response.getCode() == Constants.Codes.SUCCESS){
                     //Success
 
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User updatedUser = new User(jsonUser);
 
-                    callback.make(updatedUser, null);
+                    callback.make(response,updatedUser, null);
 
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(serverResponse.getMessage(), serverResponse.getCode());
-                    callback.make(null,e);
+                    ServerException e = new ServerException(response);
+                    callback.make(response,null,e);
                 }
             }else{
-                callback.make(null ,ex);
+                callback.make(null,null ,ex);
             }
         });
 
     }
-
 
     /**
      *
@@ -311,22 +304,23 @@ public final class APIManager {
         params.put("action",action);
         makeRequest(Constants.Routes.approveMeeting(), params, (json, ex) -> {
             if(ex==null){
-                int code=json.get("id").getAsInt();
-                String message=json.get("message").getAsString();
-                if(code== Constants.Codes.SUCCESS){
-                    
+                ServerResponse response = new ServerResponse(json);
+                if(response.getCode() == Constants.Codes.SUCCESS){
+                    //TODO: complete success
+
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(message, code);
-                    callback.make(null, e);
+                    ServerException e = new ServerException(response);
+                    callback.make(response,null, e);
                 }
             }else{
-                callback.make(null, ex);
+                callback.make(null,null, ex);
 
             }
         });
     }
+
     /**
      *
      * @param id
@@ -343,21 +337,22 @@ public final class APIManager {
         params.put("action",action);
         makeRequest(Constants.Routes.confirmMeeting(), params, (json, ex) -> {
             if(ex==null){
-                int code=json.get("id").getAsInt();
-                String message=json.get("message").getAsString();
-                if(code== Constants.Codes.SUCCESS){
+                ServerResponse response = new ServerResponse(json);
+                if(response.isOK()){
+                    //TODO: Complete this code
 
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(message, code);
-                    callback.make(null, e);
+                    ServerException e = new ServerException(response);
+                    callback.make(response,null, e);
                 }
             }else{
-                callback.make(null, ex);
+                callback.make(null,null, ex);
             }
         });
     }
+
     /**
      * This method makes a post HTTP request to a url using the given params.
      *

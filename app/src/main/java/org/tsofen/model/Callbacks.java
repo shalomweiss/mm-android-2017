@@ -18,35 +18,42 @@ public final class Callbacks {
      * Inner callback, used only by the API Manager internally.
      */
     interface Inner{
-        void make(JsonObject json, Exception ex);
+        void make(JsonObject json, Exception exception);
+    }
+
+    public interface General{
+        void make(ServerResponse response,Exception exception);
     }
 
     public interface Auth {
-        void make(User user, String token, Exception ex);
+        void make(ServerResponse response, User user, String token, Exception exception);
     }
 
     public interface GetProfile {
-        void make(User user, Exception ex);
+        void make(ServerResponse response,User user, Exception exception);
     }
 
     public interface GetMeetings{
-        void make(List<Meeting> meetingList,Exception ex);
+        void make(ServerResponse response,List<Meeting> meetingList,Exception exception);
     }
 
     public interface GetMeetingByID{
-        void make(Meeting m,Exception ex);
+        void make(ServerResponse response,Meeting meeting,Exception exception);
     }
+
     public interface AddMeeting{
-        void make(Meeting m,Exception ex);
+        void make(ServerResponse response,Meeting meeting,Exception exception);
     }
+
     public interface approveMeeting{
-        void make(Meeting m,Exception ex);
+        void make(ServerResponse response,Meeting meeting,Exception exception);
     }
+
     public interface confirmMeeting{
-        void make(Meeting m,Exception ex);
+        void make(ServerResponse response,Meeting meeting,Exception exception);
     }
 
     public interface UpdateProfile {
-        void make(User user, Exception ex);
+        void make(ServerResponse response,User user, Exception ex);
     }
 }
