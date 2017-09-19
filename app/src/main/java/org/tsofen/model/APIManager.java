@@ -51,9 +51,11 @@ public final class APIManager {
      *
      * @param email The email of the account.
      * @param password The password of the account.
+     * @param deviceId The id of the device.
      * @param callback The callback function.
      */
-    public void login(String email,String password,final Callbacks.Auth callback){
+    public void login(String email,String password,String deviceId,final Callbacks.Auth callback){
+
         Map<String,Object> params = new HashMap<>();
         params.put("email",email);
         params.put("password",password);
