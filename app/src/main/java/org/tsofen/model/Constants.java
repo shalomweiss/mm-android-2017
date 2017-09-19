@@ -39,6 +39,14 @@ final public class Constants {
         public static String getProfile(){return getAddress() + "/getProfile"; }
         public static String updateProfile(){return getAddress() + "/updateProfile"; }
 
+        public static String getProfile(){
+            return getAddress() + "/getProfile";
+        }
+        public static String getMeetings() { return getAddress() + "/getMeetings";}
+        public static String getMeetingById() { return getAddress() + "/getMeetingById";}
+        public static String addMeeting() { return getAddress() + "/addMeeting";}
+        public static String approveMeeting() { return getAddress() + "/approveMeeting";}
+        public static String confirmMeeting() { return getAddress() + "/confirmMeeting";}
     }
     public static class Codes{
         public static final int SUCCESS=200;

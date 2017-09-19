@@ -1,16 +1,16 @@
 package org.tsofen.model;
 
-import com.google.gson.Gson;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
+import org.tsofen.model.classes.Meeting;
 import org.tsofen.model.classes.User;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -54,11 +54,9 @@ public final class APIManager {
      * @param callback The callback function.
      */
     public void login(String email,String password,final Callbacks.Auth callback){
-
         Map<String,Object> params = new HashMap<>();
         params.put("email",email);
         params.put("password",password);
-
         makeRequest(Constants.Routes.login(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
@@ -67,25 +65,18 @@ public final class APIManager {
 
                 if(serverResponse.getCode() == Constants.Codes.SUCCESS){
                     //Success
-
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User user=new User(jsonUser);
-
                     //fetch token
                     String token = json.get("token").getAsString();
-
                     callback.make(user,token,null);
-
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(serverResponse.getMessage(),serverResponse.getCode());
                     callback.make(null,null,e);
-
                 }
-
-
             }else{
                 callback.make(null,null,ex);
             }
@@ -133,6 +124,60 @@ public final class APIManager {
         });
 
     }
+    /**
+     *
+     * @param id
+     * @param token
+     * @param meetingStatus
+     * @param count
+     * @param page
+     * @param callback
+     */
+    public void getMeetings(int id, String token,int meetingStatus,int count,int page,Callbacks.GetMeetings callback){
+        //TODO: Complete method
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        params.put("meetingStatus",meetingStatus);
+        params.put("count",count);
+        params.put("page",page);
+        makeRequest(Constants.Routes.getMeetings(), params, (json, ex) -> {
+            if (ex == null) {
+                //OK
+                int code = json.get("code").getAsInt();
+                String message = json.get("message").getAsString();
+                if (code == Constants.Codes.SUCCESS) {   //Success
+                    //Convert jasonObject To User Object
+                    JsonArray obj = json.getAsJsonObject("meetings").getAsJsonArray();
+                    ArrayList<Meeting> meetings = new ArrayList<>();
+                    for (JsonElement o : obj) {
+                        Meeting m = new Meeting(o);
+                        meetings.add(m);
+                    }
+                    callback.make(meetings, null);
+                } else {
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(message, code);
+                    callback.make(null, e);
+                }
+            } else {
+                callback.make(null, ex);
+            }
+        });
+    }
+    /**
+     *
+     * @param id
+     * @param token
+     * @param meetingId
+     * @param callback
+     */
+    public void getMeetingByID(int id,String token,int meetingId,Callbacks.GetMeetingByID callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        params.put("meetingId",meetingId);
 
     /**
      *
@@ -175,6 +220,69 @@ public final class APIManager {
     }
 
 
+    /**
+     *
+     * @param id
+     * @param token
+     * @param meeting_id
+     * @param action
+     * @param callback
+     */
+    public void approveMeeting (int id,String token,String meeting_id,boolean action,Callbacks.approveMeeting callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        params.put("meeting_id",meeting_id);
+        params.put("action",action);
+        makeRequest(Constants.Routes.approveMeeting(), params, (json, ex) -> {
+            if(ex==null){
+                int code=json.get("id").getAsInt();
+                String message=json.get("message").getAsString();
+                if(code== Constants.Codes.SUCCESS){
+                    
+                }else{
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(message, code);
+                    callback.make(null, e);
+                }
+            }else{
+                callback.make(null, ex);
+
+            }
+        });
+    }
+    /**
+     *
+     * @param id
+     * @param token
+     * @param meeting_id
+     * @param action
+     * @param callback
+     */
+    public void confirmMeeting(int id,String token,String meeting_id,boolean action,Callbacks.confirmMeeting callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        params.put("meeting_id",meeting_id);
+        params.put("action",action);
+        makeRequest(Constants.Routes.confirmMeeting(), params, (json, ex) -> {
+            if(ex==null){
+                int code=json.get("id").getAsInt();
+                String message=json.get("message").getAsString();
+                if(code== Constants.Codes.SUCCESS){
+
+                }else{
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(message, code);
+                    callback.make(null, e);
+                }
+            }else{
+                callback.make(null, ex);
+            }
+        });
+    }
     /**
      * This method makes a post HTTP request to a url using the given params.
      *
