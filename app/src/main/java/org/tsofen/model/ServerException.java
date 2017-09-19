@@ -6,9 +6,13 @@ package org.tsofen.model;
 
 public class ServerException extends Exception {
     private int code;
+
     public ServerException(String message,int code){
         super(message);
             this.code=code;
     }
 
+    public ServerException(ServerResponse response) {
+        this(response.getMessage(),response.getCode());
+    }
 }

@@ -48,9 +48,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: verify email with regex.
         //TODO: verify password length
+        String deviceId = "";
 
         //Make API Call
-        APIManager.getInstance().login(email, password, (user, token, ex) -> {
+        APIManager.getInstance().login(email, password,deviceId, (response, user, token, ex) -> {
             if (ex == null){
                 //create data manager instance from context
                 DataManager manager = DataManager.getInstance(this);
