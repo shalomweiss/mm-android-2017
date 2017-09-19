@@ -65,7 +65,7 @@ public final class APIManager {
 
                 ServerResponse response = new ServerResponse(json);
 
-                if(response.getCode() == Constants.Codes.SUCCESS){
+                if(response.isOK()){
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
@@ -76,7 +76,7 @@ public final class APIManager {
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(response.getMessage(),response.getCode());
+                    ServerException e = new ServerException(response);
                     callback.make(response,null,null,e);
                 }
             }else{
@@ -87,9 +87,9 @@ public final class APIManager {
 
     /**
      *
-     * @param id
-     * @param token
-     * @param callback
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param callback Callback function.
      */
     public void getUserProfile(int id, String token, final Callbacks.GetProfile callback){
         Map<String,Object> params = new HashMap<>();
@@ -102,7 +102,7 @@ public final class APIManager {
 
                 ServerResponse response = new ServerResponse(json);
 
-                if(response.getCode() == Constants.Codes.SUCCESS){
+                if(response.isOK()){
                     //Success
 
                     //Convert jasonObject To User Object
@@ -113,7 +113,7 @@ public final class APIManager {
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
-                    ServerException e = new ServerException(response.getMessage(), response.getCode());
+                    ServerException e = new ServerException(response);
                     callback.make(response,null,e);
 
                 }
@@ -126,12 +126,12 @@ public final class APIManager {
     }
     /**
      *
-     * @param id
-     * @param token
+     * @param id The id of the user.
+     * @param token The session token.
      * @param meetingStatus
      * @param count
      * @param page
-     * @param callback
+     * @param callback Callback function.
      */
     public void getMeetings(int id, String token,int meetingStatus,int count,int page,Callbacks.GetMeetings callback){
         //TODO: Complete method
@@ -189,37 +189,6 @@ public final class APIManager {
                     //Success
 
                     //Convert jasonObject To Meeting Object
-
-                   /*
-
-                   {
-
-                        "code" : 200,
-
-                        "message: "Success",
-
-                        "meeting" : {
-
-                            "id" : value,
-
-                            "name" : value,
-
-                            "type" : value,
-
-                            "location" : value,
-
-                            "time" : value,
-
-                            "subject" : value,
-
-                            "notes" : value
-
-                        }
-
-                   }
-
-                    */
-
                     JsonObject meeting = json.getAsJsonObject("meeting");
 
                     Meeting m = new Meeting(meeting);
@@ -296,7 +265,7 @@ public final class APIManager {
      * @param action
      * @param callback
      */
-    public void approveMeeting (int id,String token,String meeting_id,boolean action,Callbacks.approveMeeting callback){
+    public void approveMeeting(int id,String token,String meeting_id,boolean action,Callbacks.approveMeeting callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
@@ -423,8 +392,4 @@ public final class APIManager {
 
         return object;
     }
-
-
-
-
 }
