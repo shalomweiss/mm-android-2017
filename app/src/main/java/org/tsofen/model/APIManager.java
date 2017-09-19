@@ -173,11 +173,84 @@ public final class APIManager {
      * @param meetingId
      * @param callback
      */
-    public void getMeetingByID(int id,String token,int meetingId,Callbacks.GetMeetingByID callback){
-        Map<String,Object> params=new HashMap<>();
-        params.put("id",id);
-        params.put("token",token);
-        params.put("meetingId",meetingId);
+    public void getMeetingByID(int id,String token,int meetingId,Callbacks.GetMeetingByID callback) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("token", token);
+        params.put("meetingId", meetingId);
+
+        makeRequest(Constants.Routes.getMeetingById(), params, (json, ex) -> {
+
+            if (ex == null) {//OK
+
+                int code = json.get("code").getAsInt();
+
+                String message = json.get("message").getAsString();
+
+                if (code == Constants.Codes.SUCCESS) {
+
+                    //Success
+
+                    //Convert jasonObject To Meeting Object
+
+                   /*
+
+                   {
+
+                        "code" : 200,
+
+                        "message: "Success",
+
+                        "meeting" : {
+
+                            "id" : value,
+
+                            "name" : value,
+
+                            "type" : value,
+
+                            "location" : value,
+
+                            "time" : value,
+
+                            "subject" : value,
+
+                            "notes" : value
+
+                        }
+
+                   }
+
+                    */
+
+                    JsonObject meeting = json.getAsJsonObject("meeting");
+
+                    Meeting m = new Meeting(meeting);
+
+                    callback.make(m, null);
+
+                } else {
+
+                    //Failed
+
+                    //ToDo : handle Code return Specifec Exception
+
+                    ServerException e = new ServerException(message, code);
+
+                    callback.make(null, e);
+
+                }
+
+            } else {
+
+                callback.make(null, ex);
+
+            }
+
+        });
+
+    }
+
 
     /**
      *
