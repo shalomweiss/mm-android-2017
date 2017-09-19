@@ -26,7 +26,8 @@ public class ProfileController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent i=getIntent();
         int currentMode=i.getIntExtra("Mode",0);
-        if(currentMode== Constants.LayoutsMode.PROFILE_VIEW){
+
+        if(currentMode == LayoutsMode.PROFILE_VIEW){
             setContentView(R.layout.activity_profile);
             fullName=(TextView)findViewById(R.id.tvFullName);
             emailAddress=(TextView)findViewById(R.id.tvemailaddress);
@@ -40,8 +41,13 @@ public class ProfileController extends AppCompatActivity {
             joinedDate=(TextView)findViewById(R.id.tvJoinedDate);
             summary=(TextView)findViewById(R.id.tvSummary);
         }
-        if(currentMode== Constants.LayoutsMode.PROFILE_FILL){
+        if(currentMode == LayoutsMode.PROFILE_FILL){
             setContentView(R.layout.activity_profile_fill);
         }
+    }
+
+    public static class LayoutsMode {
+        public static final int PROFILE_VIEW=1;
+        public static final int PROFILE_FILL=0;
     }
 }
