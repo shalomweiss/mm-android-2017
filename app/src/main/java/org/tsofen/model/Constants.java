@@ -51,4 +51,8 @@ final public class Constants {
         public static final int MISSING_PARAMETERS=401;
 
     }
+    public static class LayoutsMode {
+        public static final int PROFILE_VIEW=1;
+        public static final int PROFILE_FILL=0;
+    }
 }
