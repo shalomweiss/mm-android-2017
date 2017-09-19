@@ -1,6 +1,4 @@
 package org.tsofen.model;
-
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,13 +16,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 /**
  * Created by hamza on 13-Sep-17.
  */
-
 public final class APIManager {
-
     /**
      * Get Instance
      * @return
@@ -32,19 +27,15 @@ public final class APIManager {
     public static APIManager getInstance(){
         return manager;
     }
-
     //singleton
     private final static APIManager manager = new APIManager();
-
     private final OkHttpClient client;
-
     /**
      * Private constructor
      */
     private APIManager(){
         client = new OkHttpClient();
     }
-
     /**
      * Login function. This method is used when we want to sign in to the application.
      * This will return a session token and a user object.
@@ -84,7 +75,6 @@ public final class APIManager {
             }
         });
     }
-
     /**
      *
      * @param id The id of the user.
@@ -95,7 +85,6 @@ public final class APIManager {
         Map<String,Object> params = new HashMap<>();
         params.put("id", id);
         params.put("token", token);
-
         makeRequest(Constants.Routes.getProfile(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
@@ -104,7 +93,6 @@ public final class APIManager {
 
                 if(response.isOK()){
                     //Success
-
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User user=new User(jsonUser);
@@ -120,9 +108,7 @@ public final class APIManager {
             }else{
                 callback.make(null,null ,ex);
             }
-
         });
-
     }
     /**
      *
@@ -177,9 +163,7 @@ public final class APIManager {
         params.put("id", id);
         params.put("token", token);
         params.put("meetingId", meetingId);
-
         makeRequest(Constants.Routes.getMeetingById(), params, (json, ex) -> {
-
             if (ex == null) {//OK
 
                 ServerResponse response = new ServerResponse(json);
@@ -187,18 +171,14 @@ public final class APIManager {
                 if (response.getCode() == Constants.Codes.SUCCESS) {
 
                     //Success
-
                     //Convert jasonObject To Meeting Object
                     JsonObject meeting = json.getAsJsonObject("meeting");
-
                     Meeting m = new Meeting(meeting);
 
                     callback.make(response,m, null);
 
                 } else {
-
                     //Failed
-
                     //ToDo : handle Code return Specifec Exception
 
                     ServerException e = new ServerException(response);
@@ -206,17 +186,43 @@ public final class APIManager {
                     callback.make(response,null, e);
 
                 }
-
             } else {
 
                 callback.make(null,null, ex);
 
             }
-
         });
-
     }
-
+    /**
+     *
+     * @param id
+     * @param token
+     * @param meeting
+     * @param callback
+     */
+    public void addMeeting(int id,String token,Meeting meeting,Callbacks.General callback){
+        Map<String,Object> params = new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        params.put("meeting",meeting);
+        makeRequest(Constants.Routes.addMeeting(), params,(json, ex) -> {
+            if (ex == null) {
+                //OK
+                ServerResponse response = new ServerResponse(json);
+                if(response.isOK()){
+                    //TODO: complete success
+                    callback.make(response, null);
+                }else{
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(response);
+                    callback.make(response, e);
+                }
+            }else{
+                callback.make(null,ex);
+            }
+        });
+    }
     /**
      *
      * @param id
@@ -228,22 +234,16 @@ public final class APIManager {
         Map<String,Object> params = new HashMap<>(user.getHashedUser());
         params.put("id", id);
         params.put("token", token);
-
         makeRequest(Constants.Routes.getProfile(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
-
                 ServerResponse response = new ServerResponse(json);
-
-                if(response.getCode() == Constants.Codes.SUCCESS){
+                if(response.isOK()){
                     //Success
-
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
                     User updatedUser = new User(jsonUser);
-
                     callback.make(response,updatedUser, null);
-
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
@@ -254,9 +254,7 @@ public final class APIManager {
                 callback.make(null,null ,ex);
             }
         });
-
     }
-
     /**
      *
      * @param id
@@ -266,6 +264,7 @@ public final class APIManager {
      * @param callback
      */
     public void approveMeeting(int id,String token,String meeting_id,boolean action,Callbacks.approveMeeting callback){
+    public void approveMeeting (int id,String token,String meeting_id,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
@@ -274,22 +273,21 @@ public final class APIManager {
         makeRequest(Constants.Routes.approveMeeting(), params, (json, ex) -> {
             if(ex==null){
                 ServerResponse response = new ServerResponse(json);
-                if(response.getCode() == Constants.Codes.SUCCESS){
+                if(response.isOK()){
                     //TODO: complete success
-
+                    callback.make(response, null);
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(response);
-                    callback.make(response,null, e);
+                    callback.make(response, e);
                 }
             }else{
-                callback.make(null,null, ex);
+                callback.make(null, ex);
 
             }
         });
     }
-
     /**
      *
      * @param id
@@ -298,7 +296,7 @@ public final class APIManager {
      * @param action
      * @param callback
      */
-    public void confirmMeeting(int id,String token,String meeting_id,boolean action,Callbacks.confirmMeeting callback){
+    public void confirmMeeting(int id,String token,String meeting_id,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
@@ -309,19 +307,18 @@ public final class APIManager {
                 ServerResponse response = new ServerResponse(json);
                 if(response.isOK()){
                     //TODO: Complete this code
-
+                    callback.make(response,null);
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(response);
-                    callback.make(response,null, e);
+                    callback.make(response, e);
                 }
             }else{
-                callback.make(null,null, ex);
+                callback.make(null, ex);
             }
         });
     }
-
     /**
      * This method makes a post HTTP request to a url using the given params.
      *
@@ -332,10 +329,8 @@ public final class APIManager {
     private void makeRequest(String url, Map<String,Object> params, final Callbacks.Inner callback){
         //define media type
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-
         //create request body from params
         RequestBody body = RequestBody.create(mediaType,convertMapToJson(params).toString());
-
         //create request
         Request request = new Request
                 .Builder()
@@ -343,7 +338,6 @@ public final class APIManager {
                 .post(body)
                 .addHeader("content-type","application/json")
                 .build();
-
         //make request
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -351,7 +345,6 @@ public final class APIManager {
                 if (callback != null)
                     callback.make(null,e);
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 JsonParser parser = new JsonParser();
@@ -361,7 +354,6 @@ public final class APIManager {
             }
         });
     }
-
     /**
      * Helper function, used to convert map to json object.
      * @param params The parameters.
@@ -369,27 +361,18 @@ public final class APIManager {
      */
     private JsonObject convertMapToJson(Map<String,Object> params){
         JsonObject object = new JsonObject();
-
         if (params != null) {
-
             for (Map.Entry<String, Object> item : params.entrySet()) {
                 if (item.getValue() instanceof Boolean)
                     object.addProperty(item.getKey(), (Boolean) item.getValue());
-
-
                 if (item.getValue() instanceof Number)
                     object.addProperty(item.getKey(), (Number) item.getValue());
-
-
                 if (item.getValue() instanceof String)
                     object.addProperty(item.getKey(), (String) item.getValue());
-
-
                 if (item.getValue() instanceof Character)
                     object.addProperty(item.getKey(), (Character) item.getValue());
             }
         }
-
         return object;
     }
 }

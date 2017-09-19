@@ -45,11 +45,11 @@ public final class Callbacks {
         void make(ServerResponse response,Meeting meeting,Exception exception);
     }
 
-    public interface approveMeeting{
+    public interface ApproveMeeting{
         void make(ServerResponse response,Meeting meeting,Exception exception);
     }
 
-    public interface confirmMeeting{
+    public interface ConfirmMeeting{
         void make(ServerResponse response,Meeting meeting,Exception exception);
     }
 
