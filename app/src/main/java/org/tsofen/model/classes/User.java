@@ -2,11 +2,14 @@ package org.tsofen.model.classes;
 
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by minitour on 13/09/2017.
  */
 
-public class User {
+    public class User {
     private int id;
     private String firstName;
     private String lastName;
@@ -16,6 +19,16 @@ public class User {
 
     public User(){
 
+    };
+
+    public Map<String,Object> getHashedUser(){
+        Map<String,Object> hashedUser = new HashMap<String,Object>();
+        hashedUser.put("firstName", firstName);
+        hashedUser.put("lastName", lastName);
+        hashedUser.put("email", email);
+        hashedUser.put("phoneNumber", phoneNumber);
+        hashedUser.put("address", address);
+        return hashedUser;
     };
 
     public User(JsonObject jsonUser) {
