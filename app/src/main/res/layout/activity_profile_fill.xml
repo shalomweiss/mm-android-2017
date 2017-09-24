@@ -1,172 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <TextView
+                style="@style/TableViewSectionTitle"
+                android:text="@string/contactDetails" />
 
-                <TextView
-                    style="@style/TableViewSectionTitle"
-                    android:text="@string/contactDetails" />
-
-                <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
+            <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
 
 
-                    <LinearLayout style="@style/TableViewBaseItem">
+                <LinearLayout style="@style/TableViewBaseItem">
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/firstName" />
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/firstName" />
 
-                        <EditText
-                            android:id="@+id/etFullName"
-                            style="@style/TableTextItemRowContent" />
+                    <EditText
+                        android:id="@+id/etFullName"
+                        style="@style/TableTextItemRowContent" />
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/lastName" />
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/lastName" />
 
-                        <EditText
-                            android:id="@+id/etLastName"
-                            style="@style/TableTextItemRowContent" />
+                    <EditText
+                        android:id="@+id/etLastName"
+                        style="@style/TableTextItemRowContent" />
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/emailAddress" />
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/emailAddress" />
 
-                        <EditText
-                            android:id="@+id/etemailaddress"
-                            style="@style/TableTextItemRowContent" />
+                    <EditText
+                        android:id="@+id/etemailaddress"
+                        style="@style/TableTextItemRowContent" />
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/phoneNumber" />
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/phoneNumber" />
 
-                        <EditText
-                            android:id="@+id/etPhoneNumber"
-                            style="@style/TableTextItemRowContent" />
-
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/TableViewSectionTitle"
-                    android:text="@string/education" />
-
-                <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
+                    <EditText
+                        android:id="@+id/etPhoneNumber"
+                        style="@style/TableTextItemRowContent" />
 
 
-                    <LinearLayout style="@style/TableViewBaseItem">
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/major" />
-
-                        <EditText
-                            android:id="@+id/etMajor"
-                            style="@style/TableTextItemRowContent" />
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/semesters" />
-
-                        <EditText
-                            android:id="@+id/etSemesters"
-                            style="@style/TableTextItemRowContent" />
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/university" />
-
-                        <EditText
-                            android:id="@+id/etUniversity"
-                            style="@style/TableTextItemRowContent" />
-
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/TableViewSectionTitle"
-                    android:text="@string/info" />
-
-                <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
-
-                    <LinearLayout style="@style/TableViewBaseItem">
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/status" />
-
-                        <EditText
-                            android:id="@+id/etStatus"
-                            style="TableTextItemRowContent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/gender" />
-
-                        <EditText
-                            android:id="@+id/etGender"
-                            style="@style/TableTextItemRowContent" />
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/address" />
-
-                        <EditText
-                            android:id="@+id/etAddress"
-                            style="@style/TableTextItemRowContent" />
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/joinedDate" />
-
-                        <EditText
-                            android:id="@+id/etJoinedDate"
-                            style="@style/TableTextItemRowContent" />
-
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/summary" />
-
-                        <EditText
-                            android:id="@+id/etSummary"
-                            style="@style/TableTextItemRowContent" />
-
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TableViewSectionTitle"
+                android:text="@string/education" />
+
+            <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
+
+
+                <LinearLayout style="@style/TableViewBaseItem">
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/major" />
+
+                    <EditText
+                        android:id="@+id/etMajor"
+                        style="@style/TableTextItemRowContent" />
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/semesters" />
+
+                    <EditText
+                        android:id="@+id/etSemesters"
+                        style="@style/TableTextItemRowContent" />
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/university" />
+
+                    <EditText
+                        android:id="@+id/etUniversity"
+                        style="@style/TableTextItemRowContent" />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TableViewSectionTitle"
+                android:text="@string/info" />
+
+            <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
+
+                <LinearLayout style="@style/TableViewBaseItem">
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/status" />
+
+                    <EditText
+                        android:id="@+id/etStatus"
+                        style="@style/TableTextItemRowContent" />
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/gender" />
+
+                    <EditText
+                        android:id="@+id/etGender"
+                        style="@style/TableTextItemRowContent" />
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/address" />
+
+                    <EditText
+                        android:id="@+id/etAddress"
+                        style="@style/TableTextItemRowContent" />
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/joinedDate" />
+
+                    <EditText
+                        android:id="@+id/etJoinedDate"
+                        style="@style/TableTextItemRowContent" />
+
+                    <TextView
+                        style="@style/TableViewItemRowHeader"
+                        android:text="@string/summary" />
+
+                    <EditText
+                        android:id="@+id/etSummary"
+                        style="@style/TableTextItemRowContent" />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
