@@ -48,7 +48,7 @@
                             android:text="@string/emailAddress" />
 
                         <EditText
-                            android:id="@+id/edemailaddress"
+                            android:id="@+id/etemailaddress"
                             style="@style/TableTextItemRowContent" />
 
                         <TextView
