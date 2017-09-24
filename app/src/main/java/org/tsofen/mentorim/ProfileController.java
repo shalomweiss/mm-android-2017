@@ -56,7 +56,15 @@ public class ProfileController extends AppCompatActivity {
                 String fullName = user.getFirstName() + " " + user.getLastName();
                 this.fullName.setText(fullName);
                 this.emailAddress.setText(user.getEmail());
-                phoneNumber.setText(user.getPhoneNumber());
+                this.phoneNumber.setText(user.getPhoneNumber());
+                this.major.setText(user.getMajor());
+                this.semesters.setText(user.getSemesters());
+                this.university.setText(user.getUniversity());
+                this.status.setText(user.getStatus());
+                this.gender.setText(user.getGender());
+                this.address.setText(user.getAddress());
+                this.summary.setText(user.getSummary());
+                this.joinedDate.setText(user.convetLongToDate(user.getJoinedDate()));
 
             });
         }

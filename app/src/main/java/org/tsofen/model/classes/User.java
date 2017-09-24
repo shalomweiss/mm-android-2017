@@ -2,6 +2,8 @@ package org.tsofen.model.classes;
 
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ import java.util.Map;
     private String status;
     private String gender;
     private String summary;
+    private long joinDate = 0L;
 
     public User(){
 
@@ -40,6 +43,7 @@ import java.util.Map;
         hashedUser.put("status", status);
         hashedUser.put("gender", gender);
         hashedUser.put("summary", summary);
+        hashedUser.put("joinDate", joinDate);
         return hashedUser;
     };
 
@@ -77,8 +81,11 @@ import java.util.Map;
         if(jsonUser.get("gender")!=null){
             setGender(jsonUser.get("gender").getAsString());
         }
-        if(jsonUser.get("summary")!=null){
+        if(jsonUser.get("summary")!=null) {
             setSummary(jsonUser.get("summary").getAsString());
+        }
+        if(jsonUser.get("joinDate")!=null) {
+            setJoinDate(jsonUser.get("joinDate").getAsLong());
         }
 
     }
@@ -101,82 +108,52 @@ import java.util.Map;
     public String getAddress(){
         return this.address;
     }
+    public String getMajor() { return this.major; }
+    public String getSemesters() { return this.semesters; }
+    public String getUniversity() { return this.university; }
+    public String getGender() { return this.gender; }
+    public String getStatus() { return this.status; }
+    public String getSummary() { return this.summary; }
+    public long getJoinedDate(){ return this.joinDate; }
 
-    public String getMajor() {
-        return major;
-    }
 
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public String getSemesters() {
-        return semesters;
-    }
-
-    public void setSemesters(String semesters) {
-        this.semesters = semesters;
-    }
-
-    public String getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(String university) {
-        this.university = university;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
 
     public void setId(int id) {
         this.id = id;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
+    public void setMajor(String major) { this.major = major; }
+    public void setSemesters(String semesters) { this.semesters = semesters; }
+    public void setUniversity(String university) { this.university = university; }
+    public void setStatus(String status) { this.status = status; }
+    public void setGender(String gender) { this.gender = gender; }
+    public void setSummary(String summary) { this.summary = summary; }
+    public void setJoinDate(Long joinDate) { this.joinDate = joinDate; }
     @Override
     public String toString() {
-        return "User[ID : "+this.id+" ,First Name : "+firstName+" ,Last Name : "+lastName+" ,Email : "+email+
+        return "User[ID : "+id+" ,First Name : "+firstName+" ,Last Name : "+lastName+" ,Email : "+email+
                 " ,Phone Number : "+phoneNumber+" ,Address : "+address+"]";
     }
+
+    public String convetLongToDate(long time){
+        long joinedDateLong = getJoinedDate();
+        Date date = new Date(joinedDateLong);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        return sdf.format(date);
+    }
+
 }
