@@ -41,7 +41,7 @@
         android:layout_margin="8dp"
         android:background="@color/colorPrimary"
         android:padding="0dp"
-        android:text="@string/signin"
+        android:text="@string/signIn"
         android:textColor="@android:color/background_light"
         android:textSize="14sp" />
 

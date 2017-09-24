@@ -263,7 +263,6 @@ public final class APIManager {
      * @param action
      * @param callback
      */
-    public void approveMeeting(int id,String token,String meeting_id,boolean action,Callbacks.approveMeeting callback){
     public void approveMeeting (int id,String token,String meeting_id,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);

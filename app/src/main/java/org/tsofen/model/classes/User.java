@@ -2,6 +2,8 @@ package org.tsofen.model.classes;
 
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +18,13 @@ import java.util.Map;
     private String email;
     private String phoneNumber;
     private String address;
+    private String major;
+    private String semesters;
+    private String university;
+    private String status;
+    private String gender;
+    private String summary;
+    private long joinDate = 0L;
 
     public User(){
 
@@ -28,6 +37,13 @@ import java.util.Map;
         hashedUser.put("email", email);
         hashedUser.put("phoneNumber", phoneNumber);
         hashedUser.put("address", address);
+        hashedUser.put("major", major);
+        hashedUser.put("semesters", semesters);
+        hashedUser.put("university", university);
+        hashedUser.put("status", status);
+        hashedUser.put("gender", gender);
+        hashedUser.put("summary", summary);
+        hashedUser.put("joinDate", joinDate);
         return hashedUser;
     };
 
@@ -39,16 +55,37 @@ import java.util.Map;
             setFirstName(jsonUser.get("firstName").getAsString());
         }
         if(jsonUser.get("lastName")!=null){
-            setFirstName(jsonUser.get("lastName").getAsString());
+            setLastName(jsonUser.get("lastName").getAsString());
         }
         if(jsonUser.get("email")!=null){
-            setFirstName(jsonUser.get("email").getAsString());
+            setEmail(jsonUser.get("email").getAsString());
         }
         if(jsonUser.get("phoneNumber")!=null){
-            setFirstName(jsonUser.get("phoneNumber").getAsString());
+            setPhoneNumber(jsonUser.get("phoneNumber").getAsString());
         }
         if(jsonUser.get("address")!=null){
-            setFirstName(jsonUser.get("address").getAsString());
+            setAddress(jsonUser.get("address").getAsString());
+        }
+        if(jsonUser.get("major")!=null){
+            setMajor(jsonUser.get("major").getAsString());
+        }
+        if(jsonUser.get("semesters")!=null){
+            setSemesters(jsonUser.get("semesters").getAsString());
+        }
+        if(jsonUser.get("university")!=null){
+            setUniversity(jsonUser.get("university").getAsString());
+        }
+        if(jsonUser.get("status")!=null){
+            setStatus(jsonUser.get("status").getAsString());
+        }
+        if(jsonUser.get("gender")!=null){
+            setGender(jsonUser.get("gender").getAsString());
+        }
+        if(jsonUser.get("summary")!=null) {
+            setSummary(jsonUser.get("summary").getAsString());
+        }
+        if(jsonUser.get("joinDate")!=null) {
+            setJoinDate(jsonUser.get("joinDate").getAsLong());
         }
 
     }
@@ -71,34 +108,66 @@ import java.util.Map;
     public String getAddress(){
         return this.address;
     }
+    public String getMajor() { return this.major; }
+    public String getSemesters() { return this.semesters; }
+    public String getUniversity() { return this.university; }
+    public String getGender() { return this.gender; }
+    public String getStatus() { return this.status; }
+    public String getSummary() { return this.summary; }
+    public long getJoinedDate(){ return this.joinDate; }
+
+
 
     public void setId(int id) {
         this.id = id;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    public void setMajor(String major) { this.major = major; }
+    public void setSemesters(String semesters) { this.semesters = semesters; }
+    public void setUniversity(String university) { this.university = university; }
+    public void setStatus(String status) { this.status = status; }
+    public void setGender(String gender) { this.gender = gender; }
+    public void setSummary(String summary) { this.summary = summary; }
+    public void setJoinDate(Long joinDate) { this.joinDate = joinDate; }
 
     @Override
     public String toString() {
-        return "User[ID : "+this.id+" ,First Name : "+firstName+" ,Last Name : "+lastName+" ,Email : "+email+
-                " ,Phone Number : "+phoneNumber+" ,Address : "+address+"]";
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", major='" + major + '\'' +
+                ", semesters='" + semesters + '\'' +
+                ", university='" + university + '\'' +
+                ", status='" + status + '\'' +
+                ", gender='" + gender + '\'' +
+                ", summary='" + summary + '\'' +
+                ", joinDate=" + convetLongToDate(joinDate)  +
+                '}';
     }
+
+    public String convetLongToDate(long time){
+        long joinedDateLong = getJoinedDate();
+        Date date = new Date(joinedDateLong);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        return sdf.format(date);
+    }
+
 }

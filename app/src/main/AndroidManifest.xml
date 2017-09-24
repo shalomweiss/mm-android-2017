@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MeetingCreateActivity"></activity>
+        <activity android:name=".ProfileController"></activity>
     </application>
 
 </manifest>

@@ -2,21 +2,21 @@
     <string name="app_name">Mentorim</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="signin">Sign In</string>
+    <string name="signIn">Sign In</string>
     <string name="profile">Profile</string>
-    <string name="contactdetails">Contact Details</string>
+    <string name="contactDetails">Contact Details</string>
     <string name="info">Info</string>
     <string name="education">Education</string>
-    <string name="fullname">Full Name</string>
-    <string name="emailadress">Email Adress</string>
-    <string name="phonenumber">Phone Number</string>
+    <string name="fullName">Full Name</string>
+    <string name="emailAddress">Email Address</string>
+    <string name="phoneNumber">Phone Number</string>
     <string name="major">Major</string>
     <string name="semesters">Semesters</string>
     <string name="university">University</string>
     <string name="status">Status</string>
     <string name="gender">Gender</string>
     <string name="address">Address</string>
-    <string name="joineddate">Joined Date</string>
+    <string name="joinedDate">Joined Date</string>
     <string name="summary">Summary</string>
 
     <string-array name="Mentees">
