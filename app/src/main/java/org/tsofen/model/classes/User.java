@@ -143,10 +143,24 @@ import java.util.Map;
     public void setGender(String gender) { this.gender = gender; }
     public void setSummary(String summary) { this.summary = summary; }
     public void setJoinDate(Long joinDate) { this.joinDate = joinDate; }
+
     @Override
     public String toString() {
-        return "User[ID : "+id+" ,First Name : "+firstName+" ,Last Name : "+lastName+" ,Email : "+email+
-                " ,Phone Number : "+phoneNumber+" ,Address : "+address+"]";
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", major='" + major + '\'' +
+                ", semesters='" + semesters + '\'' +
+                ", university='" + university + '\'' +
+                ", status='" + status + '\'' +
+                ", gender='" + gender + '\'' +
+                ", summary='" + summary + '\'' +
+                ", joinDate=" + convetLongToDate(joinDate)  +
+                '}';
     }
 
     public String convetLongToDate(long time){
