@@ -1,4 +1,4 @@
-package org.tsofen.model;
+package org.tsofen.mentorim;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import org.tsofen.mentorim.R;
+import org.tsofen.model.APIManager;
+import org.tsofen.model.Callbacks;
+import org.tsofen.model.DataManager;
+import org.tsofen.model.ServerResponse;
+import org.tsofen.model.classes.User;
 
 public class ProfileController extends AppCompatActivity {
     private TextView fullName;
@@ -40,6 +45,20 @@ public class ProfileController extends AppCompatActivity {
             address=(TextView)findViewById(R.id.tvAddress);
             joinedDate=(TextView)findViewById(R.id.tvJoinedDate);
             summary=(TextView)findViewById(R.id.tvSummary);
+
+            DataManager manager = DataManager.getInstance(this);
+
+            int id = manager.getUser().getId();
+            String token = manager.getToken();
+
+            APIManager.getInstance().getUserProfile(id, token, (response, user, exception) -> {
+                //update fields
+                String fullName = user.getFirstName() + " " + user.getLastName();
+                this.fullName.setText(fullName);
+                this.emailAddress.setText(user.getEmail());
+                phoneNumber.setText(user.getPhoneNumber());
+
+            });
         }
         if(currentMode == LayoutsMode.PROFILE_FILL){
             setContentView(R.layout.activity_profile_fill);
