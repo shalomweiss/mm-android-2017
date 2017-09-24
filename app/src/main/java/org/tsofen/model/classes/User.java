@@ -16,6 +16,12 @@ import java.util.Map;
     private String email;
     private String phoneNumber;
     private String address;
+    private String major;
+    private String semesters;
+    private String university;
+    private String status;
+    private String gender;
+    private String summary;
 
     public User(){
 
@@ -28,6 +34,12 @@ import java.util.Map;
         hashedUser.put("email", email);
         hashedUser.put("phoneNumber", phoneNumber);
         hashedUser.put("address", address);
+        hashedUser.put("major", major);
+        hashedUser.put("semesters", semesters);
+        hashedUser.put("university", university);
+        hashedUser.put("status", status);
+        hashedUser.put("gender", gender);
+        hashedUser.put("summary", summary);
         return hashedUser;
     };
 
@@ -39,16 +51,34 @@ import java.util.Map;
             setFirstName(jsonUser.get("firstName").getAsString());
         }
         if(jsonUser.get("lastName")!=null){
-            setFirstName(jsonUser.get("lastName").getAsString());
+            setLastName(jsonUser.get("lastName").getAsString());
         }
         if(jsonUser.get("email")!=null){
-            setFirstName(jsonUser.get("email").getAsString());
+            setEmail(jsonUser.get("email").getAsString());
         }
         if(jsonUser.get("phoneNumber")!=null){
-            setFirstName(jsonUser.get("phoneNumber").getAsString());
+            setPhoneNumber(jsonUser.get("phoneNumber").getAsString());
         }
         if(jsonUser.get("address")!=null){
-            setFirstName(jsonUser.get("address").getAsString());
+            setAddress(jsonUser.get("address").getAsString());
+        }
+        if(jsonUser.get("major")!=null){
+            setMajor(jsonUser.get("major").getAsString());
+        }
+        if(jsonUser.get("semesters")!=null){
+            setSemesters(jsonUser.get("semesters").getAsString());
+        }
+        if(jsonUser.get("university")!=null){
+            setUniversity(jsonUser.get("university").getAsString());
+        }
+        if(jsonUser.get("status")!=null){
+            setStatus(jsonUser.get("status").getAsString());
+        }
+        if(jsonUser.get("gender")!=null){
+            setGender(jsonUser.get("gender").getAsString());
+        }
+        if(jsonUser.get("summary")!=null){
+            setSummary(jsonUser.get("summary").getAsString());
         }
 
     }
@@ -70,6 +100,54 @@ import java.util.Map;
     }
     public String getAddress(){
         return this.address;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(String semesters) {
+        this.semesters = semesters;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public void setId(int id) {
