@@ -20,4 +20,13 @@
     <string name="summary">Summary</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
+
+    <string-array name="Mentees">
+        <item>Mentee name</item>
+    </string-array>
+    <string-array name="Meetings">
+        <item>Meeting Type</item>
+    </string-array>
+
+
 </resources>
