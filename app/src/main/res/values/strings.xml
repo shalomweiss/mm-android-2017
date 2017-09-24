@@ -19,5 +19,12 @@
     <string name="joineddate">Joined Date</string>
     <string name="summary">Summary</string>
 
+    <string-array name="Mentees">
+        <item>Mentee name</item>
+    </string-array>
+    <string-array name="Meetings">
+        <item>Meeting Type</item>
+    </string-array>
+
 
 </resources>
