@@ -111,12 +111,12 @@ public final class APIManager {
         });
     }
     /**
-     *
+     * This Method Get A Meetings Data From The Server
      * @param id The id of the user.
      * @param token The session token.
-     * @param meetingStatus
-     * @param count
-     * @param page
+     * @param meetingStatus The Status Of THe Meetings
+     * @param count The Number Of Meetings To Get
+     * @param page The Number Of Pages That Contain This Meetings
      * @param callback Callback function.
      */
     public void getMeetings(int id, String token,int meetingStatus,int count,int page,Callbacks.GetMeetings callback){
@@ -131,7 +131,7 @@ public final class APIManager {
             if (ex == null) {
                 //OK
                 ServerResponse response = new ServerResponse(json);
-                if (response.getCode() == Constants.Codes.SUCCESS) {   //Success
+                if (response.isOK()) {   //Success
                     //Convert jasonObject To User Object
                     JsonArray obj = json.getAsJsonObject("meetings").getAsJsonArray();
                     ArrayList<Meeting> meetings = new ArrayList<>();
@@ -152,11 +152,11 @@ public final class APIManager {
         });
     }
     /**
-     *
-     * @param id
-     * @param token
-     * @param meetingId
-     * @param callback
+     * This Method Get A Meeting Data By Id From The Server
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param meetingId THe Id Of The Meeting To Get From The Server
+     * @param callback Callback function.
      */
     public void getMeetingByID(int id,String token,int meetingId,Callbacks.GetMeetingByID callback) {
         Map<String, Object> params = new HashMap<>();
@@ -168,7 +168,7 @@ public final class APIManager {
 
                 ServerResponse response = new ServerResponse(json);
 
-                if (response.getCode() == Constants.Codes.SUCCESS) {
+                if (response.isOK()) {
 
                     //Success
                     //Convert jasonObject To Meeting Object
@@ -194,11 +194,11 @@ public final class APIManager {
         });
     }
     /**
-     *
-     * @param id
-     * @param token
-     * @param meeting
-     * @param callback
+     * This Meeting Add A New Meeting To The System
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param meeting The Meeting To Add
+     * @param callback Callback function.
      */
     public void addMeeting(int id,String token,Meeting meeting,Callbacks.General callback){
         Map<String,Object> params = new HashMap<>();
@@ -224,11 +224,11 @@ public final class APIManager {
         });
     }
     /**
-     *
-     * @param id
-     * @param token
+     * This Method Update The Profile Of This User (user) .
+     * @param id The id of the user.
+     * @param token The session token.
      * @param user must send it updated
-     * @param callback
+     * @param callback Callback function.
      */
     public void updateUserProfile(int id, String token, User user, final Callbacks.GetProfile callback){
         Map<String,Object> params = new HashMap<>(user.getHashedUser());
@@ -256,12 +256,12 @@ public final class APIManager {
         });
     }
     /**
-     *
-     * @param id
-     * @param token
-     * @param meeting_id
-     * @param action
-     * @param callback
+     * This Method Approve Meeting .
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param meeting_id Meeting Id To Approve Meeting .
+     * @param action The Status Of Approving , True Approve Meeting else false .
+     * @param callback Callback function.
      */
     public void approveMeeting (int id,String token,String meeting_id,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
@@ -288,12 +288,12 @@ public final class APIManager {
         });
     }
     /**
-     *
-     * @param id
-     * @param token
-     * @param meeting_id
-     * @param action
-     * @param callback
+     * This Method Confirm Meeting .
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param meeting_id The Meeting Id To Confirm .
+     * @param action The Status Of Confirming , True Confirm Meeting else false .
+     * @param callback Callback function.
      */
     public void confirmMeeting(int id,String token,String meeting_id,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
@@ -315,6 +315,72 @@ public final class APIManager {
                 }
             }else{
                 callback.make(null, ex);
+            }
+        });
+    }
+    /**
+     * This Method Get The mentees Of The Mentor
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param callback Callback function.
+     */
+    public void getMentees(int id,String token,Callbacks.GetMentees callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+            makeRequest(Constants.Routes.getMentees(),params,(json, ex) -> {
+                        if (ex == null) {
+                            //OK
+                            ServerResponse response = new ServerResponse(json);
+                            if (response.isOK()) {   //Success
+                                //Convert jasonObject To User Object
+                                JsonArray obj = json.getAsJsonObject("users").getAsJsonArray();
+                                ArrayList<User> mentees = new ArrayList<>();
+                                for (JsonElement o : obj) {
+                                    User m = new User(o);
+                                    mentees.add(m);
+                                }
+                                callback.make(response, mentees, null);
+                            } else {
+                                //Failed
+                                //ToDo : handle Code return Specifec Exception
+                                ServerException e = new ServerException(response);
+                                callback.make(response, null, e);
+                            }
+                        }else{
+                            callback.make(null,null, ex);
+                        }
+            });
+
+    }
+    /**
+     * This Method Get Mentor
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param callback Callback function.
+     */
+    public void getMentor(int id,String token,Callbacks.GetMentor callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        makeRequest(Constants.Routes.getMentor(),params,(json, ex) -> {
+            if(ex==null){
+                //ok
+                ServerResponse response = new ServerResponse(json);
+                if (response.isOK()) {   //Success
+                    //Success
+                    //Convert jasonObject To User Object
+                    JsonObject jsonUser = json.getAsJsonObject("user");
+                    User user=new User(jsonUser);
+                    callback.make(response,user, null);
+                } else {
+                    //Failed
+                    //ToDo : handle Code return Specifec Exception
+                    ServerException e = new ServerException(response);
+                    callback.make(response, null, e);
+                }
+            }else{
+                callback.make(null,null, ex);
             }
         });
     }
