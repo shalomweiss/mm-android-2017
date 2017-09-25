@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.tsofen.mentorim.MeetingCreateActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <Spinner
+        android:id="@+id/spinMentee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="0.04"
+
+        android:entries="@array/Mentees" />
+
+    <Spinner
+        android:id="@+id/spinMeetingType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="0.04"
+        android:entries="@array/Meetings"
+         />
+
+    <EditText
+        android:id="@+id/editLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="0.04"
+        android:ems="10"
+        android:hint="Location"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="0.04"
+        android:text="Date .. to the CONTROLER" />
+
+    <EditText
+        android:id="@+id/editMeetingSubjects"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="0.04"
+        android:ems="10"
+        android:hint="Meeting subjects (add dialog)"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="match_parent"
+        android:layout_height="168dp"
+        android:layout_margin="16dp"
+        android:ems="10"
+        android:hint="Notes"
+        android:inputType="textPersonName" />
+
+</LinearLayout>
