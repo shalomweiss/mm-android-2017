@@ -56,4 +56,10 @@ public final class Callbacks {
     public interface UpdateProfile {
         void make(ServerResponse response,User user, Exception ex);
     }
+    public interface GetMentees {
+        void make(ServerResponse response,List<User> users, Exception ex);
+    }
+    public interface GetMentor {
+        void make(ServerResponse response,User user, Exception ex);
+    }
 }

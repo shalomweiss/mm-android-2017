@@ -21,8 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name="org.tsofen.model.ProfileController" />
+        <activity android:name=".Meetingdetails"></activity>
         <activity android:name=".MeetingCreateActivity"></activity>
-        <activity android:name=".ProfileController"></activity>
     </application>
 
 </manifest>
