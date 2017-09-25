@@ -1,5 +1,6 @@
 package org.tsofen.model.classes;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.text.SimpleDateFormat;
@@ -47,7 +48,8 @@ import java.util.Map;
         return hashedUser;
     };
 
-    public User(JsonObject jsonUser) {
+    public User(JsonElement o) {
+        JsonObject jsonUser=o.getAsJsonObject();
         if(jsonUser.get("id")!=null){
             setId(jsonUser.get("id").getAsInt());
         }
