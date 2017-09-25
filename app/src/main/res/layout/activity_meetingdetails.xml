@@ -12,16 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="With Mente"
+        android:text="With Mentee"
         android:textColor="@color/gray"
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvWithMentee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="TextView"
+        android:text="tvWithMentee"
         android:textColor="#0c0b0b"
         android:textSize="18sp" />
 
@@ -35,11 +35,11 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tvFrom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="TextView"
+        android:text="tvFrom"
         android:textColor="#0c0b0b"
         android:textSize="18sp" />
 
@@ -53,11 +53,11 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/tvTo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="TextView"
+        android:text="tvTo"
         android:textColor="#0c0b0b"
         android:textSize="18sp" />
 
@@ -71,11 +71,11 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/tvAt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="TextView"
+        android:text="tvAt"
         android:textColor="#0c0b0b"
         android:textSize="18sp" />
 
@@ -89,11 +89,11 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/tvSubject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="TextView"
+        android:text="tvSubject"
         android:textColor="#0c0b0b"
         android:textSize="18sp" />
 
@@ -107,11 +107,11 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tvNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
-        android:text="TextView"
+        android:text="tvNotes"
         android:textColor="#0c0b0b"
         android:textSize="18sp" />
 
@@ -119,11 +119,10 @@
         android:id="@+id/LinearLayoutsecond"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.56"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/etSummery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -131,7 +130,7 @@
             android:text="Summery:(seen by every one)" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/etPrivateSummery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -155,7 +154,7 @@
     <LinearLayout
         android:id="@+id/Linearlayoutfirst"
         android:layout_width="match_parent"
-        android:layout_height="204dp"
+        android:layout_height="110dp"
         android:orientation="horizontal">
 
         <Button
