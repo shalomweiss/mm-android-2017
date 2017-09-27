@@ -20,6 +20,9 @@
     <string name="summary">Summary</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
+    <string name="pending"> PENDING </string>
+    <string name="upcoming"> UPCOMING </string>
+    <string name="history"> HISTORY </string>
 
     <string-array name="Mentees">
         <item>Mentee name</item>
