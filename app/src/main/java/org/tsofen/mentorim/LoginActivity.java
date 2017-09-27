@@ -1,12 +1,23 @@
 package org.tsofen.mentorim;
 
+import android.graphics.Color;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+
+import net.crofis.ui.dialog.BaseAlertDialog;
+import net.crofis.ui.dialog.DialogManager;
+import net.crofis.ui.dialog.InfoDialog;
+import net.crofis.ui.dialog.LoadingDialog;
+import net.crofis.ui.dialog.NewMessageDialog;
 
 import org.tsofen.model.APIManager;
 import org.tsofen.model.DataManager;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,11 +58,17 @@ public class LoginActivity extends AppCompatActivity {
         //TODO: verify password length
         String deviceId = "";
 
+        SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
         //Make API Call
         APIManager.getInstance().login(email, password,deviceId, (response, user, token, ex) -> {
 
-
             if (ex == null){
+                pDialog.dismiss();
+
                 Log.i("Login", response.getMessage());
                 //create data manager instance from context
                 DataManager manager = DataManager.getInstance(this);
@@ -66,6 +83,17 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }else{
                 //TODO: Handle exception.
+                //dialog.complete(false,false,"Error",ex.getMessage());
+//                pDialog.dismiss();
+                //
+                runOnUiThread(() -> {
+                    pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().stopSpinning();
+                    pDialog.setTitleText("Error");
+                    pDialog.setContentText(ex.getMessage());
+                });
+
+                //
                 ex.printStackTrace();
             }
         });

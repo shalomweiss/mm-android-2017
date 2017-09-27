@@ -60,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
         String token = manager.getToken();
 
         //check if token exists
-//        if (token == null)
-//            goToLogin();
-//        else
-//            loadData();
+        if (token == null)
+            goToLogin();
+        else
+            loadData();
 
 
-        startActivity(new Intent(MainActivity.this,MeetingController.class));
+        //startActivity(new Intent(MainActivity.this,MeetingController.class));
     }
 
     private void loadData(){
