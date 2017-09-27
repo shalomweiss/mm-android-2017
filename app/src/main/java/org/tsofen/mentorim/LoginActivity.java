@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //store user
                 manager.setUser(user);
-
+                startActivity(new Intent(LoginActivity.this,MeetingController.class));
                 //close activity
                 finish();
             }else{

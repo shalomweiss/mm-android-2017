@@ -2,6 +2,7 @@ package org.tsofen.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import org.tsofen.model.classes.User;
 
@@ -68,7 +69,7 @@ public final class DataManager {
         user.setEmail(preferences.getString(Keys.EMAIL,null));
         user.setPhoneNumber(preferences.getString(Keys.PHONENUMBER,null));
         user.setId(preferences.getInt(Keys.ID, 0));
-        return null;
+        return user;
     }
 
     /**
@@ -137,7 +138,6 @@ public final class DataManager {
 
     private static class Keys {
         private static final String PREFERENCES = "MM_PREFERENCES";
-
         private static final String TOKEN = "TOKEN";
         private static final String FIRSTNAME = "FIRSTNAME";
         private static final String LASTNAME = "LASTNAME";
@@ -145,6 +145,5 @@ public final class DataManager {
         private static final String EMAIL = "EMAIL";
         private static final String PHONENUMBER = "PHONENUMBER";
         private static final String ID = "ID";
-
     }
 }

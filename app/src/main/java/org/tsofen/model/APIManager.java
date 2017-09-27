@@ -1,4 +1,7 @@
 package org.tsofen.model;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -269,21 +272,26 @@ public final class APIManager {
         params.put("token",token);
         params.put("meeting_id",meeting_id);
         params.put("action",action);
+        Log.e("Approving Method","Hashmap "+ params);
         makeRequest(Constants.Routes.approveMeeting(), params, (json, ex) -> {
+            Log.e("Approving Method","Make A Request : ");
             if(ex==null){
                 ServerResponse response = new ServerResponse(json);
+                Log.e("Approving Method","ServerResponse : "+response);
                 if(response.isOK()){
                     //TODO: complete success
                     callback.make(response, null);
+                    Log.e("Approving Method","ServerResponse Is Ok ");
                 }else{
                     //Failed
                     //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(response);
                     callback.make(response, e);
+                    Log.e("Approving Method","ServerResponse Isn't Ok : "+response);
                 }
             }else{
                 callback.make(null, ex);
-
+                Log.e("Approving Method","Error When Request  : "+ex);
             }
         });
     }

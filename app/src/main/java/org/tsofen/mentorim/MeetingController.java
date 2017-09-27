@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import net.crofis.ui.dialog.BaseAlertDialog;
 import net.crofis.ui.dialog.DialogManager;
 import net.crofis.ui.dialog.InfoDialog;
@@ -52,22 +54,6 @@ public class MeetingController extends AppCompatActivity {
         btnDecline=(Button)findViewById(R.id.btnDecline);
         apiManager=APIManager.getInstance();
         dataManager=DataManager.getInstance(this);
-        if(meetingId != -1){
-            int userId = dataManager.getUser().getId();
-            String token = dataManager.getToken();
-            apiManager.getMeetingByID(userId, token, meetingId, (response, meeting1, exception) -> {
-                if(exception == null) {
-                    this.meeting = meeting1;
-                    //load meeting to views
-                    loadMeeting(meeting1);
-                }else{
-                    //show error
-                    meetingErrorOcuuredDialog();
-                }
-            });
-        }else{
-            meetingNotExistDialog();
-        }
         btnConfirm.setOnClickListener(view -> {
             doConfirm();
         });
@@ -89,8 +75,28 @@ public class MeetingController extends AppCompatActivity {
                 doDiscard();
             }
         });
+        if(meetingId != -1){
+            int userId = dataManager.getUser().getId();
+            String token = dataManager.getToken();
+            apiManager.getMeetingByID(userId, token, meetingId, (response, meeting1, exception) -> {
+                if(exception == null) {
+                    this.meeting = meeting1;
+                    //load meeting to views
+                    loadMeeting(meeting1);
+                }else{
+                    //show error
+                    meetingErrorOcuuredDialog();
+                }
+            });
+        }else{
+            meetingNotExistDialog();
+//            btnDiscard.setEnabled(false);
+//            btnDecline.setEnabled(false);
+//            btnApprove.setEnabled(false);
+//            btnConfirm.setEnabled(false);
+        }
     }
-    void  doDiscard(){
+    private void  doDiscard(){
         int id=dataManager.getUser().getId();
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
@@ -107,7 +113,7 @@ public class MeetingController extends AppCompatActivity {
             }
         });
     }
-    void  doDecline(){
+    private void  doDecline(){
         int id=dataManager.getUser().getId();
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
@@ -127,7 +133,7 @@ public class MeetingController extends AppCompatActivity {
             }
         });
     }
-    void  doApprove(){
+    private void  doApprove(){
         int id=dataManager.getUser().getId();
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
@@ -147,7 +153,7 @@ public class MeetingController extends AppCompatActivity {
             }
         });
     }
-    void doConfirm(){
+    private void doConfirm(){
         int id=dataManager.getUser().getId();
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
@@ -164,7 +170,7 @@ public class MeetingController extends AppCompatActivity {
             }
         });
     }
-    void loadMeeting(Meeting meeting){
+    private void loadMeeting(Meeting meeting){
         tvWithMentee.setText(meeting.getWithMentee());
         tvMeetingType.setText(meeting.getType());
         tvFrom.setText(meeting.getFrom().getTime()+"");
@@ -173,10 +179,10 @@ public class MeetingController extends AppCompatActivity {
         tvNotes.setText(meeting.getNote());
         tvSubject.setText(meeting.getSubject());
     }
-    static final class Constants{
+    private static final class Constants{
         public static String MEETING_ID = "MEETING_ID";
     }
-    void meetingNotExistDialog(){
+    private void meetingNotExistDialog(){
         InfoDialog infoDialog = new InfoDialog(this);
         infoDialog.setTitle("Meeting Action");
         infoDialog.setMessage("This Meeting Id : "+meetingId+" is not Exist in The System!");
@@ -199,7 +205,7 @@ public class MeetingController extends AppCompatActivity {
 
         infoDialog.show();
     }
-    void meetingErrorOcuuredDialog(){
+    private void meetingErrorOcuuredDialog(){
         DialogManager
                 .makeDialog(this,"Meeting Action","some Error Occurred When Getting The Meeting With This Meeting Id : "+meetingId+" .")
                 .show();
