@@ -26,7 +26,15 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/tvMeetingType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tvMeetingType"
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.56"
