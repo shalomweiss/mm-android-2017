@@ -3,7 +3,6 @@ package org.tsofen.model.classes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.security.Key;
 import java.util.Calendar;
 
 /**
@@ -13,18 +12,23 @@ import java.util.Calendar;
 public class Meeting {
     private String id;
     private String name;
+    private String withMentee;
     private String type;
-    private String location;
-    private Calendar date;
+    /**
+     *
+     */
+    private String at;
+    private Calendar From;
+    private Calendar To;
     private String subject;
     private String note;
 
-    public Meeting(String id,String name,String type,String location,Calendar date,String subject,String note){
+    public Meeting(String id,String name,String type,String at,Calendar date,String subject,String note){
         setMeetingId(id);
         setName(name);
         setType(type);
-        setLocation(location);
-        setDate(date);
+        setAt(at);
+        setFrom(date);
         setSubject(subject);
         setNote(note);
     }
@@ -37,20 +41,32 @@ public class Meeting {
         if(obj.get("meetingName")!=null){
             setName(obj.get("meetingName").getAsString());
         }
+        if(obj.get("meetingWithMentee")!=null){
+            setWithMentee(obj.get("meetingWithMentee").getAsString());
+        }
         if(obj.get("meetingType")!=null){
             setName(obj.get("meetingType").getAsString());
         }
-        if(obj.get("meetingLocation")!=null){
-            setName(obj.get("meetingLocation").getAsString());
+        if(obj.get("meetingAt")!=null){
+            setName(obj.get("meetingAt").getAsString());
         }
-        if(obj.get("meetingDate")!=null){
-            setName(obj.get("meetingDate").getAsString());
+        if(obj.get("meetingFrom")!=null){
+           int mills=obj.get("meetingFrom").getAsInt();
+           Calendar cal=Calendar.getInstance();
+            cal.setTimeInMillis(mills);
+            setFrom(cal);
+        }
+        if(obj.get("meetingTo")!=null){
+            int mills=obj.get("meetingTo").getAsInt();
+            Calendar cal=Calendar.getInstance();
+            cal.setTimeInMillis(mills);
+            setTo(cal);
         }
         if(obj.get("meetingSubject")!=null){
-            setName(obj.get("meetingSubject").getAsString());
+            setSubject(obj.get("meetingSubject").getAsString());
         }
         if(obj.get("meetingNote")!=null){
-            setName(obj.get("meetingNote").getAsString());
+            setNote(obj.get("meetingNote").getAsString());
         }
     }
 
@@ -70,12 +86,23 @@ public class Meeting {
         return type;
     }
 
-    public String getLocation() {
-        return location;
+    public String getAt() {
+        return at;
     }
 
-    public Calendar getDate() {
-        return date;
+    public Calendar getTo() {
+        return To;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getWithMentee() {
+        return withMentee;
+    }
+    public Calendar getFrom() {
+        return From;
     }
 
     public String getSubject() {
@@ -90,16 +117,28 @@ public class Meeting {
         this.name = name;
     }
 
+    public void setWithMentee(String withMentee) {
+        this.withMentee = withMentee;
+    }
+
+    public void setTo(Calendar to) {
+        To = to;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAt(String at) {
+        this.at = at;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setFrom(Calendar from) {
+        this.From = from;
     }
 
     public void setSubject(String subject) {
