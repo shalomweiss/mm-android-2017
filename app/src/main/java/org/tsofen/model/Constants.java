@@ -14,12 +14,12 @@ final public class Constants {
     /**
      * Address
      */
-    public final static String address = "192.168.38.16";
+    public final static String address = "zofenweb-env.hhaqjxq9wa.us-east-2.elasticbeanstalk.com";
 
     /**
      * Port
      */
-    public final static String port = "8080";
+    public final static String port = "80";
 
     /**
      * @return full path
@@ -34,7 +34,7 @@ final public class Constants {
     public static class Routes {
 
         public static String login(){
-            return getAddress() + "/login";
+            return getAddress() + "/LogIn";
         }
         public static String updateProfile(){return getAddress() + "/updateProfile"; }
         public static String getProfile(){
