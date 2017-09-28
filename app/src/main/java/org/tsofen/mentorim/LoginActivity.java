@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import net.crofis.ui.dialog.BaseAlertDialog;
 import net.crofis.ui.dialog.DialogManager;
 import net.crofis.ui.dialog.InfoDialog;
@@ -57,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: verify email with regex.
         //TODO: verify password length
-        String deviceId = "";
-
+        String deviceId = FirebaseInstanceId.getInstance().getToken();
+        Log.i("APP",deviceId);
         SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading");

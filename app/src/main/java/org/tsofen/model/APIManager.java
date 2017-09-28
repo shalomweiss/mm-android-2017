@@ -53,6 +53,7 @@ public final class APIManager {
         Map<String,Object> params = new HashMap<>();
         params.put("email",email);
         params.put("password",password);
+        params.put("deviceId",deviceId);
         makeRequest(Constants.Routes.login(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
