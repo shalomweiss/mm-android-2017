@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "451345912070",
+    "firebase_url": "https://tsofen-mm-2017.firebaseio.com",
+    "project_id": "tsofen-mm-2017",
+    "storage_bucket": "tsofen-mm-2017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451345912070:android:8748caa769239549",
+        "android_client_info": {
+          "package_name": "org.tsofen.mentorim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451345912070-5h00r13ebu5cvhdcp6sd8ul6vb525if9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfeG3xq3SuTY0QiT2VqbmTYVt0yVrrikY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
