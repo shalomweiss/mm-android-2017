@@ -3,13 +3,16 @@ package org.tsofen.model.classes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.tsofen.model.Mappable;
+
 import java.util.Calendar;
+import java.util.Map;
 
 /**
  * Created by win10 on 18/09/2017.
  */
 
-public class Meeting {
+public class Meeting implements Mappable{
     private String id;
     private String name;
     private String withMentee;
@@ -147,6 +150,22 @@ public class Meeting {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public Map<String, Object> map() {
+        //TODO: create mappable object
+        return null;
+    }
+
+    @Override
+    public void init(JsonObject o) {
+
+    }
+
+    @Override
+    public void init(Map<String, Object> o) {
+
     }
 
     static class Keys {

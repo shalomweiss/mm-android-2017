@@ -237,9 +237,10 @@ public final class APIManager {
      * @param callback Callback function.
      */
     public void updateUserProfile(int id, String token, User user, final Callbacks.GetProfile callback){
-        Map<String,Object> params = new HashMap<>(user.getHashedUser());
+        Map<String,Object> params = new HashMap<>();
         params.put("id", id);
         params.put("token", token);
+        params.put("user",user);
         makeRequest(Constants.Routes.getProfile(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
@@ -456,9 +457,13 @@ public final class APIManager {
                 if (item.getValue() instanceof Character)
                     object.addProperty(item.getKey(), (Character) item.getValue());
 
-                //object support
+                //map support
                 if (item.getValue() instanceof Map)
                     object.add(item.getKey(),convertMapToJson((Map<String,Object>) item.getValue()));
+
+                //mappable support
+                if(item.getValue() instanceof Mappable)
+                    object.add(item.getKey(),convertMapToJson(((Mappable) item.getValue()).map()));
             }
         }
         return object;

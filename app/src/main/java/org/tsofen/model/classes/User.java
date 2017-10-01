@@ -3,6 +3,8 @@ package org.tsofen.model.classes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.tsofen.model.Mappable;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +14,7 @@ import java.util.Map;
  * Created by minitour on 13/09/2017.
  */
 
-    public class User {
+public class User implements Mappable{
     private int id;
     private String firstName;
     private String lastName;
@@ -172,4 +174,31 @@ import java.util.Map;
         return sdf.format(date);
     }
 
+    @Override
+    public Map<String, Object> map() {
+        Map<String,Object> hashedUser = new HashMap<String,Object>();
+        hashedUser.put("firstName", firstName);
+        hashedUser.put("lastName", lastName);
+        hashedUser.put("email", email);
+        hashedUser.put("phoneNumber", phoneNumber);
+        hashedUser.put("address", address);
+        hashedUser.put("major", major);
+        hashedUser.put("semesters", semesters);
+        hashedUser.put("university", university);
+        hashedUser.put("status", status);
+        hashedUser.put("gender", gender);
+        hashedUser.put("summary", summary);
+        hashedUser.put("joinDate", joinDate);
+        return hashedUser;
+    }
+
+    @Override
+    public void init(JsonObject o) {
+
+    }
+
+    @Override
+    public void init(Map<String, Object> o) {
+
+    }
 }
