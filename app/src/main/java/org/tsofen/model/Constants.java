@@ -38,15 +38,15 @@ final public class Constants {
         }
         public static String updateProfile(){return getAddress() + "/updateProfile"; }
         public static String getProfile(){
-            return getAddress() + "/getProfile";
+            return getAddress() + "/GetProfile";
         }
-        public static String getMeetings() { return getAddress() + "/getMeetings";}
-        public static String getMeetingById() { return getAddress() + "/getMeetingById";}
-        public static String addMeeting() { return getAddress() + "/addMeeting";}
+        public static String getMeetings() { return getAddress() + "/GetMeetings";}
+        public static String getMeetingById() { return getAddress() + "/GetMeetingById";}
+        public static String addMeeting() { return getAddress() + "/AddMeeting";}
         public static String approveMeeting() { return getAddress() + "/approveMeeting";}
         public static String confirmMeeting() { return getAddress() + "/confirmMeeting";}
-        public static String getMentees() { return getAddress() + "/getMentees";}
-        public static String getMentor() { return getAddress() + "/getMentor";}
+        public static String getMentees() { return getAddress() + "/GetMentees";}
+        public static String getMentor() { return getAddress() + "/GetMentor";}
     }
     public static class Codes{
         public static final int SUCCESS=200;

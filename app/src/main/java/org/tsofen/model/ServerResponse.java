@@ -39,4 +39,12 @@ public class ServerResponse {
     public boolean isOK(){
         return getCode() == Constants.Codes.SUCCESS;
     }
+
+    @Override
+    public String toString() {
+        return "ServerResponse{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
