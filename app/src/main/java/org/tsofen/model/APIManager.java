@@ -240,7 +240,7 @@ public final class APIManager {
      * @param user must send it updated
      * @param callback Callback function.
      */
-    public void updateUserProfile(int id, String token, User user, final Callbacks.GetProfile callback){
+    public void updateUserProfile(int id, String token, User user, final Callbacks.UpdateProfile callback){
         Map<String,Object> params = new HashMap<>();
         params.put("id", id);
         params.put("token", token);
