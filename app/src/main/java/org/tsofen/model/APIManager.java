@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -437,14 +439,26 @@ public final class APIManager {
         JsonObject object = new JsonObject();
         if (params != null) {
             for (Map.Entry<String, Object> item : params.entrySet()) {
+
+                //boolean support
                 if (item.getValue() instanceof Boolean)
                     object.addProperty(item.getKey(), (Boolean) item.getValue());
+
+                //number support
                 if (item.getValue() instanceof Number)
                     object.addProperty(item.getKey(), (Number) item.getValue());
+
+                //string support
                 if (item.getValue() instanceof String)
                     object.addProperty(item.getKey(), (String) item.getValue());
+
+                //char support
                 if (item.getValue() instanceof Character)
                     object.addProperty(item.getKey(), (Character) item.getValue());
+
+                //object support
+                if (item.getValue() instanceof Map)
+                    object.add(item.getKey(),convertMapToJson((Map<String,Object>) item.getValue()));
             }
         }
         return object;
