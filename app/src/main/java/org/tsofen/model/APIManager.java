@@ -35,12 +35,14 @@ public final class APIManager {
     //singleton
     private final static APIManager manager = new APIManager();
     private final OkHttpClient client;
+    private final String TAG = "API-MANAGER";
     /**
      * Private constructor
      */
     private APIManager(){
         client = new OkHttpClient();
     }
+
     /**
      * Login function. This method is used when we want to sign in to the application.
      * This will return a session token and a user object.
@@ -56,6 +58,7 @@ public final class APIManager {
         params.put("email",email);
         params.put("password",password);
         params.put("deviceId",deviceId);
+
         makeRequest(Constants.Routes.login(), params, (json, ex) -> {
             if (ex == null) {
                 //OK
@@ -81,6 +84,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      *
      * @param id The id of the user.
@@ -407,7 +411,11 @@ public final class APIManager {
         //define media type
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
         //create request body from params
-        RequestBody body = RequestBody.create(mediaType,convertMapToJson(params).toString());
+
+        JsonElement element = convertMapToJson(params);
+        Log.i(TAG, "makeRequest: \n"+ element.toString());
+
+        RequestBody body = RequestBody.create(mediaType,element.toString());
         //create request
         Request request = new Request
                 .Builder()
@@ -421,6 +429,7 @@ public final class APIManager {
             public void onFailure(Call call, IOException e) {
                 if (callback != null)
                     callback.make(null,e);
+                Log.i(TAG, "onFailure: " + e.toString());
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -428,6 +437,8 @@ public final class APIManager {
                 JsonObject o = parser.parse(response.body().string()).getAsJsonObject();
                 if (callback != null)
                     callback.make(o,null);
+
+                Log.i(TAG, "onResponse: " + o.toString());
             }
         });
     }

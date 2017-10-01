@@ -18,7 +18,10 @@ import net.crofis.ui.dialog.LoadingDialog;
 import net.crofis.ui.dialog.NewMessageDialog;
 
 import org.tsofen.model.APIManager;
+import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
+import org.tsofen.model.ServerResponse;
+import org.tsofen.model.classes.User;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -59,45 +62,52 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: verify email with regex.
         //TODO: verify password length
-        String deviceId = FirebaseInstanceId.getInstance().getToken();
-        Log.i("APP",deviceId);
+
+        String deviceId = null;
+        try{
+            deviceId = FirebaseInstanceId.getInstance().getToken();
+            Log.i("APP",deviceId);
+        }catch (NullPointerException e){}
+
+
         SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
         pDialog.show();
+
+
+
+
         //Make API Call
         APIManager.getInstance().login(email, password,deviceId, (response, user, token, ex) -> {
 
-            if (ex == null){
+            if (ex == null) {
                 pDialog.dismiss();
 
                 Log.i("Login", response.getMessage());
                 //create data manager instance from context
-                DataManager manager = DataManager.getInstance(this);
+                DataManager manager = DataManager.getInstance(LoginActivity.this);
 
                 //store token
                 manager.setToken(token);
 
                 //store user
                 manager.setUser(user);
-                startActivity(new Intent(LoginActivity.this,MeetingController.class));
+
                 //close activity
-                finish();
-            }else{
+                LoginActivity.this.finish();
+            } else {
                 //TODO: Handle exception.
                 //dialog.complete(false,false,"Error",ex.getMessage());
 //                pDialog.dismiss();
                 //
-                runOnUiThread(() -> {
+                LoginActivity.this.runOnUiThread(() -> {
                     pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
                     pDialog.getProgressHelper().stopSpinning();
                     pDialog.setTitleText("Error");
                     pDialog.setContentText(ex.getMessage());
                 });
-
-                //
-                ex.printStackTrace();
             }
         });
     }
