@@ -171,4 +171,12 @@ public class Meeting implements Mappable{
     static class Keys {
         public static final String ID = "meetingId";
     }
+
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

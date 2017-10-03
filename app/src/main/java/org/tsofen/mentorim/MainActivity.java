@@ -26,7 +26,12 @@ import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.tsofen.fragments.PendingFragment;
+import org.tsofen.model.APIManager;
+import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
+import org.tsofen.model.ServerResponse;
+import org.tsofen.model.classes.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        fab.setOnClickListener(view -> {
+            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            APIManager.getInstance().getMeetings(4,"1",0,15,1,(response,meetingList,exception) -> {
+                if(exception == null && response.isOK()){
+                    System.out.println(meetingList);
+                }else{
+                    //TODO: show error
+                }
+            });
         });
 
         //create data manager instance
@@ -172,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+
+            if(position == 0)
+                return new PendingFragment();
+
             return PlaceholderFragment.newInstance(position + 1);
         }
 

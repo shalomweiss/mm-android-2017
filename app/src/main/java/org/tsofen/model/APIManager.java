@@ -1,4 +1,5 @@
 package org.tsofen.model;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -21,6 +23,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 /**
  * Created by hamza on 13-Sep-17.
  */
@@ -40,7 +44,9 @@ public final class APIManager {
      * Private constructor
      */
     private APIManager(){
-        client = new OkHttpClient();
+        client = new OkHttpClient.Builder()
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
     }
 
     /**
@@ -143,7 +149,7 @@ public final class APIManager {
                 ServerResponse response = new ServerResponse(json);
                 if (response.isOK()) {   //Success
                     //Convert jasonObject To User Object
-                    JsonArray obj = json.getAsJsonObject("meetings").getAsJsonArray();
+                    JsonArray obj = json.getAsJsonArray("meetings");
                     ArrayList<Meeting> meetings = new ArrayList<>();
                     for (JsonElement o : obj) {
                         Meeting m = new Meeting(o);
@@ -433,14 +439,52 @@ public final class APIManager {
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                JsonParser parser = new JsonParser();
-                JsonObject o = parser.parse(response.body().string()).getAsJsonObject();
-                if (callback != null)
-                    callback.make(o,null);
 
-                Log.i(TAG, "onResponse: " + o.toString());
+                try (ResponseBody responseBody = response.body()) {
+                    String res = responseBody.string();
+                    JsonParser parser = new JsonParser();
+                    JsonObject o = parser.parse(res).getAsJsonObject();
+                    if (callback != null)
+                        callback.make(o,null);
+                    responseBody.close();
+                }
+
             }
         });
+
+//        AsyncTask<Void,Void,String> task = new AsyncTask<Void,Void,String>(){
+//            IOException exception;
+//
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//                try {
+//                    Response response = client.newCall(request).execute();
+//                    try(ResponseBody body = response.body()){
+//                        return body.string();
+//                    }
+//                } catch (IOException e) {
+//                    exception = e;
+//                    e.printStackTrace();
+//                    return null;
+//                }
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String result) {
+//                if(result != null) {
+//
+//                    JsonParser parser = new JsonParser();
+//                    JsonObject o = parser.parse(result).getAsJsonObject();
+//                    if (callback != null)
+//                        callback.make(o, null);
+//                }else{
+//                    if (callback != null)
+//                        callback.make(null,exception);
+//                }
+//            }
+//        };
+//
+//        task.execute();
     }
     /**
      * Helper function, used to convert map to json object.

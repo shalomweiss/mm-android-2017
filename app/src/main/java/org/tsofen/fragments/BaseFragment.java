@@ -1,6 +1,6 @@
 package org.tsofen.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +21,8 @@ public abstract class BaseFragment extends Fragment {
      */
     protected RecyclerView listView;
 
+
+
     /**
      * A method called when view is ready to be used
      * @param view
@@ -32,6 +34,7 @@ public abstract class BaseFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_view, container, false);
         setup(rootView);
         viewDidLoad(rootView);
+
         return rootView;
     }
 
