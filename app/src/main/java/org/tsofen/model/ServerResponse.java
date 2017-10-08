@@ -32,8 +32,13 @@ public class ServerResponse {
     }
 
     public ServerResponse(JsonObject json){
-        code = json.get("code").getAsInt();
-        message = json.get("message").getAsString();
+        try {
+            code = json.get("code").getAsInt();
+            message = json.get("message").getAsString();
+        }catch (NullPointerException e){
+            code = -1;
+            message = "Unknown Error";
+        }
     }
 
     public boolean isOK(){

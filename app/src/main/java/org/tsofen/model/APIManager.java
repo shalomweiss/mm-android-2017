@@ -1,19 +1,18 @@
 package org.tsofen.model;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import org.tsofen.model.classes.Meeting;
 import org.tsofen.model.classes.User;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -25,9 +24,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-/**
- * Created by hamza on 13-Sep-17.
- */
 public final class APIManager {
     /**
      * Get Instance
@@ -71,22 +67,22 @@ public final class APIManager {
 
                 ServerResponse response = new ServerResponse(json);
 
-                if(response.isOK()){
+                if (response.isOK()) {
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
-                    User user=new User(jsonUser);
+                    User user = new User(jsonUser);
                     //fetch token
                     String token = json.get("token").getAsString();
-                    callback.make(response,user,token,null);
-                }else{
+                    callback.make(response, user, token, null);
+                } else {
                     //Failed
                     //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(response);
-                    callback.make(response,null,null,e);
+                    callback.make(response, null, null, e);
                 }
-            }else{
-                callback.make(null,null,null,ex);
+            } else {
+                callback.make(null, null, null, ex);
             }
         });
     }
@@ -419,7 +415,9 @@ public final class APIManager {
         //create request body from params
 
         JsonElement element = convertMapToJson(params);
+        Log.i(TAG,"makeRequest: "+url);
         Log.i(TAG, "makeRequest: \n"+ element.toString());
+
 
         RequestBody body = RequestBody.create(mediaType,element.toString());
         //create request
@@ -439,52 +437,17 @@ public final class APIManager {
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 try (ResponseBody responseBody = response.body()) {
                     String res = responseBody.string();
+                    Log.i(TAG,"success "+res);
                     JsonParser parser = new JsonParser();
                     JsonObject o = parser.parse(res).getAsJsonObject();
                     if (callback != null)
                         callback.make(o,null);
                     responseBody.close();
                 }
-
             }
         });
-
-//        AsyncTask<Void,Void,String> task = new AsyncTask<Void,Void,String>(){
-//            IOException exception;
-//
-//            @Override
-//            protected String doInBackground(Void... voids) {
-//                try {
-//                    Response response = client.newCall(request).execute();
-//                    try(ResponseBody body = response.body()){
-//                        return body.string();
-//                    }
-//                } catch (IOException e) {
-//                    exception = e;
-//                    e.printStackTrace();
-//                    return null;
-//                }
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String result) {
-//                if(result != null) {
-//
-//                    JsonParser parser = new JsonParser();
-//                    JsonObject o = parser.parse(result).getAsJsonObject();
-//                    if (callback != null)
-//                        callback.make(o, null);
-//                }else{
-//                    if (callback != null)
-//                        callback.make(null,exception);
-//                }
-//            }
-//        };
-//
-//        task.execute();
     }
     /**
      * Helper function, used to convert map to json object.

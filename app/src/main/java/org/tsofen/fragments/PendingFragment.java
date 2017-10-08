@@ -1,5 +1,6 @@
 package org.tsofen.fragments;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,21 +45,23 @@ public class PendingFragment extends BaseFragment {
 
         listView.addOnScrollListener(scrollListener);
         listView.setAdapter(adapter);
-
-        DataManager manager = DataManager.getInstance(getContext());
-        user = manager.getUser();
-        token = manager.getToken();
         loadNextDataFromApi(1);
 
     }
 
     public void loadNextDataFromApi(int offset) {
+        DataManager manager = DataManager.getInstance(getContext());
+        user = manager.getUser();
+        token = manager.getToken();
         if(user != null){
             APIManager.getInstance().getMeetings(user.getId(),token,0,15,offset,(response,meetingList,exception) -> {
                 if(exception == null && response.isOK()){
                     updateData(meetingList);
                 }else{
                     //TODO: show error
+                    Snackbar.make(listView, "Failed to load!", Snackbar.LENGTH_LONG).setAction("Try Again", view -> {
+                        loadNextDataFromApi(offset);
+                    }).show();
                 }
             });
         }

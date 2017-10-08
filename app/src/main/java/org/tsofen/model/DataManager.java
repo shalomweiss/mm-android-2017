@@ -62,14 +62,17 @@ public final class DataManager {
      * @return The current user.
      */
     public User getUser(){
-        User user = new User();
-        user.setFirstName(preferences.getString(Keys.FIRSTNAME,null));
-        user.setLastName(preferences.getString(Keys.LASTNAME,null));
-        user.setAddress(preferences.getString(Keys.ADDRESS,null));
-        user.setEmail(preferences.getString(Keys.EMAIL,null));
-        user.setPhoneNumber(preferences.getString(Keys.PHONENUMBER,null));
-        user.setId(preferences.getInt(Keys.ID, 0));
-        return user;
+        if (preferences.contains(Keys.ID)) {
+            User user = new User();
+            user.setFirstName(preferences.getString(Keys.FIRSTNAME, null));
+            user.setLastName(preferences.getString(Keys.LASTNAME, null));
+            user.setAddress(preferences.getString(Keys.ADDRESS, null));
+            user.setEmail(preferences.getString(Keys.EMAIL, null));
+            user.setPhoneNumber(preferences.getString(Keys.PHONENUMBER, null));
+            user.setId(preferences.getInt(Keys.ID, 0));
+            return user;
+        }
+        return null;
     }
 
     /**

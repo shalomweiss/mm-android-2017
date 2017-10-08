@@ -11,6 +11,9 @@ import java.util.List;
  * Created by minitour on 13/09/2017.
  */
 public final class Callbacks {
+
+    private Callbacks(){}
+
     /**
      * Inner callback, used only by the API Manager internally.
      */
@@ -24,25 +27,25 @@ public final class Callbacks {
         void make(ServerResponse response,Exception exception);
     }
     /**
-     * Auth callback, used only by the API Manager internally.
+     * Auth callback, used for authentication
      */
     public interface Auth {
         void make(ServerResponse response, User user, String token, Exception exception);
     }
     /**
-     * GetProfile callback, used only by the API Manager internally.
+     * GetProfile callback, used when fetching a user object.
      */
     public interface GetProfile {
         void make(ServerResponse response,User user, Exception exception);
     }
     /**
-     * GetMeetings callback, used only by the API Manager internally.
+     * GetMeetings callback, used to get a list of meetings.
      */
     public interface GetMeetings{
         void make(ServerResponse response,List<Meeting> meetingList,Exception exception);
     }
     /**
-     * GetMeetingByID callback, used only by the API Manager internally.
+     * GetMeetingByID callback, used to get a specific meeting object.
      */
     public interface GetMeetingByID{
         void make(ServerResponse response,Meeting meeting,Exception exception);
