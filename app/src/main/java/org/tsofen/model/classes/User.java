@@ -224,12 +224,59 @@ public class User implements Mappable<User>{
 
         firstName = o.has("firstName") ? o.get("firstName").getAsString() : null;
 
+        lastName = o.has("lastName") ? o.get("lastName").getAsString() : null;
+
+        email = o.has("email") ? o.get("email").getAsString() : null;
+
+        phoneNumber = o.has("phoneNumber") ? o.get("phoneNumber").getAsString() : null;
+
+        gender = o.has("gender") ? o.get("gender").getAsString() : null;
+
+        address = o.has("address") ? o.get("address").getAsString() : null;
+
+        summary = o.has("summary") ? o.get("summary").getAsString() : null;
+
+        status = o.has("status") ? o.get("status").getAsString() : null;
+
+        joinDate = o.has("joinDate") ? o.get("joinDate").getAsLong() : -1;
+
+        major = o.has("major") ? o.get("major").getAsString() : null;
+
+        secondMajor = o.has("secondMajor") ? o.get("secondMajor").getAsString() : null;
+
+        semesters = o.has("semesters") ? o.get("semesters").getAsString() : null;
+
+        university = o.has("university") ? o.get("university").getAsString() : null;
+
+        graduationStatus = o.has("graduationStatus") ? o.get("graduationStatus").getAsString() : null;
+
+        average = o.has("average") ? o.get("average").getAsString() : null;
+
+        didSignEULA = o.has("didSignEULA") ? o.get("didSignEULA").getAsBoolean() : null;
+
+        resume = o.has("resume") ? o.get("resume").getAsString() : null;
+
+        gradeSheet = o.has("gradeSheet") ? o.get("gradeSheet").getAsString() : null;
+
+        exp = o.has("exp") ? o.get("exp").getAsString() : null;
+
+        role = o.has("role") ? o.get("role").getAsString() : null;
+
+        company = o.has("company") ? o.get("company").getAsString() : null;
+
+        volunteering = o.has("volunteering") ? o.get("volunteering").getAsString() : null;
+
+        workHistory = o.has("workHistory") ? o.get("workHistory").getAsString() : null;
+
+
         return this;
     }
 
     @Override
     public User init(Map<String, Object> o) {
         //TODO: init properties
+
+        id = o.containsKey("id") ? (int) o.get("id") : -1;
 
         return this;
     }
