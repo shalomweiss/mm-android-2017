@@ -203,14 +203,26 @@ public class User implements Mappable<User>{
         hashedUser.put("lastName", lastName);
         hashedUser.put("email", email);
         hashedUser.put("phoneNumber", phoneNumber);
+        hashedUser.put("gender", gender);
         hashedUser.put("address", address);
+        hashedUser.put("summary", summary);
+        hashedUser.put("status", status);
+        hashedUser.put("joinDate", joinDate);
         hashedUser.put("major", major);
+        hashedUser.put("secondMajor" , secondMajor);
         hashedUser.put("semesters", semesters);
         hashedUser.put("university", university);
-        hashedUser.put("status", status);
-        hashedUser.put("gender", gender);
-        hashedUser.put("summary", summary);
-        hashedUser.put("joinDate", joinDate);
+        hashedUser.put("graduationStatus", graduationStatus);
+        hashedUser.put("average", average);
+        hashedUser.put("didSignEULA", didSignEULA);
+        hashedUser.put("resume", resume);
+        hashedUser.put("gradeSheet", gradeSheet);
+        hashedUser.put("exp", exp);
+        hashedUser.put("role", role);
+        hashedUser.put("company", company);
+        hashedUser.put("volunteering", volunteering);
+        hashedUser.put("workHistory", workHistory);
+        
         return hashedUser;
     }
 
