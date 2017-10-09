@@ -18,14 +18,28 @@ public class ProfileController extends AppCompatActivity {
     private TextView fullName;
     private TextView emailAddress;
     private TextView phoneNumber;
-    private TextView major;
-    private TextView semesters;
-    private TextView university;
-    private TextView status;
     private TextView gender;
     private TextView address;
-    private TextView joinedDate;
     private TextView summary;
+    private TextView status;
+    private TextView joinedDate;
+    private TextView major;
+    private TextView secondMajor;
+    private TextView semesters;
+    private TextView university;
+    private TextView graduationStatus;
+    private TextView average;
+    private TextView experience;
+    private TextView role;
+    private TextView company;
+    private TextView volunteering;
+    private TextView workHistory;
+
+    private TextView fillFirstName;
+    private TextView fillLastName;
+    private TextView fillEmail;
+    private TextView fillPhoneNumber;
+
 
 
     @Override
@@ -43,33 +57,60 @@ public class ProfileController extends AppCompatActivity {
             fullName=(TextView)findViewById(R.id.tvFullName);
             emailAddress=(TextView)findViewById(R.id.tvemailaddress);
             phoneNumber=(TextView)findViewById(R.id.tvPhoneNumber);
-            major=(TextView)findViewById(R.id.tvMajor);
-            semesters=(TextView)findViewById(R.id.tvSemesters);
-            university=(TextView)findViewById(R.id.tvUniversity);
-            status=(TextView)findViewById(R.id.tvStatus);
             gender=(TextView)findViewById(R.id.tvGender);
             address=(TextView)findViewById(R.id.tvAddress);
-            joinedDate=(TextView)findViewById(R.id.tvJoinedDate);
             summary=(TextView)findViewById(R.id.tvSummary);
+            status=(TextView)findViewById(R.id.tvStatus);
+            joinedDate=(TextView)findViewById(R.id.tvJoinedDate);
+            major=(TextView)findViewById(R.id.tvMajor);
+            secondMajor=(TextView)findViewById(R.id.tvSecondMajor);
+            semesters=(TextView)findViewById(R.id.tvSemesters);
+            university=(TextView)findViewById(R.id.tvUniversity);
+            graduationStatus=(TextView)findViewById(R.id.tvGraduationStatus);
+            average=(TextView)findViewById(R.id.tvAverage);
+            experience=(TextView)findViewById(R.id.tvExperience);
+            role=(TextView)findViewById(R.id.tvRole);
+            company=(TextView)findViewById(R.id.tvCompany);
+            volunteering=(TextView)findViewById(R.id.tvVolunteering);
+            workHistory=(TextView)findViewById(R.id.tvWorkHistory);
+
             APIManager.getInstance().getUserProfile(id, token, (response, user, exception) -> {
                 //update fields
                 String fullName = user.getFirstName() + " " + user.getLastName();
                 this.fullName.setText(fullName);
                 this.emailAddress.setText(user.getEmail());
                 this.phoneNumber.setText(user.getPhoneNumber());
-                this.major.setText(user.getMajor());
-                this.semesters.setText(user.getSemesters());
-                this.university.setText(user.getUniversity());
-                this.status.setText(user.getStatus());
                 this.gender.setText(user.getGender());
                 this.address.setText(user.getAddress());
                 this.summary.setText(user.getSummary());
+                this.status.setText(user.getStatus());
                 this.joinedDate.setText(user.convetLongToDate(user.getJoinedDate()));
+                this.major.setText(user.getMajor());
+                this.secondMajor.setText(user.getSecondMajor());
+                this.semesters.setText(user.getSemesters());
+                this.university.setText(user.getUniversity());
+                this.graduationStatus.setText(user.getGraduationStatus());
+                this.average.setText(user.getAverage());
+                this.experience.setText(user.getExp());
+                this.role.setText(user.getRole());
+                this.company.setText(user.getCompany());
+                this.volunteering.setText(user.getVolunteering());
+                this.workHistory.setText(user.getWorkHistory());
+
             });
         }
         // Updated upstream:app/src/main/java/org/tsofen/mentorim/ProfileController.java
         if(currentMode == LayoutsMode.PROFILE_FILL){
             updateProfile(R.layout.activity_profile_fill);
+            fillFirstName = (TextView) findViewById(R.id.etFullName);
+            fillLastName = (TextView) findViewById(R.id.etLastName);
+            fillEmail = (TextView) findViewById(R.id.etemailaddress);
+            fillPhoneNumber = (TextView) findViewById(R.id.etPhoneNumber);
+
+            fillFirstName.setText(manager.getUser().getFirstName());
+            fillLastName.setText(manager.getUser().getLastName());
+            fillEmail.setText(manager.getUser().getEmail());
+            fillPhoneNumber.setText(manager.getUser().getPhoneNumber());
            //Write this code in the Done / Update On Click Listener
             User u=updateProfile();
             APIManager.getInstance().updateUserProfile(id, token, u, (response, user, ex) -> {

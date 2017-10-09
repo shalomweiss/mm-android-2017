@@ -124,7 +124,53 @@ public class User implements Mappable<User>{
     public String getSummary() { return this.summary; }
     public long getJoinedDate(){ return this.joinDate; }
 
+    public long getJoinDate() {
+        return joinDate;
+    }
 
+    public String getSecondMajor() {
+        return secondMajor;
+    }
+
+    public String getGraduationStatus() {
+        return graduationStatus;
+    }
+
+    public String getAverage() {
+        return average;
+    }
+
+    public boolean isDidSignEULA() {
+        return didSignEULA;
+    }
+
+    public String getResume() {
+        return resume;
+    }
+
+    public String getGradeSheet() {
+        return gradeSheet;
+    }
+
+    public String getExp() {
+        return exp;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public String getVolunteering() {
+        return volunteering;
+    }
+
+    public String getWorkHistory() {
+        return workHistory;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -151,6 +197,54 @@ public class User implements Mappable<User>{
     public void setGender(String gender) { this.gender = gender; }
     public void setSummary(String summary) { this.summary = summary; }
     public void setJoinDate(Long joinDate) { this.joinDate = joinDate; }
+
+    public void setJoinDate(long joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public void setSecondMajor(String secondMajor) {
+        this.secondMajor = secondMajor;
+    }
+
+    public void setGraduationStatus(String graduationStatus) {
+        this.graduationStatus = graduationStatus;
+    }
+
+    public void setAverage(String average) {
+        this.average = average;
+    }
+
+    public void setDidSignEULA(boolean didSignEULA) {
+        this.didSignEULA = didSignEULA;
+    }
+
+    public void setResume(String resume) {
+        this.resume = resume;
+    }
+
+    public void setGradeSheet(String gradeSheet) {
+        this.gradeSheet = gradeSheet;
+    }
+
+    public void setExp(String exp) {
+        this.exp = exp;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setVolunteering(String volunteering) {
+        this.volunteering = volunteering;
+    }
+
+    public void setWorkHistory(String workHistory) {
+        this.workHistory = workHistory;
+    }
 
     @Override
     public String toString() {
