@@ -80,6 +80,14 @@
 
                         <TextView
                             style="@style/TableViewItemRowHeader"
+                            android:text="@string/secondMajor" />
+
+                        <TextView
+                            android:id="@+id/tvSecondMajor"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
                             android:text="@string/semesters" />
 
                         <TextView
@@ -92,6 +100,82 @@
 
                         <TextView
                             android:id="@+id/tvUniversity"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/graduationStatus" />
+
+                        <TextView
+                            android:id="@+id/tvGraduationStatus"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/average" />
+
+                        <TextView
+                            android:id="@+id/tvAverage"
+                            style="@style/TableViewItemRowContent" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TableViewSectionTitle"
+                    android:text="@string/occupation" />
+
+                <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
+
+
+                    <LinearLayout style="@style/TableViewBaseItem">
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/experience" />
+
+                        <TextView
+                            android:id="@+id/tvExperience"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/role" />
+
+                        <TextView
+                            android:id="@+id/tvRole"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/company" />
+
+                        <TextView
+                            android:id="@+id/tvCompany"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/volunteering" />
+
+                        <TextView
+                            android:id="@+id/tvVolunteering"
+                            style="@style/TableViewItemRowContent" />
+
+                        <TextView
+                            style="@style/TableViewItemRowHeader"
+                            android:text="@string/workHistory" />
+
+                        <TextView
+                            android:id="@+id/tvWorkHistory"
                             style="@style/TableViewItemRowContent" />
 
 
