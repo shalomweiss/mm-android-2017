@@ -14,20 +14,41 @@ import java.util.Map;
  * Created by minitour on 13/09/2017.
  */
 
-public class User implements Mappable{
+public class User implements Mappable<User>{
+
+    //common
     private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
+    private String gender;
     private String address;
+    private String summary;
+    private String status;
+    private long joinDate = 0L;
+
+    //mentee properties
     private String major;
+    private String secondMajor;
     private String semesters;
     private String university;
-    private String status;
-    private String gender;
-    private String summary;
-    private long joinDate = 0L;
+    private String graduationStatus;
+    private String average;
+    private boolean didSignEULA;
+
+    //file urls
+    private String resume;
+    private String gradeSheet;
+
+    //mentor properties
+    private String exp;
+    private String role;
+    private String company;
+    private String volunteering;
+    private String workHistory;
+
+
 
     public User(){
 
@@ -177,6 +198,7 @@ public class User implements Mappable{
     @Override
     public Map<String, Object> map() {
         Map<String,Object> hashedUser = new HashMap<String,Object>();
+        hashedUser.put("id",id);
         hashedUser.put("firstName", firstName);
         hashedUser.put("lastName", lastName);
         hashedUser.put("email", email);
@@ -193,12 +215,22 @@ public class User implements Mappable{
     }
 
     @Override
-    public void init(JsonObject o) {
+    public User init(JsonObject o) {
+        //TODO: init properties
 
+        //property = exists ? realValue : defaultValue
+
+        id = o.has("id") ? o.get("id").getAsInt() : -1;
+
+        firstName = o.has("firstName") ? o.get("firstName").getAsString() : null;
+
+        return this;
     }
 
     @Override
-    public void init(Map<String, Object> o) {
+    public User init(Map<String, Object> o) {
+        //TODO: init properties
 
+        return this;
     }
 }

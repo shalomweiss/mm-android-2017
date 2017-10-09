@@ -153,6 +153,8 @@
 
                     <EditText
                         android:id="@+id/etSummary"
+                        android:lines="5"
+                        android:gravity="top"
                         style="@style/TableTextItemRowContent" />
 
 

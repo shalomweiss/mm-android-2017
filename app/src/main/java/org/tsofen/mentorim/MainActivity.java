@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3
+        );
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -58,11 +60,12 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            APIManager.getInstance().getMeetings(4,"1",0,15,1,(response,meetingList,exception) -> {
+            APIManager.getInstance().getMeetings(16,"1",0,15,1,(response,meetingList,exception) -> {
                 if(exception == null && response.isOK()){
                     System.out.println(meetingList);
                 }else{
                     //TODO: show error
+                    Snackbar.make(view, exception.getMessage(), Snackbar.LENGTH_LONG).show();
                 }
             });
         });

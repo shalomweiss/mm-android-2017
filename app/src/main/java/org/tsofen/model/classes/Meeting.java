@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by win10 on 18/09/2017.
  */
 
-public class Meeting implements Mappable{
+public class Meeting implements Mappable<Meeting>{
     private String id;
     private String name;
     private String withMentee;
@@ -159,13 +159,15 @@ public class Meeting implements Mappable{
     }
 
     @Override
-    public void init(JsonObject o) {
+    public Meeting init(JsonObject o) {
 
+        return this;
     }
 
     @Override
-    public void init(Map<String, Object> o) {
-
+    public Meeting init(Map<String, Object> o) {
+        
+        return this;
     }
 
     static class Keys {

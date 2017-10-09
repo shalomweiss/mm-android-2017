@@ -29,24 +29,22 @@ public class PendingFragment extends BaseFragment {
     PendingAdapter adapter = new PendingAdapter();
     User user;
     String token;
+    int currentPage = 1;
+    boolean didLoadAll = false;
 
-    private EndlessRecyclerViewScrollListener scrollListener;
     @Override
-    public void viewDidLoad(View view) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        listView.setLayoutManager(linearLayoutManager);
-
-        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadNextDataFromApi(page);
-            }
-        };
-
-        listView.addOnScrollListener(scrollListener);
+    public void viewDidLoad(View view,RecyclerView listView) {
         listView.setAdapter(adapter);
-        loadNextDataFromApi(1);
+        loadNextDataFromApi(currentPage);
 
+    }
+
+    @Override
+    public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+        if(page != currentPage && !didLoadAll) {
+            loadNextDataFromApi(page);
+            currentPage = page;
+        }
     }
 
     public void loadNextDataFromApi(int offset) {
@@ -56,9 +54,12 @@ public class PendingFragment extends BaseFragment {
         if(user != null){
             APIManager.getInstance().getMeetings(user.getId(),token,0,15,offset,(response,meetingList,exception) -> {
                 if(exception == null && response.isOK()){
-                    updateData(meetingList);
+                    if(meetingList.size() > 0 ) {
+                        updateData(meetingList);
+                    }else{
+                        didLoadAll = true;
+                    }
                 }else{
-                    //TODO: show error
                     Snackbar.make(listView, "Failed to load!", Snackbar.LENGTH_LONG).setAction("Try Again", view -> {
                         loadNextDataFromApi(offset);
                     }).show();

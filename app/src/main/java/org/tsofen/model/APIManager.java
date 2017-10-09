@@ -41,6 +41,7 @@ public final class APIManager {
      */
     private APIManager(){
         client = new OkHttpClient.Builder()
+                .connectTimeout(30,TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
     }
@@ -437,14 +438,19 @@ public final class APIManager {
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String res = responseBody.string();
-                    Log.i(TAG,"success "+res);
-                    JsonParser parser = new JsonParser();
-                    JsonObject o = parser.parse(res).getAsJsonObject();
-                    if (callback != null)
-                        callback.make(o,null);
-                    responseBody.close();
+
+                if (callback!= null){
+                    try (ResponseBody responseBody = response.body()) {
+                        String res = responseBody.string();
+                        try{
+                            JsonParser parser = new JsonParser();
+                            JsonObject o = parser.parse(res).getAsJsonObject();
+                            callback.make(o,null);
+                        }catch (Exception e) {
+                            callback.make(null, e);
+                        }
+                        responseBody.close();
+                    }
                 }
             }
         });
