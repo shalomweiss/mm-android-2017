@@ -217,7 +217,6 @@ public class User implements Mappable<User>{
     @Override
     public User init(JsonObject o) {
         //TODO: init properties
-
         //property = exists ? realValue : defaultValue
 
         id = o.has("id") ? o.get("id").getAsInt() : -1;
@@ -268,6 +267,8 @@ public class User implements Mappable<User>{
         workHistory = o.has("workHistory") ? o.get("workHistory").getAsString() : null;
 
 
+
+
         return this;
     }
 
@@ -276,6 +277,52 @@ public class User implements Mappable<User>{
         //TODO: init properties
 
         id = o.containsKey("id") ? (int) o.get("id") : -1;
+
+        firstName = o.containsKey("firstName") ? o.get("firstName").toString() : null;
+
+        lastName = o.containsKey("lastName") ? o.get("lastName").toString() : null;
+
+        email = o.containsKey("email") ? o.get("email").toString() : null;
+
+        phoneNumber = o.containsKey("phoneNumber") ? o.get("phoneNumber").toString() : null;
+
+        gender = o.containsKey("gender") ? o.get("gender").toString() : null;
+
+        address = o.containsKey("address") ? o.get("address").toString() : null;
+
+        summary = o.containsKey("summary") ? o.get("summary").toString() : null;
+
+        status = o.containsKey("status") ? o.get("status").toString() : null;
+
+        joinDate = o.containsKey("joinDate") ? (long) o.get("joinDate") : -1;
+
+        major = o.containsKey("major") ? o.get("major").toString() : null;
+
+        secondMajor = o.containsKey("secondMajor") ? o.get("secondMajor").toString() : null;
+
+        semesters = o.containsKey("semesters") ? o.get("semesters").toString() : null;
+
+        university = o.containsKey("university") ? o.get("university").toString() : null;
+
+        graduationStatus = o.containsKey("graduationStatus") ? o.get("graduationStatus").toString() : null;
+
+        average = o.containsKey("average") ? o.get("average").toString() : null;
+
+        didSignEULA = o.containsKey("didSignEULA") ? (boolean) o.get("didSignEULA") : null;
+
+        resume = o.containsKey("resume") ? o.get("resume").toString() : null;
+
+        gradeSheet = o.containsKey("gradeSheet") ? o.get("gradeSheet").toString() : null;
+
+        exp = o.containsKey("exp") ? o.get("exp").toString() : null;
+
+        role = o.containsKey("role") ? o.get("role").toString() : null;
+
+        company = o.containsKey("company") ? o.get("company").toString() : null;
+
+        volunteering = o.containsKey("volunteering") ? o.get("volunteering").toString() : null;
+
+        workHistory = o.containsKey("workHistory") ? o.get("workHistory").toString() : null;
 
         return this;
     }
