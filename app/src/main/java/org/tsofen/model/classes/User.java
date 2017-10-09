@@ -221,7 +221,6 @@ public class User implements Mappable<User>{
         //property = exists ? realValue : defaultValue
 
         id = o.has("id") ? o.get("id").getAsInt() : -1;
-
         firstName = o.has("firstName") ? o.get("firstName").getAsString() : null;
 
         lastName = o.has("lastName") ? o.get("lastName").getAsString() : null;
