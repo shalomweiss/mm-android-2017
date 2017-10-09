@@ -3,6 +3,7 @@ package org.tsofen.fragments;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,8 @@ public class PendingFragment extends BaseFragment {
         @Override
         public PendingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            return new PendingViewHolder(inflater.inflate(R.layout.list_item_meeting,parent,false));
+            View v = inflater.inflate(R.layout.list_item_meeting,parent,false);
+            return new PendingViewHolder(v);
         }
 
         @Override
@@ -110,7 +112,11 @@ public class PendingFragment extends BaseFragment {
                 tvDate = itemView.findViewById(R.id.tvDate);
                 imageView = itemView.findViewById(R.id.imageView);
 
+                itemView.setOnClickListener(view ->{
+                    Meeting o = meetingArrayList.get(getAdapterPosition());
+                    Log.i("PendingList",o.toString());
 
+                });
             }
         }
     }
