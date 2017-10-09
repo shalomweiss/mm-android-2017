@@ -54,23 +54,6 @@ public class User implements Mappable<User>{
 
     };
 
-    public Map<String,Object> getHashedUser(){
-        Map<String,Object> hashedUser = new HashMap<String,Object>();
-        hashedUser.put("firstName", firstName);
-        hashedUser.put("lastName", lastName);
-        hashedUser.put("email", email);
-        hashedUser.put("phoneNumber", phoneNumber);
-        hashedUser.put("address", address);
-        hashedUser.put("major", major);
-        hashedUser.put("semesters", semesters);
-        hashedUser.put("university", university);
-        hashedUser.put("status", status);
-        hashedUser.put("gender", gender);
-        hashedUser.put("summary", summary);
-        hashedUser.put("joinDate", joinDate);
-        return hashedUser;
-    };
-
     public User(JsonElement o) {
         JsonObject jsonUser=o.getAsJsonObject();
         if(jsonUser.get("id")!=null){
@@ -177,14 +160,25 @@ public class User implements Mappable<User>{
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender='" + gender + '\'' +
                 ", address='" + address + '\'' +
+                ", summary='" + summary + '\'' +
+                ", status='" + status + '\'' +
+                ", joinDate=" + joinDate +
                 ", major='" + major + '\'' +
+                ", secondMajor='" + secondMajor + '\'' +
                 ", semesters='" + semesters + '\'' +
                 ", university='" + university + '\'' +
-                ", status='" + status + '\'' +
-                ", gender='" + gender + '\'' +
-                ", summary='" + summary + '\'' +
-                ", joinDate=" + convetLongToDate(joinDate)  +
+                ", graduationStatus='" + graduationStatus + '\'' +
+                ", average='" + average + '\'' +
+                ", didSignEULA=" + didSignEULA +
+                ", resume='" + resume + '\'' +
+                ", gradeSheet='" + gradeSheet + '\'' +
+                ", exp='" + exp + '\'' +
+                ", role='" + role + '\'' +
+                ", company='" + company + '\'' +
+                ", volunteering='" + volunteering + '\'' +
+                ", workHistory='" + workHistory + '\'' +
                 '}';
     }
 
