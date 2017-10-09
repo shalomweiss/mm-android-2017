@@ -26,25 +26,25 @@
                         style="@style/TableViewItemRowHeader"
                         android:text="@string/firstName" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etFullName"
-                        style="@style/TableTextItemRowContent" />
+                        style="@style/TableViewItemRowContent" />
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
                         android:text="@string/lastName" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etLastName"
-                        style="@style/TableTextItemRowContent" />
+                        style="@style/TableViewItemRowContent" />
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
                         android:text="@string/emailAddress" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/etemailaddress"
-                        style="@style/TableTextItemRowContent" />
+                        style="@style/TableViewItemRowContent"/>
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
