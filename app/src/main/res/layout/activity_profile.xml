@@ -198,7 +198,7 @@
 
                         <TextView
                             style="@style/TableViewItemRowHeader"
-                            android:text="@string/status" />
+                            android:text="@string/type" />
 
                         <TextView
                             android:id="@+id/tvStatus"

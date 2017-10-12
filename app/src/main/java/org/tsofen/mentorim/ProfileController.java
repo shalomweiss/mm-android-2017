@@ -9,9 +9,7 @@ import android.widget.TextView;
 import net.crofis.ui.dialog.LoadingDialog;
 
 import org.tsofen.model.APIManager;
-import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
-import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.User;
 
 public class ProfileController extends AppCompatActivity {
@@ -83,7 +81,7 @@ public class ProfileController extends AppCompatActivity {
                 this.gender.setText(user.getGender());
                 this.address.setText(user.getAddress());
                 this.summary.setText(user.getSummary());
-                this.status.setText(user.getStatus());
+                this.status.setText(user.getType());
                 this.joinedDate.setText(user.convetLongToDate(user.getJoinedDate()));
                 this.major.setText(user.getMajor());
                 this.secondMajor.setText(user.getSecondMajor());
@@ -147,7 +145,7 @@ public class ProfileController extends AppCompatActivity {
         u.setFirstName(fullName.getText().toString().substring(0,firstSpace));
         u.setLastName(fullName.getText().toString().substring(firstSpace+1));
         u.setEmail(emailAddress.getText().toString());
-        u.setStatus(status.getText().toString());
+        u.setType(status.getText().toString());
         u.setUniversity(university.getText().toString());
         u.setSemesters(semesters.getText().toString());
         u.setSummary(summary.getText().toString());

@@ -86,4 +86,8 @@ public final class Callbacks {
     public interface GetMentor {
         void make(ServerResponse response,User user, Exception ex);
     }
+
+    public interface GetAssociatedUsers{
+        void make(ServerResponse response,User[] users, Exception ex);
+    }
 }

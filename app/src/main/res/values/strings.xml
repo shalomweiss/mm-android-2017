@@ -22,7 +22,7 @@
     <string name="company">Company</string>
     <string name="volunteering">Volunteering</string>
     <string name="workHistory">Work History</string>
-    <string name="status">Status</string>
+    <string name="type">Status</string>
     <string name="gender">Gender</string>
     <string name="address">Address</string>
     <string name="joinedDate">Joined Date</string>
@@ -46,6 +46,7 @@
         It should describe the category of notifications that will be sent through this channel
      -->
     <string name="default_notification_channel_name" translatable="true">Notifications</string>
+    <string name="add_meeting">Add Meeting</string>
 
 
 </resources>

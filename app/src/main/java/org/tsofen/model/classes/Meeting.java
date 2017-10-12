@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 
 import org.tsofen.model.Mappable;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -13,143 +15,49 @@ import java.util.Map;
  */
 
 public class Meeting implements Mappable<Meeting>{
-    private String id;
-    private String name;
-    private String withMentee;
-    private String type;
-    /**
-     *
-     */
-    private String at;
-    private Calendar From;
-    private Calendar To;
+    private int meetingId;
+    private int mentorId;
+    private int menteeId;
+    private String status;
+    private String meetingType;
     private String subject;
+    private String location;
+    private long startingDate;
+    private long endingDate;
+    private boolean mentorComplete;
+    private boolean menteeComplete;
     private String note;
 
-    public Meeting(String id,String name,String type,String at,Calendar date,String subject,String note){
-        setMeetingId(id);
-        setName(name);
-        setType(type);
-        setAt(at);
-        setFrom(date);
-        setSubject(subject);
-        setNote(note);
-    }
 
-    public Meeting(JsonElement o) {
-        JsonObject obj=o.getAsJsonObject();
-        if(obj.get(Keys.ID)!=null){
-            setMeetingId(obj.get(Keys.ID).getAsString());
-        }
-        if(obj.get("meetingName")!=null){
-            setName(obj.get("meetingName").getAsString());
-        }
-        if(obj.get("meetingWithMentee")!=null){
-            setWithMentee(obj.get("meetingWithMentee").getAsString());
-        }
-        if(obj.get("meetingType")!=null){
-            setName(obj.get("meetingType").getAsString());
-        }
-        if(obj.get("meetingAt")!=null){
-            setName(obj.get("meetingAt").getAsString());
-        }
-        if(obj.get("meetingFrom")!=null){
-           int mills=obj.get("meetingFrom").getAsInt();
-           Calendar cal=Calendar.getInstance();
-            cal.setTimeInMillis(mills);
-            setFrom(cal);
-        }
-        if(obj.get("meetingTo")!=null){
-            int mills=obj.get("meetingTo").getAsInt();
-            Calendar cal=Calendar.getInstance();
-            cal.setTimeInMillis(mills);
-            setTo(cal);
-        }
-        if(obj.get("meetingSubject")!=null){
-            setSubject(obj.get("meetingSubject").getAsString());
-        }
-        if(obj.get("meetingNote")!=null){
-            setNote(obj.get("meetingNote").getAsString());
-        }
-    }
+    public Meeting(){}
 
-    public String getMeetingId() {
-        return id;
-    }
+    @Deprecated
+    private Meeting(JsonElement o) {}
 
-    public void setMeetingId(String meetingId) {
-        this.id = meetingId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getAt() {
-        return at;
-    }
-
-    public Calendar getTo() {
-        return To;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getWithMentee() {
-        return withMentee;
-    }
-    public Calendar getFrom() {
-        return From;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setWithMentee(String withMentee) {
-        this.withMentee = withMentee;
-    }
-
-    public void setTo(Calendar to) {
-        To = to;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setAt(String at) {
-        this.at = at;
-    }
-
-    public void setFrom(Calendar from) {
-        this.From = from;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+
+    public String getMeetingTitle(boolean isMentor,User[] assoicated){
+        if(isMentor){
+            String name = null;
+            for(int i = 0; i < assoicated.length; i++){
+                if(getMenteeId() == assoicated[i].getId()){
+                    name = assoicated[i].getFirstName() + " " + assoicated[i].getLastName();
+                    break;
+                }
+            }
+            return "Meeting with "+name;
+        }else{
+            return "Meeting with "+ assoicated[0].getFirstName() + " " + assoicated[0].getLastName();
+        }
+    }
+
+    public String getStartTime(){
+        Date date = new Date(startingDate);
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
     }
 
     @Override
@@ -160,25 +68,118 @@ public class Meeting implements Mappable<Meeting>{
 
     @Override
     public Meeting init(JsonObject o) {
+        meetingId = o.has("meetingId") ? o.get("meetingId").getAsInt() : -1;
+        mentorId = o.has("mentorId") ? o.get("mentorId").getAsInt() : -1;
+        menteeId = o.has("menteeId") ? o.get("menteeId").getAsInt() : -1;
+        status = o.has("status") ? o.get("status").getAsString() : null;
+        meetingType = o.has("meetingType") ? o.get("meetingType").getAsString() : null;
+        subject = o.has("subject") ? o.get("subject").getAsString() : null;
+        location = o.has("location") ? o.get("location").getAsString() : null;
+        startingDate = o.has("startingDate") ? o.get("startingDate").getAsLong() : 0L;
+        endingDate = o.has("endingDate") ? o.get("endingDate").getAsLong() : 0L;
+        mentorComplete = o.has("mentorComplete") && o.get("mentorComplete").getAsBoolean();
+        menteeComplete = o.has("menteeComplete") && o.get("menteeComplete").getAsBoolean();
 
         return this;
     }
 
     @Override
     public Meeting init(Map<String, Object> o) {
-        
+
         return this;
     }
 
-    static class Keys {
-        public static final String ID = "meetingId";
+    public int getMeetingId() {
+        return meetingId;
     }
 
-    @Override
-    public String toString() {
-        return "Meeting{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public void setMeetingId(int meetingId) {
+        this.meetingId = meetingId;
     }
+
+    public int getMentorId() {
+        return mentorId;
+    }
+
+    public void setMentorId(int mentorId) {
+        this.mentorId = mentorId;
+    }
+
+    public int getMenteeId() {
+        return menteeId;
+    }
+
+    public void setMenteeId(int menteeId) {
+        this.menteeId = menteeId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMeetingType() {
+        return meetingType;
+    }
+
+    public void setMeetingType(String meetingType) {
+        this.meetingType = meetingType;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public long getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(long startingDate) {
+        this.startingDate = startingDate;
+    }
+
+    public long getEndingDate() {
+        return endingDate;
+    }
+
+    public void setEndingDate(long endingDate) {
+        this.endingDate = endingDate;
+    }
+
+    public boolean isMentorComplete() {
+        return mentorComplete;
+    }
+
+    public void setMentorComplete(boolean mentorComplete) {
+        this.mentorComplete = mentorComplete;
+    }
+
+    public boolean isMenteeComplete() {
+        return menteeComplete;
+    }
+
+    public void setMenteeComplete(boolean menteeComplete) {
+        this.menteeComplete = menteeComplete;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+
 }

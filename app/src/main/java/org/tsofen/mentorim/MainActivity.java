@@ -25,22 +25,31 @@ import android.widget.TextView;
 
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.JsonObject;
 
+import net.crofis.ui.dialog.CustomViewDialog;
+
+import org.tsofen.fragments.BaseFragment;
 import org.tsofen.fragments.PendingFragment;
+import org.tsofen.fragments.UpcomingFragment;
 import org.tsofen.model.APIManager;
 import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
 import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.User;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
+
+    BaseFragment fragments[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        fragments = new BaseFragment[]{new PendingFragment(),new UpcomingFragment(),null};
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,25 +59,29 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this::addNew);
+    }
+
+    private void addNew(View view){
+        startActivity(new Intent(MainActivity.this,MeetingCreateActivity.class));
+    }
+
+    private void loadData(){
+        //TODO: Load meetings from server.
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3
-        );
+        mViewPager.setOffscreenPageLimit(3);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            APIManager.getInstance().getMeetings(16,"1",0,15,1,(response,meetingList,exception) -> {
-                if(exception == null && response.isOK()){
-                    System.out.println(meetingList);
-                }else{
-                    //TODO: show error
-                    Snackbar.make(view, exception.getMessage(), Snackbar.LENGTH_LONG).show();
-                }
-            });
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         //create data manager instance
         final DataManager manager = DataManager.getInstance(this);
@@ -83,11 +96,6 @@ public class MainActivity extends AppCompatActivity {
             loadData();
 
 
-        //startActivity(new Intent(MainActivity.this,MeetingController.class));
-    }
-
-    private void loadData(){
-        //TODO: Load meetings from server.
     }
 
     private void goToLogin(){
@@ -127,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_logout){
+            DataManager.getInstance(this).destroy();
+            goToLogin();
             return true;
         }
 
@@ -184,10 +198,9 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            if(position == 0)
-                return new PendingFragment();
+            Fragment f = fragments[position];
 
-            return PlaceholderFragment.newInstance(position + 1);
+            return f != null ? f : PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override

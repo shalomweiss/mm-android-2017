@@ -25,7 +25,7 @@ public class User implements Mappable<User>{
     private String gender;
     private String address;
     private String summary;
-    private String status;
+    private String type;
     private long joinDate = 0L;
 
     //mentee properties
@@ -54,7 +54,7 @@ public class User implements Mappable<User>{
 
     };
 
-    public User(JsonElement o) {
+    private User(JsonElement o) {
         JsonObject jsonUser=o.getAsJsonObject();
         if(jsonUser.get("id")!=null){
             setId(jsonUser.get("id").getAsInt());
@@ -83,8 +83,8 @@ public class User implements Mappable<User>{
         if(jsonUser.get("university")!=null){
             setUniversity(jsonUser.get("university").getAsString());
         }
-        if(jsonUser.get("status")!=null){
-            setStatus(jsonUser.get("status").getAsString());
+        if(jsonUser.get("type")!=null){
+            setType(jsonUser.get("type").getAsString());
         }
         if(jsonUser.get("gender")!=null){
             setGender(jsonUser.get("gender").getAsString());
@@ -120,56 +120,48 @@ public class User implements Mappable<User>{
     public String getSemesters() { return this.semesters; }
     public String getUniversity() { return this.university; }
     public String getGender() { return this.gender; }
-    public String getStatus() { return this.status; }
+    public String getType() { return this.type; }
     public String getSummary() { return this.summary; }
     public long getJoinedDate(){ return this.joinDate; }
-
     public long getJoinDate() {
         return joinDate;
     }
-
     public String getSecondMajor() {
         return secondMajor;
     }
-
     public String getGraduationStatus() {
         return graduationStatus;
     }
-
     public String getAverage() {
         return average;
     }
-
     public boolean isDidSignEULA() {
         return didSignEULA;
     }
-
     public String getResume() {
         return resume;
     }
-
     public String getGradeSheet() {
         return gradeSheet;
     }
-
     public String getExp() {
         return exp;
     }
-
     public String getRole() {
         return role;
     }
-
     public String getCompany() {
         return company;
     }
-
     public String getVolunteering() {
         return volunteering;
     }
-
     public String getWorkHistory() {
         return workHistory;
+    }
+
+    public boolean isMentor(){
+        return type.equalsIgnoreCase("MENTOR");
     }
 
     public void setId(int id) {
@@ -193,55 +185,43 @@ public class User implements Mappable<User>{
     public void setMajor(String major) { this.major = major; }
     public void setSemesters(String semesters) { this.semesters = semesters; }
     public void setUniversity(String university) { this.university = university; }
-    public void setStatus(String status) { this.status = status; }
+    public void setType(String type) { this.type = type; }
     public void setGender(String gender) { this.gender = gender; }
     public void setSummary(String summary) { this.summary = summary; }
     public void setJoinDate(Long joinDate) { this.joinDate = joinDate; }
-
     public void setJoinDate(long joinDate) {
         this.joinDate = joinDate;
     }
-
     public void setSecondMajor(String secondMajor) {
         this.secondMajor = secondMajor;
     }
-
     public void setGraduationStatus(String graduationStatus) {
         this.graduationStatus = graduationStatus;
     }
-
     public void setAverage(String average) {
         this.average = average;
     }
-
     public void setDidSignEULA(boolean didSignEULA) {
         this.didSignEULA = didSignEULA;
     }
-
     public void setResume(String resume) {
         this.resume = resume;
     }
-
     public void setGradeSheet(String gradeSheet) {
         this.gradeSheet = gradeSheet;
     }
-
     public void setExp(String exp) {
         this.exp = exp;
     }
-
     public void setRole(String role) {
         this.role = role;
     }
-
     public void setCompany(String company) {
         this.company = company;
     }
-
     public void setVolunteering(String volunteering) {
         this.volunteering = volunteering;
     }
-
     public void setWorkHistory(String workHistory) {
         this.workHistory = workHistory;
     }
@@ -257,7 +237,7 @@ public class User implements Mappable<User>{
                 ", gender='" + gender + '\'' +
                 ", address='" + address + '\'' +
                 ", summary='" + summary + '\'' +
-                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
                 ", joinDate=" + joinDate +
                 ", major='" + major + '\'' +
                 ", secondMajor='" + secondMajor + '\'' +
@@ -294,7 +274,7 @@ public class User implements Mappable<User>{
         hashedUser.put("gender", gender);
         hashedUser.put("address", address);
         hashedUser.put("summary", summary);
-        hashedUser.put("status", status);
+        hashedUser.put("type", type);
         hashedUser.put("joinDate", joinDate);
         hashedUser.put("major", major);
         hashedUser.put("secondMajor" , secondMajor);
@@ -334,7 +314,7 @@ public class User implements Mappable<User>{
 
         summary = o.has("summary") ? o.get("summary").getAsString() : null;
 
-        status = o.has("status") ? o.get("status").getAsString() : null;
+        type = o.has("type") ? o.get("type").getAsString() : null;
 
         joinDate = o.has("joinDate") ? o.get("joinDate").getAsLong() : -1;
 
@@ -350,7 +330,7 @@ public class User implements Mappable<User>{
 
         average = o.has("average") ? o.get("average").getAsString() : null;
 
-        didSignEULA = o.has("didSignEULA") ? o.get("didSignEULA").getAsBoolean() : null;
+        didSignEULA = o.has("didSignEULA") && o.get("didSignEULA").getAsBoolean();
 
         resume = o.has("resume") ? o.get("resume").getAsString() : null;
 
@@ -392,7 +372,7 @@ public class User implements Mappable<User>{
 
         summary = o.containsKey("summary") ? o.get("summary").toString() : null;
 
-        status = o.containsKey("status") ? o.get("status").toString() : null;
+        type = o.containsKey("type") ? o.get("type").toString() : null;
 
         joinDate = o.containsKey("joinDate") ? (long) o.get("joinDate") : -1;
 
@@ -408,7 +388,7 @@ public class User implements Mappable<User>{
 
         average = o.containsKey("average") ? o.get("average").toString() : null;
 
-        didSignEULA = o.containsKey("didSignEULA") ? (boolean) o.get("didSignEULA") : null;
+        didSignEULA = o.containsKey("didSignEULA") && (boolean) o.get("didSignEULA");
 
         resume = o.containsKey("resume") ? o.get("resume").toString() : null;
 

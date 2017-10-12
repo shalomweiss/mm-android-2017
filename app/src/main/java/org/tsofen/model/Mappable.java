@@ -2,13 +2,14 @@ package org.tsofen.model;
 
 import com.google.gson.JsonObject;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by minitour on 01/10/2017.
  */
 
-public interface Mappable<T> {
+public interface Mappable<T> extends Serializable {
 
     /**
      * A method that converts the current object to a map.

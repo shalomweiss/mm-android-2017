@@ -1,66 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+
+<LinearLayout
     android:layout_height="match_parent"
-    tools:context="org.tsofen.mentorim.MeetingCreateActivity"
-    android:orientation="vertical"
-    android:weightSum="1">
-
-    <Spinner
-        android:id="@+id/spinMentee"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="0.04"
-
-        android:entries="@array/Mentees" />
-
-    <Spinner
-        android:id="@+id/spinMeetingType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="0.04"
-        android:entries="@array/Meetings"
-         />
-
-    <EditText
-        android:id="@+id/editLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="0.04"
-        android:ems="10"
-        android:hint="Location"
-        android:inputType="textPersonName" />
-
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <TextView
-        android:id="@+id/tvDate"
+        android:text="@string/add_meeting"
+        android:textColor="@android:color/black"
+        style="@style/TextViewTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="0.04"
-        android:text="Date .. to the CONTROLER" />
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
 
-    <EditText
-        android:id="@+id/editMeetingSubjects"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="0.04"
-        android:ems="10"
-        android:hint="Meeting subjects (add dialog)"
-        android:inputType="textPersonName" />
+        android:background="@android:color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="org.tsofen.mentorim.MeetingCreateActivity"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-    <EditText
-        android:id="@+id/editText3"
+            <Spinner
+                android:id="@+id/spinAssociatedUsers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:entries="@array/Mentees" />
+
+            <Spinner
+                android:id="@+id/spinMeetingType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:entries="@array/Meetings"
+                />
+
+            <com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker
+                android:id="@+id/datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp">
+
+            </com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker>
+
+
+            <EditText
+                android:textSize="18sp"
+                android:id="@+id/editLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:hint="Location"
+                android:inputType="textPersonName" />
+
+
+
+            <EditText
+                android:textSize="18sp"
+                android:id="@+id/editMeetingSubjects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:hint="Meeting subjects"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:textSize="18sp"
+                android:lines="10"
+                android:gravity="top|start"
+                android:id="@+id/editText3"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:hint="Notes"
+                android:inputType="textMultiLine" />
+
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:text="Done"
         android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="Notes"
-        android:inputType="textPersonName" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
+
+
+

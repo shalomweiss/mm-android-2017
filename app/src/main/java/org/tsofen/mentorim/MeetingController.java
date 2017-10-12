@@ -187,13 +187,15 @@ public class MeetingController extends AppCompatActivity {
      * @param meeting The Meeting Object To Load
      */
     private void loadMeeting(Meeting meeting){
-        tvWithMentee.setText(meeting.getWithMentee());
-        tvMeetingType.setText(meeting.getType());
-        tvFrom.setText(meeting.getFrom().getTime()+"");
-        tvTo.setText(meeting.getTo().getTime()+"");
-        tvAt.setText(meeting.getAt());
-        tvNotes.setText(meeting.getNote());
-        tvSubject.setText(meeting.getSubject());
+
+        //TODO: update
+//        tvWithMentee.setText(meeting.getWithMentee());
+//        tvMeetingType.setText(meeting.getType());
+//        tvFrom.setText(meeting.getFrom().getTime()+"");
+//        tvTo.setText(meeting.getTo().getTime()+"");
+//        tvAt.setText(meeting.getAt());
+//        tvNotes.setText(meeting.getNote());
+//        tvSubject.setText(meeting.getSubject());
     }
     /**
      *This Class Contain Final keys

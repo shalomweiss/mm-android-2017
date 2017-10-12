@@ -4,7 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import org.tsofen.model.classes.User;
+
+import java.util.Arrays;
 
 /**
  * Created by minitour on 17/09/2017.
@@ -62,17 +70,15 @@ public final class DataManager {
      * @return The current user.
      */
     public User getUser(){
-        if (preferences.contains(Keys.ID)) {
-            User user = new User();
-            user.setFirstName(preferences.getString(Keys.FIRSTNAME, null));
-            user.setLastName(preferences.getString(Keys.LASTNAME, null));
-            user.setAddress(preferences.getString(Keys.ADDRESS, null));
-            user.setEmail(preferences.getString(Keys.EMAIL, null));
-            user.setPhoneNumber(preferences.getString(Keys.PHONENUMBER, null));
-            user.setId(preferences.getInt(Keys.ID, 0));
-            return user;
-        }
-        return null;
+       if(preferences.contains(Keys.CURRENT_USER)){
+           String user = preferences.getString(Keys.CURRENT_USER, null);
+           JsonParser parser = new JsonParser();
+           JsonObject o = parser.parse(user).getAsJsonObject();
+
+           return new User().init(o);
+       }
+
+       return null;
     }
 
     /**
@@ -80,12 +86,43 @@ public final class DataManager {
      * @param user The user to store.
      */
     public void setUser(User user){
-        storeData(user.getFirstName(),Keys.FIRSTNAME);
-        storeData(user.getLastName(),Keys.LASTNAME);
-        storeData(user.getAddress(),Keys.ADDRESS);
-        storeData(user.getEmail(), Keys.EMAIL);
-        storeData(user.getId(), Keys.ID);
-        storeData(user.getPhoneNumber(), Keys.PHONENUMBER);
+        String json = new Gson().toJson(user);
+        storeData(json,Keys.CURRENT_USER);
+    }
+
+    /**
+     * A method used to store the associated users as array.
+     * @param users
+     */
+    public void associatedUsers(User[] users){
+        String json = new Gson().toJson(Arrays.asList(users));
+        storeData(json,Keys.ASSOCIATED_USERS);
+    }
+
+    /**
+     * A method that returns the associated users.
+     * @return A empty array if there are not associated users.
+     */
+    public User[] getAssociatedUsers(){
+        if (preferences.contains(Keys.ASSOCIATED_USERS)) {
+            String users = preferences.getString(Keys.ASSOCIATED_USERS, null);
+
+            JsonParser parser = new JsonParser();
+            JsonArray o = parser.parse(users).getAsJsonArray();
+
+            User[] arr = new User[o.size()];
+
+            for (int i = 0; i < o.size(); i++)
+                arr[i] = new User().init(o.get(i).getAsJsonObject());
+
+            return arr;
+        }
+
+        return new User[]{};
+    }
+
+    public void destroy(){
+        preferences.edit().clear().apply();
     }
 
     /**
@@ -148,5 +185,9 @@ public final class DataManager {
         private static final String EMAIL = "EMAIL";
         private static final String PHONENUMBER = "PHONENUMBER";
         private static final String ID = "ID";
+
+        private static final String ASSOCIATED_USERS = "ASSOCIATED_USERS";
+
+        private static final String CURRENT_USER = "CURRENT_USER";
     }
 }

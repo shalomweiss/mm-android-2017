@@ -117,7 +117,7 @@
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
-                        android:text="@string/status" />
+                        android:text="@string/type" />
 
                     <EditText
                         android:id="@+id/etStatus"

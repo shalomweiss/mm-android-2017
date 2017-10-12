@@ -12,6 +12,7 @@ import org.tsofen.model.classes.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -72,7 +73,7 @@ public final class APIManager {
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
-                    User user = new User(jsonUser);
+                    User user = new User().init(jsonUser);
                     //fetch token
                     String token = json.get("token").getAsString();
                     callback.make(response, user, token, null);
@@ -108,7 +109,7 @@ public final class APIManager {
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
-                    User user=new User(jsonUser);
+                    User user=new User().init(jsonUser);
                     callback.make(response,user, null);
 
                 }else{
@@ -133,7 +134,6 @@ public final class APIManager {
      * @param callback Callback function.
      */
     public void getMeetings(int id, String token,int meetingStatus,int count,int page,Callbacks.GetMeetings callback){
-        //TODO: Complete method
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
@@ -149,7 +149,7 @@ public final class APIManager {
                     JsonArray obj = json.getAsJsonArray("meetings");
                     ArrayList<Meeting> meetings = new ArrayList<>();
                     for (JsonElement o : obj) {
-                        Meeting m = new Meeting(o);
+                        Meeting m = new Meeting().init(o.getAsJsonObject());
                         meetings.add(m);
                     }
                     callback.make(response,meetings, null);
@@ -186,7 +186,7 @@ public final class APIManager {
                     //Success
                     //Convert jasonObject To Meeting Object
                     JsonObject meeting = json.getAsJsonObject("meeting");
-                    Meeting m = new Meeting(meeting);
+                    Meeting m = new Meeting().init(meeting);
 
                     callback.make(response,m, null);
 
@@ -256,7 +256,7 @@ public final class APIManager {
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
-                    User updatedUser = new User(jsonUser);
+                    User updatedUser = new User().init(jsonUser);
                     callback.make(response,updatedUser, null);
                 }else{
                     //Failed
@@ -343,7 +343,7 @@ public final class APIManager {
      * @param token The session token.
      * @param callback Callback function.
      */
-    public void getMentees(int id,String token,Callbacks.GetMentees callback){
+    private  void getMentees(int id,String token,Callbacks.GetMentees callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
@@ -353,10 +353,11 @@ public final class APIManager {
                             ServerResponse response = new ServerResponse(json);
                             if (response.isOK()) {   //Success
                                 //Convert jasonObject To User Object
-                                JsonArray obj = json.getAsJsonObject("users").getAsJsonArray();
+
+                                JsonArray obj = json.get("users").getAsJsonArray();
                                 ArrayList<User> mentees = new ArrayList<>();
                                 for (JsonElement o : obj) {
-                                    User m = new User(o);
+                                    User m = new User().init(o.getAsJsonObject());
                                     mentees.add(m);
                                 }
                                 callback.make(response, mentees, null);
@@ -378,7 +379,7 @@ public final class APIManager {
      * @param token The session token.
      * @param callback Callback function.
      */
-    public void getMentor(int id,String token,Callbacks.GetMentor callback){
+    private void getMentor(int id,String token,Callbacks.GetMentor callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
@@ -390,7 +391,7 @@ public final class APIManager {
                     //Success
                     //Convert jasonObject To User Object
                     JsonObject jsonUser = json.getAsJsonObject("user");
-                    User user=new User(jsonUser);
+                    User user=new User().init(jsonUser);
                     callback.make(response,user, null);
                 } else {
                     //Failed
@@ -403,6 +404,27 @@ public final class APIManager {
             }
         });
     }
+
+    public void getAssociatedUsers(int id,String token,boolean isMentor,Callbacks.GetAssociatedUsers callback){
+        if(isMentor){
+            getMentees(id, token, (response, users, ex) -> {
+                int size = users != null ? users.size() : 0;
+                User[] arr = new User[size];
+
+                for (int i = 0; i < size; i++)
+                    arr[i] = users.get(i);
+
+                callback.make(response,arr,ex);
+            });
+        }else{
+            getMentor(id,token,(response, user, ex) -> {
+                User[] arr = new User[]{user};
+                callback.make(response,arr,ex);
+            });
+        }
+    }
+
+
     /**
      * This method makes a post HTTP request to a url using the given params.
      *
@@ -442,6 +464,7 @@ public final class APIManager {
                 if (callback!= null){
                     try (ResponseBody responseBody = response.body()) {
                         String res = responseBody.string();
+                        Log.i(TAG, "onResponse: " + res);
                         try{
                             JsonParser parser = new JsonParser();
                             JsonObject o = parser.parse(res).getAsJsonObject();

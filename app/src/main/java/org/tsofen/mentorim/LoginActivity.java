@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         APIManager.getInstance().login(email, password,deviceId, (response, user, token, ex) -> {
 
             if (ex == null) {
-                pDialog.dismiss();
+                //
 
                 Log.i("Login", response.getMessage());
                 //create data manager instance from context
@@ -95,13 +95,20 @@ public class LoginActivity extends AppCompatActivity {
                 //store user
                 manager.setUser(user);
 
-                //close activity
-                LoginActivity.this.finish();
+                APIManager.getInstance().getAssociatedUsers(user.getId(), token, user.isMentor(), (response1, users, ex1) -> {
+
+                    //store users
+                    manager.associatedUsers(users);
+
+                    pDialog.dismiss();
+
+                    //close activity
+                    LoginActivity.this.finish();
+                });
+
+
             } else {
                 //TODO: Handle exception.
-                //dialog.complete(false,false,"Error",ex.getMessage());
-//                pDialog.dismiss();
-                //
                 LoginActivity.this.runOnUiThread(() -> {
                     pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
                     pDialog.getProgressHelper().stopSpinning();
