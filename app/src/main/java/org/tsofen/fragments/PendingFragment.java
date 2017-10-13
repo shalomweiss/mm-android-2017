@@ -1,5 +1,6 @@
 package org.tsofen.fragments;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
+
+import org.tsofen.mentorim.MeetingController;
 import org.tsofen.mentorim.R;
 import org.tsofen.model.APIManager;
+import org.tsofen.model.Callbacks;
+import org.tsofen.model.Constants;
 import org.tsofen.model.DataManager;
+import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.Meeting;
 import org.tsofen.model.classes.User;
 import org.tsofen.views.EndlessRecyclerViewScrollListener;
@@ -107,6 +113,13 @@ public class PendingFragment extends BaseFragment {
             holder.tvTitle.setText(o.getMeetingTitle(user.isMentor(),manager.getAssociatedUsers()));
             holder.tvDate.setText(o.getStartTime());
             holder.tvSubtitle.setText(o.getLocation());
+
+            holder.itemView.setOnClickListener(view -> {
+                Intent i = new Intent(getContext(),MeetingController.class);
+                //i.putExtra(MeetingController.Constants.MEETING_ID,o.getMeetingId());
+                i.putExtra(MeetingController.Constants.MEETING_ID,o);
+                getContext().startActivity(i);
+            });
         }
 
         @Override
@@ -124,16 +137,11 @@ public class PendingFragment extends BaseFragment {
             public PendingViewHolder(View itemView) {
                 super(itemView);
                 //link to subviews
+                itemView.findViewById(R.id.badge_pending).setVisibility(View.VISIBLE);
                 tvTitle = itemView.findViewById(R.id.tvTitle);
                 tvSubtitle = itemView.findViewById(R.id.tvSubtitle);
                 tvDate = itemView.findViewById(R.id.tvDate);
                 imageView = itemView.findViewById(R.id.imageView);
-
-                itemView.setOnClickListener(view ->{
-                    Meeting o = meetingArrayList.get(getAdapterPosition());
-                    Log.i("PendingList",o.toString());
-
-                });
             }
         }
     }

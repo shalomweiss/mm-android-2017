@@ -12,9 +12,7 @@ import org.tsofen.model.classes.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -38,6 +36,7 @@ public final class APIManager {
     private final static APIManager manager = new APIManager();
     private final OkHttpClient client;
     private final String TAG = "API-MANAGER";
+
     /**
      * Private constructor
      */
@@ -125,6 +124,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Method Get A Meetings Data From The Server
      * @param id The id of the user.
@@ -165,6 +165,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Method Get A Meeting Data By Id From The Server
      * @param id The id of the user.
@@ -207,6 +208,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Meeting Add A New Meeting To The System
      * @param id The id of the user.
@@ -246,6 +248,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Method Update The Profile Of This User (user) .
      * @param id The id of the user.
@@ -279,6 +282,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Method Approve Meeting .
      * @param id The id of the user.
@@ -316,6 +320,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Method Confirm Meeting .
      * @param id The id of the user.
@@ -347,6 +352,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * This Method Get The mentees Of The Mentor
      * @param id The id of the user.
@@ -383,6 +389,7 @@ public final class APIManager {
             });
 
     }
+
     /**
      * This Method Get Mentor
      * @param id The id of the user.
@@ -415,6 +422,13 @@ public final class APIManager {
         });
     }
 
+    /**
+     *
+     * @param id
+     * @param token
+     * @param isMentor
+     * @param callback
+     */
     public void getAssociatedUsers(int id,String token,boolean isMentor,Callbacks.GetAssociatedUsers callback){
         if(isMentor){
             getMentees(id, token, (response, users, ex) -> {
@@ -488,6 +502,7 @@ public final class APIManager {
             }
         });
     }
+
     /**
      * Helper function, used to convert map to json object.
      * @param params The parameters.

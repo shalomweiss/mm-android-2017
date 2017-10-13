@@ -29,10 +29,10 @@ public class User implements Mappable<User>{
     private long joinDate = 0L;
 
     //mentee properties
-    private String major;
-    private String secondMajor;
-    private String semesters;
-    private String university;
+    private String academicDicipline;
+    private String academicDicipline2;
+    private String remainingSemesters;
+    private String academiclnstitution;
     private String graduationStatus;
     private String average;
     private boolean didSignEULA;
@@ -74,14 +74,14 @@ public class User implements Mappable<User>{
         if(jsonUser.get("address")!=null){
             setAddress(jsonUser.get("address").getAsString());
         }
-        if(jsonUser.get("major")!=null){
-            setMajor(jsonUser.get("major").getAsString());
+        if(jsonUser.get("academicDicipline")!=null){
+            setAcademicDicipline(jsonUser.get("academicDicipline").getAsString());
         }
-        if(jsonUser.get("semesters")!=null){
-            setSemesters(jsonUser.get("semesters").getAsString());
+        if(jsonUser.get("remainingSemesters")!=null){
+            setRemainingSemesters(jsonUser.get("remainingSemesters").getAsString());
         }
-        if(jsonUser.get("university")!=null){
-            setUniversity(jsonUser.get("university").getAsString());
+        if(jsonUser.get("academiclnstitution")!=null){
+            setAcademiclnstitution(jsonUser.get("academiclnstitution").getAsString());
         }
         if(jsonUser.get("type")!=null){
             setType(jsonUser.get("type").getAsString());
@@ -116,9 +116,9 @@ public class User implements Mappable<User>{
     public String getAddress(){
         return this.address;
     }
-    public String getMajor() { return this.major; }
-    public String getSemesters() { return this.semesters; }
-    public String getUniversity() { return this.university; }
+    public String getAcademicDicipline() { return this.academicDicipline; }
+    public String getRemainingSemesters() { return this.remainingSemesters; }
+    public String getAcademiclnstitution() { return this.academiclnstitution; }
     public String getGender() { return this.gender; }
     public String getType() { return this.type; }
     public String getSummary() { return this.summary; }
@@ -126,8 +126,8 @@ public class User implements Mappable<User>{
     public long getJoinDate() {
         return joinDate;
     }
-    public String getSecondMajor() {
-        return secondMajor;
+    public String getAcademicDicipline2() {
+        return academicDicipline2;
     }
     public String getGraduationStatus() {
         return graduationStatus;
@@ -182,9 +182,9 @@ public class User implements Mappable<User>{
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public void setMajor(String major) { this.major = major; }
-    public void setSemesters(String semesters) { this.semesters = semesters; }
-    public void setUniversity(String university) { this.university = university; }
+    public void setAcademicDicipline(String academicDicipline) { this.academicDicipline = academicDicipline; }
+    public void setRemainingSemesters(String remainingSemesters) { this.remainingSemesters = remainingSemesters; }
+    public void setAcademiclnstitution(String academiclnstitution) { this.academiclnstitution = academiclnstitution; }
     public void setType(String type) { this.type = type; }
     public void setGender(String gender) { this.gender = gender; }
     public void setSummary(String summary) { this.summary = summary; }
@@ -192,8 +192,8 @@ public class User implements Mappable<User>{
     public void setJoinDate(long joinDate) {
         this.joinDate = joinDate;
     }
-    public void setSecondMajor(String secondMajor) {
-        this.secondMajor = secondMajor;
+    public void setAcademicDicipline2(String academicDicipline2) {
+        this.academicDicipline2 = academicDicipline2;
     }
     public void setGraduationStatus(String graduationStatus) {
         this.graduationStatus = graduationStatus;
@@ -239,10 +239,10 @@ public class User implements Mappable<User>{
                 ", summary='" + summary + '\'' +
                 ", type='" + type + '\'' +
                 ", joinDate=" + joinDate +
-                ", major='" + major + '\'' +
-                ", secondMajor='" + secondMajor + '\'' +
-                ", semesters='" + semesters + '\'' +
-                ", university='" + university + '\'' +
+                ", academicDicipline='" + academicDicipline + '\'' +
+                ", academicDicipline2='" + academicDicipline2 + '\'' +
+                ", remainingSemesters='" + remainingSemesters + '\'' +
+                ", academiclnstitution='" + academiclnstitution + '\'' +
                 ", graduationStatus='" + graduationStatus + '\'' +
                 ", average='" + average + '\'' +
                 ", didSignEULA=" + didSignEULA +
@@ -276,10 +276,10 @@ public class User implements Mappable<User>{
         hashedUser.put("summary", summary);
         hashedUser.put("type", type);
         hashedUser.put("joinDate", joinDate);
-        hashedUser.put("major", major);
-        hashedUser.put("secondMajor" , secondMajor);
-        hashedUser.put("semesters", semesters);
-        hashedUser.put("university", university);
+        hashedUser.put("academicDicipline", academicDicipline);
+        hashedUser.put("academicDicipline2" , academicDicipline2);
+        hashedUser.put("remainingSemesters", remainingSemesters);
+        hashedUser.put("academiclnstitution", academiclnstitution);
         hashedUser.put("graduationStatus", graduationStatus);
         hashedUser.put("average", average);
         hashedUser.put("didSignEULA", didSignEULA);
@@ -318,13 +318,13 @@ public class User implements Mappable<User>{
 
         joinDate = o.has("joinDate") ? o.get("joinDate").getAsLong() : -1;
 
-        major = o.has("major") ? o.get("major").getAsString() : null;
+        academicDicipline = o.has("academicDicipline") ? o.get("academicDicipline").getAsString() : null;
 
-        secondMajor = o.has("secondMajor") ? o.get("secondMajor").getAsString() : null;
+        academicDicipline2 = o.has("academicDicipline2") ? o.get("academicDicipline2").getAsString() : null;
 
-        semesters = o.has("semesters") ? o.get("semesters").getAsString() : null;
+        remainingSemesters = o.has("remainingSemesters") ? o.get("remainingSemesters").getAsString() : null;
 
-        university = o.has("university") ? o.get("university").getAsString() : null;
+        academiclnstitution = o.has("academiclnstitution") ? o.get("academiclnstitution").getAsString() : null;
 
         graduationStatus = o.has("graduationStatus") ? o.get("graduationStatus").getAsString() : null;
 
@@ -376,13 +376,13 @@ public class User implements Mappable<User>{
 
         joinDate = o.containsKey("joinDate") ? (long) o.get("joinDate") : -1;
 
-        major = o.containsKey("major") ? o.get("major").toString() : null;
+        academicDicipline = o.containsKey("academicDicipline") ? o.get("academicDicipline").toString() : null;
 
-        secondMajor = o.containsKey("secondMajor") ? o.get("secondMajor").toString() : null;
+        academicDicipline2 = o.containsKey("academicDicipline2") ? o.get("academicDicipline2").toString() : null;
 
-        semesters = o.containsKey("semesters") ? o.get("semesters").toString() : null;
+        remainingSemesters = o.containsKey("remainingSemesters") ? o.get("remainingSemesters").toString() : null;
 
-        university = o.containsKey("university") ? o.get("university").toString() : null;
+        academiclnstitution = o.containsKey("academiclnstitution") ? o.get("academiclnstitution").toString() : null;
 
         graduationStatus = o.containsKey("graduationStatus") ? o.get("graduationStatus").toString() : null;
 

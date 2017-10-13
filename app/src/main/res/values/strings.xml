@@ -11,10 +11,10 @@
     <string name="fullName">Full Name</string>
     <string name="emailAddress">Email Address</string>
     <string name="phoneNumber">Phone Number</string>
-    <string name="major">Major</string>
-    <string name="secondMajor">Second Major</string>
-    <string name="semesters">Semesters</string>
-    <string name="university">University</string>
+    <string name="academicDicipline">Major</string>
+    <string name="academicDicipline2">Second Major</string>
+    <string name="remainingSemesters">Semesters</string>
+    <string name="academiclnstitution">University</string>
     <string name="graduationStatus">Graduation Status</string>
     <string name="average">Average</string>
     <string name="experience">Experience</string>

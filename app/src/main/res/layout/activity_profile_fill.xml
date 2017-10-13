@@ -75,7 +75,7 @@
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
-                        android:text="@string/major" />
+                        android:text="@string/academicDicipline" />
 
                     <EditText
                         android:id="@+id/etMajor"
@@ -83,7 +83,7 @@
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
-                        android:text="@string/semesters" />
+                        android:text="@string/remainingSemesters" />
 
                     <EditText
                         android:id="@+id/etSemesters"
@@ -91,7 +91,7 @@
 
                     <TextView
                         style="@style/TableViewItemRowHeader"
-                        android:text="@string/university" />
+                        android:text="@string/academiclnstitution" />
 
                     <EditText
                         android:id="@+id/etUniversity"

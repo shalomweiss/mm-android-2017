@@ -55,6 +55,19 @@ public class Meeting implements Mappable<Meeting>{
         }
     }
 
+    public int getStatusInt(){
+        switch (status){
+            case "PENDING":
+                return 0;
+            case "APPROVED":
+                return 1;
+            case "COMPLETE":
+                return 2;
+            default:
+                return -1;
+        }
+    }
+
     public String getStartTime(){
         Date date = new Date(startingDate);
         return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);

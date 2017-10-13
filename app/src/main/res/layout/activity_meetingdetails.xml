@@ -6,178 +6,116 @@
     android:layout_height="match_parent"
     tools:context="org.tsofen.mentorim.Meetingdetails"
     android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="With Mentee"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
 
     <TextView
         android:id="@+id/tvWithMentee"
+        style="@style/TextViewTitle" />
+    <ScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="tvWithMentee"
-        android:textColor="#0c0b0b"
-        android:textSize="18sp" />
+        android:layout_height="0dp">
+        <LinearLayout
+            android:padding="8dp"
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvMeetingType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Meeting Type"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="From:"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tvMeetingType"
+                style="@style/TableViewItemRowContent" />
 
-    <TextView
-        android:id="@+id/tvFrom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="tvFrom"
-        android:textColor="#0c0b0b"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvFrom"
+                style="@style/TableViewItemRowContent" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="To:"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tvTo"
+                style="@style/TableViewItemRowContent" />
 
-    <TextView
-        android:id="@+id/tvTo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="tvTo"
-        android:textColor="#0c0b0b"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvAt"
+                style="@style/TableViewItemRowContent" />
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="At:"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tvSubject"
+                style="@style/TableViewItemRowContent" />
 
-    <TextView
-        android:id="@+id/tvAt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="tvAt"
-        android:textColor="#0c0b0b"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="Subject:"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/tvSubject"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="tvSubject"
-        android:textColor="#0c0b0b"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="Notes:"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/tvNotes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.56"
-        android:text="tvNotes"
-        android:textColor="#0c0b0b"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tvNotes"
+                style="@style/TableViewItemRowContent" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
-        android:id="@+id/LinearLayoutsecond"
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/etSummery"
+        <LinearLayout
+            android:id="@+id/LinearLayoutsecond"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Summery:(seen by every one)" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etPrivateSummery"
+            <EditText
+                android:id="@+id/etSummery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Summery:(seen by every one)" />
+
+            <EditText
+                android:id="@+id/etPrivateSummery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Private Summery:(seen  by tsofen only)" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirm Meeting Occurred" />
+
+            <Button
+                android:id="@+id/btnDiscard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="discard meeting" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linearlayoutfirst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Private Summery:(seen  by tsofen only)" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirm Meeting Accured" />
+            <Button
+                android:id="@+id/btnApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Approve" />
 
-        <Button
-            android:id="@+id/btnDiscard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="discard meeting" />
+            <Button
+                android:id="@+id/btnDecline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Decline" />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/Linearlayoutfirst"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnApprove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.63"
-            android:text="approve" />
-
-        <Button
-            android:id="@+id/btnDecline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Decline" />
     </LinearLayout>
 
 </LinearLayout>

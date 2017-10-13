@@ -16,6 +16,8 @@ import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
 import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.Meeting;
+import org.tsofen.model.classes.User;
+
 public class MeetingController extends AppCompatActivity {
     private TextView tvWithMentee;
     private TextView tvMeetingType;
@@ -38,7 +40,9 @@ public class MeetingController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetingdetails);
-        meetingId = getIntent().getIntExtra(Constants.MEETING_ID,-1);
+
+        meeting = (Meeting) getIntent().getSerializableExtra(Constants.MEETING_ID);
+        meetingId = meeting != null ? meeting.getMeetingId() : -1;
         tvWithMentee=(TextView)findViewById(R.id.tvWithMentee);
         tvMeetingType=(TextView)findViewById(R.id.tvMeetingType);
         tvFrom=(TextView)findViewById(R.id.tvFrom);
@@ -52,42 +56,30 @@ public class MeetingController extends AppCompatActivity {
         btnApprove=(Button)findViewById(R.id.btnApprove);
         btnDiscard=(Button)findViewById(R.id.btnDiscard);
         btnDecline=(Button)findViewById(R.id.btnDecline);
+
         apiManager=APIManager.getInstance();
         dataManager=DataManager.getInstance(this);
-        btnConfirm.setOnClickListener(view -> {
-            doConfirm();
-        });
-        btnApprove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doApprove();
-            }
-        });
-        btnDecline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doDecline();
-            }
-        });
-        btnDiscard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doDiscard();
-            }
-        });
-        if(meetingId != -1){
-            int userId = dataManager.getUser().getId();
-            String token = dataManager.getToken();
-            apiManager.getMeetingByID(userId, token, meetingId, (response, meeting1, exception) -> {
-                if(exception == null) {
-                    this.meeting = meeting1;
-                    //load meeting to views
-                    loadMeeting(meeting1);
-                }else{
-                    //show error
-                    meetingErrorOcuuredDialog();
-                }
-            });
+
+        btnConfirm.setOnClickListener(view -> doConfirm());
+        btnApprove.setOnClickListener(view -> doApprove());
+        btnDecline.setOnClickListener(view -> doDecline());
+        btnDiscard.setOnClickListener(view -> doDiscard());
+
+        if(meeting != null){
+//            int userId = dataManager.getUser().getId();
+//            String token = dataManager.getToken();
+//            apiManager.getMeetingByID(userId, token, meetingId, (response, meeting1, exception) -> {
+//                if(exception == null) {
+//                    this.meeting = meeting1;
+//                    //load meeting to views
+//                    loadMeeting(meeting1,dataManager);
+//                }else{
+//                    //show error
+//                    meetingErrorOcuuredDialog();
+//                }
+//            });
+
+            loadMeeting(meeting,dataManager);
         }else{
             meetingNotExistDialog();
 //            btnDiscard.setEnabled(false);
@@ -124,9 +116,8 @@ public class MeetingController extends AppCompatActivity {
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
         dialog.show();
-        apiManager.approveMeeting(id, token, meetingId + "", false, new Callbacks.General() {
-            @Override
-            public void make(ServerResponse response, Exception exception) {
+        apiManager.approveMeeting(id, token, meetingId + "", false, (response, exception) -> {
+            runOnUiThread(()->{
                 if(exception==null){
                     if(response.isOK()) {
                         dialog.complete(false,true,"Declining","The Meeting Is Declined !");
@@ -136,7 +127,7 @@ public class MeetingController extends AppCompatActivity {
                 }else{
                     dialog.complete(false,false,"Declining","Error Occurred, The Meeting Wasn't Declined !");
                 }
-            }
+            });
         });
     }
     /**
@@ -147,9 +138,8 @@ public class MeetingController extends AppCompatActivity {
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
         dialog.show();
-        apiManager.approveMeeting(id, token, meetingId + "", true, new Callbacks.General() {
-            @Override
-            public void make(ServerResponse response, Exception exception) {
+        apiManager.approveMeeting(id, token, meetingId + "", true, (response, exception) -> {
+            runOnUiThread(()->{
                 if(exception==null){
                     if(response.isOK()) {
                         dialog.complete(false,true,"Approving","The Meeting Is Approved !");
@@ -159,7 +149,7 @@ public class MeetingController extends AppCompatActivity {
                 }else{
                     dialog.complete(false,false,"Approving","Error Occurred, The Meeting Wasn't Approved !");
                 }
-            }
+            });
         });
     }
     /**
@@ -186,22 +176,40 @@ public class MeetingController extends AppCompatActivity {
      *Load The Meeting Details To The TextViews In Layout
      * @param meeting The Meeting Object To Load
      */
-    private void loadMeeting(Meeting meeting){
+    private void loadMeeting(Meeting meeting,DataManager manager){
 
+        User current = manager.getUser();
+        User[] associated = manager.getAssociatedUsers();
         //TODO: update
-//        tvWithMentee.setText(meeting.getWithMentee());
-//        tvMeetingType.setText(meeting.getType());
-//        tvFrom.setText(meeting.getFrom().getTime()+"");
-//        tvTo.setText(meeting.getTo().getTime()+"");
-//        tvAt.setText(meeting.getAt());
-//        tvNotes.setText(meeting.getNote());
-//        tvSubject.setText(meeting.getSubject());
+        tvWithMentee.setText(meeting.getMeetingTitle(current.isMentor(),associated));
+        tvMeetingType.setText(meeting.getMeetingType());
+        tvFrom.setText(meeting.getStartTime());
+        //tvTo.setText((""+ meeting.getEndingDate()));
+        tvAt.setText(meeting.getLocation());
+        tvNotes.setText(meeting.getNote());
+        tvSubject.setText(meeting.getSubject());
+
+        if(meeting.getStatusInt() == 0){
+            //show approve/decline layout
+            findViewById(R.id.LinearLayoutsecond).setVisibility(View.GONE);
+        }
+
+        if(meeting.getStatusInt() == 1){
+            //hide both layouts
+            findViewById(R.id.Linearlayoutfirst).setVisibility(View.GONE);
+            findViewById(R.id.LinearLayoutsecond).setVisibility(View.GONE);
+        }
+
+        if(meeting.getStatusInt() == 2){
+            //show summary layout
+            findViewById(R.id.Linearlayoutfirst).setVisibility(View.GONE);
+        }
     }
     /**
      *This Class Contain Final keys
      */
-    private static final class Constants{
-        public static String MEETING_ID = "MEETING_ID";
+    public static final class Constants{
+        public static final String MEETING_ID = "MEETING_ID";
     }
     /**
      * This Method Show A Dialog With Error Message When The Meeting Isn't Exist In The System .
@@ -233,8 +241,11 @@ public class MeetingController extends AppCompatActivity {
      * This Method Show A Dialog With Error Message
      */
     private void meetingErrorOcuuredDialog(){
-        DialogManager
-                .makeDialog(this,"Meeting Action","some Error Occurred When Getting The Meeting With This Meeting Id : "+meetingId+" .")
-                .show();
+        runOnUiThread(()->{
+            DialogManager
+                    .makeDialog(this,"Meeting Action","some Error Occurred When Getting The Meeting With This Meeting Id : "+meetingId+" .")
+                    .show();
+        });
+
     }
 }
