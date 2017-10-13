@@ -43,6 +43,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     BaseFragment fragments[];
+    private boolean didLogout = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +71,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this,MeetingCreateActivity.class));
     }
 
-    private void loadData(){
-        //TODO: Load meetings from server.
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+    private void loadData(DataManager manager){
+        if(didLogout){
+            //TODO: Load meetings from server.
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setOffscreenPageLimit(3);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mViewPager);
+            didLogout = false;
+        }
+
+        APIManager.getInstance().getAssociatedUsers(manager.getUser().getId(),
+                manager.getToken(),
+                manager.getUser().isMentor(),
+                (response1, users, ex1) -> {
+            //store users
+            manager.associatedUsers(users);
+        });
     }
 
     @Override
@@ -93,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         if (token == null)
             goToLogin();
         else
-            loadData();
+            loadData(manager);
 
 
     }
@@ -141,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout){
             DataManager.getInstance(this).destroy();
             goToLogin();
+            didLogout = true;
             return true;
         }
 

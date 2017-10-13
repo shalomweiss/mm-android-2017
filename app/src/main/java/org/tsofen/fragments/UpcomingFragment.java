@@ -93,7 +93,7 @@ public class UpcomingFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(UpcomingAdapter.UpcomingViewHolder holder, int position) {
             Meeting o = meetingArrayList.get(position);
-            holder.tvTitle.setText("Meeting ID: " + o.getMeetingTitle(user.isMentor(),manager.getAssociatedUsers()));
+            holder.tvTitle.setText(o.getMeetingTitle(user.isMentor(),manager.getAssociatedUsers()));
             //holder.tvDate.setText(o.getAt());
             holder.tvSubtitle.setText(o.getLocation());
         }

@@ -37,6 +37,7 @@ public class PendingFragment extends BaseFragment {
 
     @Override
     public void viewDidLoad(View view,RecyclerView listView) {
+        meetingArrayList.clear();
         manager = DataManager.getInstance(getContext());
         listView.setAdapter(adapter);
         loadNextDataFromApi(currentPage);
@@ -66,7 +67,10 @@ public class PendingFragment extends BaseFragment {
         token = manager.getToken();
         if(user != null){
             APIManager.getInstance().getMeetings(user.getId(),token,0,15,offset,(response,meetingList,exception) -> {
-                getActivity().runOnUiThread(this::stopRefreshing);
+                try{
+                    getActivity().runOnUiThread(this::stopRefreshing);
+                }catch (NullPointerException e){}
+
                 if(exception == null && response.isOK()){
                     if(meetingList.size() > 0 ) {
                         updateData(meetingList);

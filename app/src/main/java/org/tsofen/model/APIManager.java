@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -217,7 +218,16 @@ public final class APIManager {
         Map<String,Object> params = new HashMap<>();
         params.put("id",id);
         params.put("token",token);
-        params.put("meeting",meeting);
+
+        Map<String,Object> meetingObj = new HashMap<>();
+        meetingObj.put("menteeId",meeting.getMenteeId());
+        meetingObj.put("meetingType",meeting.getMeetingType());
+        meetingObj.put("startingDate",meeting.getStartingDate());
+        meetingObj.put("endingDate",meeting.getEndingDate());
+        meetingObj.put("subject",meeting.getSubject());
+        meetingObj.put("location", meeting.getLocation());
+
+        params.put("meeting",meetingObj);
         makeRequest(Constants.Routes.addMeeting(), params,(json, ex) -> {
             if (ex == null) {
                 //OK
@@ -390,7 +400,7 @@ public final class APIManager {
                 if (response.isOK()) {   //Success
                     //Success
                     //Convert jasonObject To User Object
-                    JsonObject jsonUser = json.getAsJsonObject("user");
+                    JsonObject jsonUser = json.getAsJsonArray("users").get(0).getAsJsonObject();
                     User user=new User().init(jsonUser);
                     callback.make(response,user, null);
                 } else {

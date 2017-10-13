@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Overriding method to prevent user from closing the activity.
+        moveTaskToBack(true);
     }
 
     private EditText edtEmail;
