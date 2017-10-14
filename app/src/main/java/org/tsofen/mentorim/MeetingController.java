@@ -1,4 +1,5 @@
 package org.tsofen.mentorim;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -80,7 +81,7 @@ public class MeetingController extends AppCompatActivity {
 
     private void doCancel() {
         User current = dataManager.getUser();
-        User[] associated = dataManager.getAssociatedUsers();
+        String token = dataManager.getToken();
 
         NewMessageDialog messageDialog = DialogManager.makeMessageDialog(this, "Cancel Meeting", true);
         //String header = meeting.getMeetingTitle(current.isMentor(),associated);
@@ -89,11 +90,15 @@ public class MeetingController extends AppCompatActivity {
         messageDialog.getInputMessage().setLines(5);
         messageDialog.getInputMessage().setHint("Why are you canceling the meeting?");
         messageDialog.setPostiveButtonOnClickListener((v, dialog) -> {
-            //TODO: send to server
+            String message = messageDialog.getInputMessage().getText().toString();
+            APIManager.getInstance().cancelMeeting(current.getId(), token, "" + meetingId , message, (response, exception) -> {
+                runOnUiThread(()->{
+                    messageDialog.setOnDismissListener(dialogInterface -> finish());
+                    messageDialog.dismiss();
+                });
+            });
         });
-        messageDialog.setNegativeButtonOnClickListener((v,dialog)->{
-            dialog.dismiss();
-        });
+        messageDialog.setNegativeButtonOnClickListener((v,dialog)-> dialog.dismiss());
         messageDialog.setAllowCameraButton(false);
 
         messageDialog.show();

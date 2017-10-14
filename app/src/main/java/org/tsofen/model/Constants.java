@@ -47,6 +47,7 @@ final public class Constants {
         public static String confirmMeeting() { return getAddress() + "/confirmMeeting";}
         public static String getMentees() { return getAddress() + "/GetMentees";}
         public static String getMentor() { return getAddress() + "/GetMentor";}
+        public static String cancelMeeting() {return getAddress() + "/CancelMeeting";}
     }
     public static class Codes{
         public static final int SUCCESS=200;

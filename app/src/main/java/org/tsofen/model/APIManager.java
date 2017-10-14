@@ -316,15 +316,15 @@ public final class APIManager {
      * This Method Confirm Meeting .
      * @param id The id of the user.
      * @param token The session token.
-     * @param meeting_id The Meeting Id To Confirm .
+     * @param meetingId The Meeting Id To Confirm .
      * @param action The Status Of Confirming , True Confirm Meeting else false .
      * @param callback Callback function.
      */
-    public void confirmMeeting(int id,String token,String meeting_id,boolean action,Callbacks.General callback){
+    public void confirmMeeting(int id,String token,String meetingId,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
-        params.put("meeting_id",meeting_id);
+        params.put("meetingId",meetingId);
         params.put("action",action);
         makeRequest(Constants.Routes.confirmMeeting(), params, (json, ex) -> {
             if(ex==null){
@@ -342,6 +342,29 @@ public final class APIManager {
                 callback.make(null, ex);
             }
         });
+    }
+
+    public void cancelMeeting(int id, String token, String meetingId, String message, Callbacks.General callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+        params.put("meetingId",meetingId);
+        params.put("message",message);
+
+        makeRequest(Constants.Routes.cancelMeeting(), params, (json, ex) -> {
+            if(ex==null){
+                ServerResponse response = new ServerResponse(json);
+                if(response.isOK()){
+                    callback.make(response,null);
+                }else{
+                    ServerException e = new ServerException(response);
+                    callback.make(response, e);
+                }
+            }else{
+                callback.make(null, ex);
+            }
+        });
+
     }
 
     /**
