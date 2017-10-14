@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     BaseFragment fragments[];
     private boolean didLogout = true;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this::addNew);
     }
 
     private void addNew(View view){
-        startActivity(new Intent(MainActivity.this,MeetingCreateActivity.class));
+        Intent i = new Intent(this,MeetingCreateActivity.class);
+        startActivityForResult(i,MeetingCreateActivity.REQUEST_CODE);
     }
 
     private void loadData(DataManager manager){
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
             didLogout = false;
+            boolean isMentor = manager.getUser().isMentor();
+            if(!isMentor){
+                fab.setVisibility(View.GONE);
+            }else{
+                fab.setVisibility(View.VISIBLE);
+            }
         }
 
         APIManager.getInstance().getAssociatedUsers(manager.getUser().getId(),
@@ -164,6 +172,23 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == MeetingCreateActivity.REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                for (BaseFragment fragment : fragments) {
+                    if(fragment != null){
+                        fragment.onRefresh();
+                    }
+                }
+            }
+        }
+
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -239,6 +264,5 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
 
 }

@@ -76,7 +76,7 @@
                 android:textSize="18sp"
                 android:lines="10"
                 android:gravity="top|start"
-                android:id="@+id/editText3"
+                android:id="@+id/editNotes"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
@@ -88,6 +88,7 @@
         </LinearLayout>
     </ScrollView>
     <Button
+        android:id="@+id/btnDone"
         android:text="Done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

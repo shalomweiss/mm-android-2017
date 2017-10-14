@@ -1,5 +1,6 @@
 package org.tsofen.fragments;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.tsofen.mentorim.MeetingController;
 import org.tsofen.mentorim.R;
 import org.tsofen.model.APIManager;
 import org.tsofen.model.DataManager;
@@ -50,7 +52,11 @@ public class UpcomingFragment extends BaseFragment {
 
     @Override
     public void onRefresh() {
-
+        didLoadAll = false;
+        currentPage = 1;
+        meetingArrayList.clear();
+        adapter.notifyDataSetChanged();
+        loadNextDataFromApi(currentPage);
     }
 
     public void loadNextDataFromApi(int offset) {
@@ -59,7 +65,9 @@ public class UpcomingFragment extends BaseFragment {
         token = manager.getToken();
         if (user != null) {
             APIManager.getInstance().getMeetings(user.getId(), token, 1, 15, offset, (response, meetingList, exception) -> {
-                stopRefreshing();
+                try{
+                    getActivity().runOnUiThread(this::stopRefreshing);
+                }catch (NullPointerException e){}
                 if (exception == null && response.isOK()) {
                     if (meetingList.size() > 0) {
                         updateData(meetingList);
@@ -94,8 +102,13 @@ public class UpcomingFragment extends BaseFragment {
         public void onBindViewHolder(UpcomingAdapter.UpcomingViewHolder holder, int position) {
             Meeting o = meetingArrayList.get(position);
             holder.tvTitle.setText(o.getMeetingTitle(user.isMentor(),manager.getAssociatedUsers()));
-            //holder.tvDate.setText(o.getAt());
+            holder.tvDate.setText(o.getStartTime());
             holder.tvSubtitle.setText(o.getLocation());
+            holder.itemView.setOnClickListener(view -> {
+                Intent i = new Intent(getContext(),MeetingController.class);
+                i.putExtra(MeetingController.Constants.MEETING_ID,o);
+                getContext().startActivity(i);
+            });
         }
 
         @Override
@@ -113,16 +126,11 @@ public class UpcomingFragment extends BaseFragment {
             public UpcomingViewHolder(View itemView) {
                 super(itemView);
                 //link to subviews
+                itemView.findViewById(R.id.badge_upcoming).setVisibility(View.VISIBLE);
                 tvTitle = itemView.findViewById(R.id.tvTitle);
                 tvSubtitle = itemView.findViewById(R.id.tvSubtitle);
                 tvDate = itemView.findViewById(R.id.tvDate);
                 imageView = itemView.findViewById(R.id.imageView);
-
-                itemView.setOnClickListener(view -> {
-                    Meeting o = meetingArrayList.get(getAdapterPosition());
-                    Log.i("PendingList", o.toString());
-
-                });
             }
         }
     }

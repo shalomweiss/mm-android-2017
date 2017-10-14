@@ -24,7 +24,6 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name="org.tsofen.mentorim.ProfileController" />
-        <activity android:name=".Meetingdetails" />
         <activity android:name=".MeetingCreateActivity" android:theme="@style/AppDialogTheme" />
         <activity android:name=".MeetingController"></activity>
 

@@ -235,11 +235,9 @@ public final class APIManager {
                 //OK
                 ServerResponse response = new ServerResponse(json);
                 if(response.isOK()){
-                    //TODO: complete success
                     callback.make(response, null);
                 }else{
                     //Failed
-                    //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(response);
                     callback.make(response, e);
                 }
@@ -287,36 +285,29 @@ public final class APIManager {
      * This Method Approve Meeting .
      * @param id The id of the user.
      * @param token The session token.
-     * @param meeting_id Meeting Id To Approve Meeting .
+     * @param meetingId Meeting Id To Approve Meeting .
      * @param action The Status Of Approving , True Approve Meeting else false .
      * @param callback Callback function.
      */
-    public void approveMeeting (int id,String token,String meeting_id,boolean action,Callbacks.General callback){
+    public void approveMeeting (int id,String token,String meetingId,boolean action,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
-        params.put("meeting_id",meeting_id);
+        params.put("meetingId",meetingId);
         params.put("action",action);
-        Log.e("Approving Method","Hashmap "+ params);
+
         makeRequest(Constants.Routes.approveMeeting(), params, (json, ex) -> {
-            Log.e("Approving Method","Make A Request : ");
             if(ex==null){
                 ServerResponse response = new ServerResponse(json);
-                Log.e("Approving Method","ServerResponse : "+response);
                 if(response.isOK()){
-                    //TODO: complete success
                     callback.make(response, null);
-                    Log.e("Approving Method","ServerResponse Is Ok ");
                 }else{
                     //Failed
-                    //ToDo : handle Code return Specifec Exception
                     ServerException e = new ServerException(response);
                     callback.make(response, e);
-                    Log.e("Approving Method","ServerResponse Isn't Ok : "+response);
                 }
             }else{
                 callback.make(null, ex);
-                Log.e("Approving Method","Error When Request  : "+ex);
             }
         });
     }

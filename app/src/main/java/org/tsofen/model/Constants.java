@@ -43,7 +43,7 @@ final public class Constants {
         public static String getMeetings() { return getAddress() + "/GetMeetings";}
         public static String getMeetingById() { return getAddress() + "/GetMeetingById";}
         public static String addMeeting() { return getAddress() + "/AddMeeting";}
-        public static String approveMeeting() { return getAddress() + "/approveMeeting";}
+        public static String approveMeeting() { return getAddress() + "/ApproveMeeting";}
         public static String confirmMeeting() { return getAddress() + "/confirmMeeting";}
         public static String getMentees() { return getAddress() + "/GetMentees";}
         public static String getMentor() { return getAddress() + "/GetMentor";}

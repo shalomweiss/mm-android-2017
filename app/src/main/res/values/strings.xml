@@ -37,7 +37,9 @@
         <item>Mentee name</item>
     </string-array>
     <string-array name="Meetings">
-        <item>Meeting Type</item>
+        <item>Phone</item>
+        <item>Face to Face</item>
+        <item>SMS</item>
     </string-array>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>

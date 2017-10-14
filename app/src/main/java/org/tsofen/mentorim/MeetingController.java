@@ -11,6 +11,8 @@ import net.crofis.ui.dialog.BaseAlertDialog;
 import net.crofis.ui.dialog.DialogManager;
 import net.crofis.ui.dialog.InfoDialog;
 import net.crofis.ui.dialog.LoadingDialog;
+import net.crofis.ui.dialog.NewMessageDialog;
+
 import org.tsofen.model.APIManager;
 import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
@@ -32,6 +34,8 @@ public class MeetingController extends AppCompatActivity {
     private Button btnDiscard;
     private Button btnApprove;
     private Button btnDecline;
+    private Button btnCancel;
+
     private APIManager apiManager;
     private DataManager dataManager;
     private int meetingId;
@@ -56,6 +60,7 @@ public class MeetingController extends AppCompatActivity {
         btnApprove=(Button)findViewById(R.id.btnApprove);
         btnDiscard=(Button)findViewById(R.id.btnDiscard);
         btnDecline=(Button)findViewById(R.id.btnDecline);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
 
         apiManager=APIManager.getInstance();
         dataManager=DataManager.getInstance(this);
@@ -64,30 +69,37 @@ public class MeetingController extends AppCompatActivity {
         btnApprove.setOnClickListener(view -> doApprove());
         btnDecline.setOnClickListener(view -> doDecline());
         btnDiscard.setOnClickListener(view -> doDiscard());
+        btnCancel.setOnClickListener(view -> doCancel());
 
         if(meeting != null){
-//            int userId = dataManager.getUser().getId();
-//            String token = dataManager.getToken();
-//            apiManager.getMeetingByID(userId, token, meetingId, (response, meeting1, exception) -> {
-//                if(exception == null) {
-//                    this.meeting = meeting1;
-//                    //load meeting to views
-//                    loadMeeting(meeting1,dataManager);
-//                }else{
-//                    //show error
-//                    meetingErrorOcuuredDialog();
-//                }
-//            });
-
             loadMeeting(meeting,dataManager);
         }else{
             meetingNotExistDialog();
-//            btnDiscard.setEnabled(false);
-//            btnDecline.setEnabled(false);
-//            btnApprove.setEnabled(false);
-//            btnConfirm.setEnabled(false);
         }
     }
+
+    private void doCancel() {
+        User current = dataManager.getUser();
+        User[] associated = dataManager.getAssociatedUsers();
+
+        NewMessageDialog messageDialog = DialogManager.makeMessageDialog(this, "Cancel Meeting", true);
+        //String header = meeting.getMeetingTitle(current.isMentor(),associated);
+        messageDialog.getInputTitle().setVisibility(View.GONE);
+        messageDialog.getInputMessage().setMinLines(5);
+        messageDialog.getInputMessage().setLines(5);
+        messageDialog.getInputMessage().setHint("Why are you canceling the meeting?");
+        messageDialog.setPostiveButtonOnClickListener((v, dialog) -> {
+            //TODO: send to server
+        });
+        messageDialog.setNegativeButtonOnClickListener((v,dialog)->{
+            dialog.dismiss();
+        });
+        messageDialog.setAllowCameraButton(false);
+
+        messageDialog.show();
+
+    }
+
     /**
      * this method do The Discard Code When Check The Discard Button
      */
@@ -189,9 +201,17 @@ public class MeetingController extends AppCompatActivity {
         tvNotes.setText(meeting.getNote());
         tvSubject.setText(meeting.getSubject());
 
+        boolean isMentor = current.isMentor();
         if(meeting.getStatusInt() == 0){
             //show approve/decline layout
             findViewById(R.id.LinearLayoutsecond).setVisibility(View.GONE);
+
+            if(isMentor){
+                findViewById(R.id.Linearlayoutfirst).setVisibility(View.GONE);
+            }else{
+                btnCancel.setVisibility(View.GONE);
+            }
+
         }
 
         if(meeting.getStatusInt() == 1){
@@ -203,6 +223,7 @@ public class MeetingController extends AppCompatActivity {
         if(meeting.getStatusInt() == 2){
             //show summary layout
             findViewById(R.id.Linearlayoutfirst).setVisibility(View.GONE);
+            btnCancel.setVisibility(View.GONE);
         }
     }
     /**
@@ -218,22 +239,13 @@ public class MeetingController extends AppCompatActivity {
         InfoDialog infoDialog = new InfoDialog(this);
         infoDialog.setTitle("Meeting Action");
         infoDialog.setMessage("This Meeting Id : "+meetingId+" is not Exist in The System!");
-        infoDialog.setPostiveButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
-            @Override
-            public void onClick(View v, BaseAlertDialog dialog) {
-                //Do whatever
-                //You must add this otherwise the dialog will not dismiss.
-                dialog.dismiss();
-            }
+        infoDialog.setPostiveButtonOnClickListener((v, dialog) -> {
+            //Do whatever
+            //You must add this otherwise the dialog will not dismiss.
+            dialog.dismiss();
+            finish();
         });
 
-        infoDialog. setNegativeButtonOnClickListener(new BaseAlertDialog.OnClickListener() {
-            @Override
-            public void onClick(View v, BaseAlertDialog dialog) {
-                //Do whatever
-                dialog.dismiss();
-            }
-        });
 
         infoDialog.show();
     }
