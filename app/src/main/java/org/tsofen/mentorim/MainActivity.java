@@ -2,6 +2,9 @@ package org.tsofen.mentorim;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.design.widget.TabLayout;
@@ -19,8 +22,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     BaseFragment fragments[];
     private boolean didLogout = true;
     FloatingActionButton fab;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +72,49 @@ public class MainActivity extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this::addNew);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        navigationView=(NavigationView)findViewById(R.id.nav_view);
+        final DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+
+        drawerLayout.closeDrawers();
     }
 
     private void addNew(View view){
         Intent i = new Intent(this,MeetingCreateActivity.class);
         startActivityForResult(i,MeetingCreateActivity.REQUEST_CODE);
+    }
+
+    private void setupMenu(DataManager manager){
+        Menu menu = navigationView.getMenu();
+        View v = navigationView.getHeaderView(0);
+        //TODO: load user data to to header
+
+        menu.clear();
+
+        boolean isMentor = manager.getUser().isMentor();
+        User[] associatedUsers = manager.getAssociatedUsers();
+
+        SubMenu usersMenu = menu.addSubMenu(isMentor ? "Mentees" : "Mentor");
+
+        //add(groupId,itemId,order,title) -> MenuItem
+
+        for (int i = 0; i < associatedUsers.length; i++) {
+            User u = associatedUsers[i];
+            MenuItem item = usersMenu.add(0,i,0,u.getFullName()).setIcon(R.drawable.ic_account_circle_grey_500_48dp);
+
+            item.setOnMenuItemClickListener(menuItem -> {
+                Intent in = new Intent(this,ProfileController.class);
+                in.putExtra(ProfileController.LayoutsMode.VIEW_OTHER, u);
+                startActivity(in);
+                return true;
+            });
+        }
+
     }
 
     private void loadData(DataManager manager){
@@ -88,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 fab.setVisibility(View.VISIBLE);
             }
+
+            setupMenu(manager);
         }
 
         APIManager.getInstance().getAssociatedUsers(manager.getUser().getId(),

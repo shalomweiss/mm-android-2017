@@ -164,6 +164,10 @@ public class User implements Mappable<User>{
         return type.equalsIgnoreCase("MENTOR");
     }
 
+    public String getFullName(){
+        return getFirstName() + " " + getLastName();
+    }
+
     public void setId(int id) {
         this.id = id;
     }

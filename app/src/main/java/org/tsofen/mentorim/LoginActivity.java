@@ -101,10 +101,12 @@ public class LoginActivity extends AppCompatActivity {
                     //store users
                     manager.associatedUsers(users);
 
-                    pDialog.dismiss();
+                    runOnUiThread(()->{
+                        pDialog.dismiss();
 
-                    //close activity
-                    LoginActivity.this.finish();
+                        //close activity
+                        LoginActivity.this.finish();
+                    });
                 });
 
 

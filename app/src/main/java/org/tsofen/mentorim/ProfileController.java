@@ -53,13 +53,25 @@ public class ProfileController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
+
         //check input mode
         Intent i=getIntent();
-        int currentMode=i.getIntExtra("Mode",1);
+
+        User optional = (User) i.getSerializableExtra(LayoutsMode.VIEW_OTHER);
+
+        boolean showSelf = true;
+
+        if(optional != null){
+            showSelf = false;
+        }
+
+        int currentMode= showSelf ? i.getIntExtra("Mode",1) : LayoutsMode.PROFILE_VIEW;
 
         //get data manager
         final DataManager manager = DataManager.getInstance(this);
-        final User user = manager.getUser();
+        final User user = showSelf ? manager.getUser() : optional;
 
         //get user details
         boolean isMentor = user.isMentor();
@@ -69,7 +81,7 @@ public class ProfileController extends AppCompatActivity {
         //layout subviews
         if(currentMode== LayoutsMode.PROFILE_VIEW){
             setLayoutView(isMentor);
-            loadData(id,token);
+            loadData(id,token,!showSelf);
         }
 
         if(currentMode == LayoutsMode.PROFILE_FILL){
@@ -135,33 +147,44 @@ public class ProfileController extends AppCompatActivity {
         }
     }
 
-    private void loadData(int id,String token){
-        APIManager.getInstance().getUserProfile(id,token, (response, user, exception) -> {
+    private void loadData(int id,String token,boolean loadOther){
+        if (loadOther){
+           User[] users = DataManager.getInstance(this).getAssociatedUsers();
+            for (User u : users){
+                if(u.getId() == id){
+                    applyData(u);
+                    break;
+                }
+            }
+
+        }else APIManager.getInstance().getUserProfile(id,token, (response, user, exception) -> {
             //update fields
-            runOnUiThread(()->{
-                String fullName = user.getFirstName() + " " + user.getLastName();
-                this.fullName.setText(fullName);
-                this.emailAddress.setText(user.getEmail());
-                this.phoneNumber.setText(user.getPhoneNumber());
-                this.gender.setText(user.getGender());
-                this.address.setText(user.getAddress());
-                this.summary.setText(user.getSummary());
-                this.status.setText(user.getType());
-                this.joinedDate.setText(user.convetLongToDate(user.getJoinedDate()));
-                this.major.setText(user.getAcademicDicipline());
-                this.secondMajor.setText(user.getAcademicDicipline2());
-                this.semesters.setText(user.getRemainingSemesters());
-                this.university.setText(user.getAcademiclnstitution());
-                this.graduationStatus.setText(user.getGraduationStatus());
-                this.average.setText(user.getAverage());
-                this.experience.setText(user.getExp());
-                this.role.setText(user.getRole());
-                this.company.setText(user.getCompany());
-                this.volunteering.setText(user.getVolunteering());
-                this.workHistory.setText(user.getWorkHistory());
-            });
+            runOnUiThread(()-> applyData(user));
 
         });
+    }
+
+    private void applyData(User user){
+        String fullName = user.getFirstName() + " " + user.getLastName();
+        this.fullName.setText(fullName);
+        this.emailAddress.setText(user.getEmail());
+        this.phoneNumber.setText(user.getPhoneNumber());
+        this.gender.setText(user.getGender());
+        this.address.setText(user.getAddress());
+        this.summary.setText(user.getSummary());
+        this.status.setText(user.getType());
+        this.joinedDate.setText(user.convetLongToDate(user.getJoinedDate()));
+        this.major.setText(user.getAcademicDicipline());
+        this.secondMajor.setText(user.getAcademicDicipline2());
+        this.semesters.setText(user.getRemainingSemesters());
+        this.university.setText(user.getAcademiclnstitution());
+        this.graduationStatus.setText(user.getGraduationStatus());
+        this.average.setText(user.getAverage());
+        this.experience.setText(user.getExp());
+        this.role.setText(user.getRole());
+        this.company.setText(user.getCompany());
+        this.volunteering.setText(user.getVolunteering());
+        this.workHistory.setText(user.getWorkHistory());
     }
 
     private void updateData(int id, String token, User user, Callbacks.UpdateProfile callback){
@@ -177,5 +200,6 @@ public class ProfileController extends AppCompatActivity {
     public static class LayoutsMode {
         public static final int PROFILE_VIEW=1;
         public static final int PROFILE_FILL=0;
+        public static final String VIEW_OTHER = "VIEW_OTHER";
     }
 }
