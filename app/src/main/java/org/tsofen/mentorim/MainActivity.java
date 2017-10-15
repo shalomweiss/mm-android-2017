@@ -1,6 +1,9 @@
 package org.tsofen.mentorim;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +32,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 
@@ -42,8 +49,10 @@ import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
 import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.User;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean didLogout = true;
     FloatingActionButton fab;
     private NavigationView navigationView;
+
+    private Map<Integer,MenuItem> associatedUsersMenuItems = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView=(NavigationView)findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         final DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+
 
         drawerLayout.closeDrawers();
     }
@@ -90,22 +103,69 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupMenu(DataManager manager){
+
+
+        User currentUser = manager.getUser();
+        User[] associatedUsers = manager.getAssociatedUsers();
+        boolean isMentor = currentUser.isMentor();
+
         Menu menu = navigationView.getMenu();
         View v = navigationView.getHeaderView(0);
+
+
+        TextView fullName = v.findViewById(R.id.fullName);
+        TextView email = v.findViewById(R.id.email);
+        ImageView imageView = v.findViewById(R.id.imageView);
+
         //TODO: load user data to to header
 
+        Glide.with(this)
+                .load("https://avatars0.githubusercontent.com/u/17438617?s=400")
+                .apply(RequestOptions.circleCropTransform())
+                .into(imageView);
+
+        fullName.setText(currentUser.getFullName());
+        email.setText(currentUser.getEmail());
+
+        //clear menu
         menu.clear();
 
-        boolean isMentor = manager.getUser().isMentor();
-        User[] associatedUsers = manager.getAssociatedUsers();
-
+        //add sub menu todo: replace strings with resources
         SubMenu usersMenu = menu.addSubMenu(isMentor ? "Mentees" : "Mentor");
 
         //add(groupId,itemId,order,title) -> MenuItem
 
         for (int i = 0; i < associatedUsers.length; i++) {
             User u = associatedUsers[i];
-            MenuItem item = usersMenu.add(0,i,0,u.getFullName()).setIcon(R.drawable.ic_account_circle_grey_500_48dp);
+            final MenuItem item = usersMenu.add(0,i,0,u.getFullName()).setIcon(R.drawable.ic_account_circle_grey_500_48dp);
+
+            String url = null;
+
+            if(i == 0)
+                url = "https://avatars0.githubusercontent.com/u/17438617?s=400";
+
+            if(i == 1)
+                url = "https://avatars3.githubusercontent.com/u/26304818?s=400";
+
+            if(i == 2)
+                url = "https://avatars3.githubusercontent.com/u/11991858?s=400";
+
+            if(i == 3)
+                url = "https://avatars2.githubusercontent.com/u/31918069?s=400";
+
+            if(i == 4)
+                url = "https://avatars1.githubusercontent.com/u/31919328?s=400";
+
+            if(i == 5)
+                url = "https://avatars3.githubusercontent.com/u/31918144?s=400";
+
+            if (url != null)
+                Glide.with(this).asDrawable().load(url).apply(RequestOptions.circleCropTransform()).into(new SimpleTarget<Drawable>(128,128) {
+                    @Override
+                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                        item.setIcon(resource);
+                    }
+                });
 
             item.setOnMenuItemClickListener(menuItem -> {
                 Intent in = new Intent(this,ProfileController.class);
