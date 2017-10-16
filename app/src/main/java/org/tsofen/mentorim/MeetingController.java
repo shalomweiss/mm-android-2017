@@ -91,12 +91,10 @@ public class MeetingController extends AppCompatActivity {
         messageDialog.getInputMessage().setHint("Why are you canceling the meeting?");
         messageDialog.setPostiveButtonOnClickListener((v, dialog) -> {
             String message = messageDialog.getInputMessage().getText().toString();
-            APIManager.getInstance().cancelMeeting(current.getId(), token, "" + meetingId , message, (response, exception) -> {
-                runOnUiThread(()->{
-                    messageDialog.setOnDismissListener(dialogInterface -> finish());
-                    messageDialog.dismiss();
-                });
-            });
+            APIManager.getInstance().cancelMeeting(current.getId(), token, "" + meetingId , message, (response, exception) -> runOnUiThread(() -> {
+                messageDialog.setOnDismissListener(dialogInterface -> MeetingController.this.finish());
+                messageDialog.dismiss();
+            }));
         });
         messageDialog.setNegativeButtonOnClickListener((v,dialog)-> dialog.dismiss());
         messageDialog.setAllowCameraButton(false);

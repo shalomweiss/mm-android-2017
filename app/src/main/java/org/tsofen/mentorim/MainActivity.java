@@ -272,7 +272,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(id == R.id.action_profile){
-            startActivity(new Intent(MainActivity.this,ProfileController.class));
+            Intent i=new Intent(MainActivity.this,ProfileController.class);
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -30,16 +30,16 @@ public class User implements Mappable<User>{
 
     //mentee properties
     private String academicDicipline;
-    private String academicDicipline2;
+    private String academicDicipline2;//?
     private String remainingSemesters;
     private String academiclnstitution;
-    private String graduationStatus;
-    private String average;
+    private String graduationStatus;//?
+    private String average;//?
     private boolean didSignEULA;
 
     //file urls
-    private String resume;
-    private String gradeSheet;
+    private String resume;//?
+    private String gradeSheet;//?
 
     //mentor properties
     private String exp;
