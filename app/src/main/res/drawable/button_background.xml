@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:state_enabled="false"> 
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <corners android:radius="0dp" />
+
+            <solid android:color="#34495e" />
+
+            <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
+
+            <margin></margin>
+
+            <corners android:radius="@dimen/buttonCornerRadius"/>
+        </shape></item>
+
+    <item android:state_pressed="true"><shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <corners android:radius="0dp" />
+            <!--old blue color #2980b9  -->
+            <solid android:color="?attr/colorAccent" />
+
+            <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
+
+
+        <corners android:radius="@dimen/buttonCornerRadius"/>
+        </shape></item>
+    <item><shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <corners android:radius="0dp" />
+            
+            <!-- old light blue color #3498db  -->
+            <solid android:color="?attr/colorAccent" />
+
+            <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
+
+            <corners android:radius="@dimen/buttonCornerRadius"/>
+
+            <margin></margin>
+
+        </shape></item>
+    
+
+</selector>

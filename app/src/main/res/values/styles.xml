@@ -6,9 +6,41 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/ButtonMain</item>
     </style>
 
+    <style name="MenteeTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/MenteeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/MenteeColorPrimaryDark</item>
+        <item name="colorAccent">@color/MenteeColorAccent</item>
+    </style>
+
+    <style name="MentorTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/MentorColorPrimary</item>
+        <item name="colorPrimaryDark">@color/MentorColorPrimaryDark</item>
+        <item name="colorAccent">@color/MentorColorAccent</item>
+    </style>
+
+
     <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MenteeTheme.NoActionBar">
+        <item name="colorPrimary">@color/MenteeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/MenteeColorPrimaryDark</item>
+        <item name="colorAccent">@color/MenteeColorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MentorTheme.NoActionBar">
+        <item name="colorPrimary">@color/MentorColorPrimary</item>
+        <item name="colorPrimaryDark">@color/MentorColorPrimaryDark</item>
+        <item name="colorAccent">@color/MentorColorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -80,7 +112,23 @@
 
     <style name="AppDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowNoTitle">true</item>
-        <item name="android:background">#fff</item> //Your custom background color
+        <item name="android:background">#fff</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/ButtonMain</item>
+    </style>
+
+    <style name="MenteeAppDialogTheme" parent="AppDialogTheme">
+        <item name="colorPrimary">@color/MenteeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/MenteeColorPrimaryDark</item>
+        <item name="colorAccent">@color/MenteeColorAccent</item>
+    </style>
+
+    <style name="MentorAppDialogTheme" parent="AppDialogTheme">
+        <item name="colorPrimary">@color/MentorColorPrimary</item>
+        <item name="colorPrimaryDark">@color/MentorColorPrimaryDark</item>
+        <item name="colorAccent">@color/MentorColorAccent</item>
     </style>
 
     <style name="TextViewBadgeIcon" parent="android:Widget.TextView">
@@ -91,6 +139,13 @@
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <style name="ButtonMain" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_height">36dp</item>
     </style>
 
 </resources>

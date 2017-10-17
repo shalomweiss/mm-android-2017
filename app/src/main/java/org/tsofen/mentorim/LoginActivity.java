@@ -25,9 +25,9 @@ import org.tsofen.model.classes.User;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends UIViewController {
 
-
+    public static final int REQUEST_CODE = 1997;
     @Override
     public void onBackPressed() {
         //Overriding method to prevent user from closing the activity.
@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                         pDialog.dismiss();
 
                         //close activity
+                        setResult(RESULT_OK);
                         LoginActivity.this.finish();
                     });
                 });

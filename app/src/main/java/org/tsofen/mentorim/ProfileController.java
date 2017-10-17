@@ -18,7 +18,7 @@ import org.tsofen.model.DataManager;
 import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.User;
 
-public class ProfileController extends AppCompatActivity {
+public class ProfileController extends UIViewController {
 
 
     /**

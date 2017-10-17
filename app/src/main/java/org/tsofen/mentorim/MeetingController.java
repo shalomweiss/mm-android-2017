@@ -21,7 +21,7 @@ import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.Meeting;
 import org.tsofen.model.classes.User;
 
-public class MeetingController extends AppCompatActivity {
+public class MeetingController extends UIViewController {
     private TextView tvWithMentee;
     private TextView tvMeetingType;
     private TextView tvFrom;

@@ -1,27 +1,20 @@
 package org.tsofen.mentorim;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,32 +29,44 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.JsonObject;
-
-import net.crofis.ui.dialog.CustomViewDialog;
 
 import org.tsofen.fragments.BaseFragment;
 import org.tsofen.fragments.PendingFragment;
 import org.tsofen.fragments.UpcomingFragment;
 import org.tsofen.model.APIManager;
-import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
-import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.User;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends UIViewController {
 
     BaseFragment fragments[];
-    private boolean didLogout = true;
     FloatingActionButton fab;
     private NavigationView navigationView;
 
     private Map<Integer,MenuItem> associatedUsersMenuItems = new HashMap<>();
+
+    @Override
+    protected void applyTheme(User user) {
+        //apply custom theme
+
+        if(user != null){
+            if(user.isMentor()){
+                setTheme(R.style.MentorTheme_NoActionBar);
+            }else{
+                setTheme(R.style.MenteeTheme_NoActionBar);
+            }
+        }else{
+            setTheme(R.style.AppTheme_NoActionBar);
+        }
+    }
+
+    @Override
+    protected void enableBackButton() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        super.enableBackButton();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -92,15 +98,30 @@ public class MainActivity extends AppCompatActivity {
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
         final DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-
-
         drawerLayout.closeDrawers();
+
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        DataManager manager = DataManager.getInstance(this);
+        User user = manager.getUser();
+        if(user != null && !user.isMentor()){
+            fab.setVisibility(View.GONE);
+        }else{
+            fab.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void addNew(View view){
         Intent i = new Intent(this,MeetingCreateActivity.class);
         startActivityForResult(i,MeetingCreateActivity.REQUEST_CODE);
     }
+
+
 
     private void setupMenu(DataManager manager){
 
@@ -178,23 +199,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData(DataManager manager){
-        if(didLogout){
             //TODO: Load meetings from server.
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-            mViewPager.setOffscreenPageLimit(3);
 
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(mViewPager);
-            didLogout = false;
-            boolean isMentor = manager.getUser().isMentor();
-            if(!isMentor){
-                fab.setVisibility(View.GONE);
-            }else{
-                fab.setVisibility(View.VISIBLE);
-            }
-
-            setupMenu(manager);
-        }
+       setupMenu(manager);
 
         APIManager.getInstance().getAssociatedUsers(manager.getUser().getId(),
                 manager.getToken(),
@@ -225,7 +232,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToLogin(){
-        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        Intent i = new Intent(MainActivity.this,LoginActivity.class);
+        startActivityForResult(i,LoginActivity.REQUEST_CODE);
     }
 
     /**
@@ -267,7 +275,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout){
             DataManager.getInstance(this).destroy();
             goToLogin();
-            didLogout = true;
             return true;
         }
 
@@ -290,6 +297,12 @@ public class MainActivity extends AppCompatActivity {
                         fragment.onRefresh();
                     }
                 }
+            }
+        }
+
+        if (requestCode == LoginActivity.REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                recreate();
             }
         }
 

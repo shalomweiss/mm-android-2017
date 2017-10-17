@@ -82,15 +82,15 @@
                 android:hint="Private Summery:(seen  by tsofen only)" />
 
             <Button
+                style="?attr/buttonStyle"
                 android:id="@+id/btnConfirm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Confirm Meeting Occurred" />
 
             <Button
+                style="?attr/buttonStyle"
                 android:id="@+id/btnDiscard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="discard meeting" />
 
         </LinearLayout>
@@ -102,25 +102,25 @@
             android:orientation="horizontal">
 
             <Button
+                style="?attr/buttonStyle"
                 android:id="@+id/btnApprove"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Approve" />
 
             <Button
+                style="?attr/buttonStyle"
                 android:id="@+id/btnDecline"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Decline" />
         </LinearLayout>
 
         <Button
+            style="?attr/buttonStyle"
             android:text="Cancel"
             android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent" />
 
     </LinearLayout>
 

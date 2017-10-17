@@ -88,10 +88,10 @@
         </LinearLayout>
     </ScrollView>
     <Button
+        style="?attr/buttonStyle"
         android:id="@+id/btnDone"
         android:text="Done"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent" />
 
 </LinearLayout>
 

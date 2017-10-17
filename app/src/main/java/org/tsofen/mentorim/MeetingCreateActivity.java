@@ -19,7 +19,7 @@ import org.tsofen.model.classes.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MeetingCreateActivity extends AppCompatActivity {
+public class MeetingCreateActivity extends UIViewController {
 
 
     Spinner spinAssociatedUsers;
@@ -46,6 +46,17 @@ public class MeetingCreateActivity extends AppCompatActivity {
         setupAssociatedUsersSpinner();
         setupDatePicker();
         setupButton();
+    }
+
+    @Override
+    protected void applyTheme(User user) {
+        if(user != null){
+            if(user.isMentor()){
+                setTheme(R.style.MentorAppDialogTheme);
+            }else{
+                setTheme(R.style.MenteeAppDialogTheme);
+            }
+        }
     }
 
     void init(){

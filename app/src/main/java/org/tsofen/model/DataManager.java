@@ -104,20 +104,23 @@ public final class DataManager {
      * @return A empty array if there are not associated users.
      */
     public User[] getAssociatedUsers(){
-        if (preferences.contains(Keys.ASSOCIATED_USERS)) {
-            String users = preferences.getString(Keys.ASSOCIATED_USERS, null);
+        try {
+            if (preferences.contains(Keys.ASSOCIATED_USERS)) {
+                String users = preferences.getString(Keys.ASSOCIATED_USERS, null);
 
-            JsonParser parser = new JsonParser();
-            JsonArray o = parser.parse(users).getAsJsonArray();
+                JsonParser parser = new JsonParser();
+                JsonArray o = parser.parse(users).getAsJsonArray();
 
-            User[] arr = new User[o.size()];
+                User[] arr = new User[o.size()];
 
-            for (int i = 0; i < o.size(); i++)
-                arr[i] = new User().init(o.get(i).getAsJsonObject());
+                for (int i = 0; i < o.size(); i++)
+                    arr[i] = new User().init(o.get(i).getAsJsonObject());
 
-            return arr;
+                return arr;
+            }
+        }catch (Exception e){
+            return new User[]{};
         }
-
         return new User[]{};
     }
 
