@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 import org.tsofen.model.classes.Meeting;
 import org.tsofen.model.classes.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -474,6 +476,28 @@ public final class APIManager {
         }
     }
 
+    public void uploadProfile(int id, String token, File file, Callbacks.General callback){
+        Map<String,Object> params=new HashMap<>();
+        params.put("id",id);
+        params.put("token",token);
+
+        makeFileUploadRequest(Constants.Routes.uploadImage(),file,params,"image/jpeg", (json,ex)->{
+            if (ex == null) {
+                //OK
+                ServerResponse response = new ServerResponse(json);
+                if(response.isOK()){
+                    callback.make(response, null);
+                }else{
+                    //Failed
+                    ServerException e = new ServerException(response);
+                    callback.make(response, e);
+                }
+            }else{
+                callback.make(null,ex);
+            }
+        });
+    }
+
 
     /**
      * This method makes a post HTTP request to a url using the given params.
@@ -501,6 +525,33 @@ public final class APIManager {
                 .addHeader("content-type","application/json")
                 .build();
         //make request
+        makeOkHttpRequest(request,callback);
+    }
+
+    private void makeFileUploadRequest(String url,
+                                       File file,
+                                       Map<String,Object> params,
+                                       String fileType,
+                                       final Callbacks.Inner callback){
+
+        RequestBody formBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(MediaType.parse(fileType), file))
+                .build();
+
+        Request.Builder requestBuilder = new Request.Builder();
+
+        for(Map.Entry<String,Object> entry : params.entrySet()){
+            requestBuilder.addHeader(entry.getKey(),entry.getValue().toString());
+        }
+
+        Request request = requestBuilder.url(url).post(formBody).build();
+
+        makeOkHttpRequest(request,callback);
+    }
+
+    private void makeOkHttpRequest(Request request,Callbacks.Inner callback){
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

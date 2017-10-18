@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         tools:replace="android:icon,android:theme"
         android:name="org.tsofen.App"
@@ -26,6 +29,7 @@
         <activity android:name="org.tsofen.mentorim.ProfileController" />
         <activity android:name=".MeetingCreateActivity" android:theme="@style/AppDialogTheme" />
         <activity android:name=".MeetingController"></activity>
+        <activity android:name=".TestController"></activity>
 
         <service
             android:name="services.MyFirebaseMessagingService">

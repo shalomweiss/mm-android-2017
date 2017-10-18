@@ -48,6 +48,11 @@ final public class Constants {
         public static String getMentees() { return getAddress() + "/GetMentees";}
         public static String getMentor() { return getAddress() + "/GetMentor";}
         public static String cancelMeeting() {return getAddress() + "/CancelMeeting";}
+        public static String uploadImage() { return getAddress() + "/UploadImage"; }
+
+        public static String getProfilePicture(int id){
+            return getAddress() + "/DownloadFile?type=img&id="+id;
+        }
     }
     public static class Codes{
         public static final int SUCCESS=200;
