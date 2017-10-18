@@ -1,22 +1,27 @@
 package org.tsofen.mentorim;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.mvc.imagepicker.ImagePicker;
+
 import net.crofis.ui.dialog.LoadingDialog;
 
 import org.tsofen.model.APIManager;
 import org.tsofen.model.Callbacks;
 import org.tsofen.model.DataManager;
-import org.tsofen.model.ServerResponse;
 import org.tsofen.model.classes.User;
+
+import java.io.File;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileController extends UIViewController {
 
@@ -43,6 +48,7 @@ public class ProfileController extends UIViewController {
     private TextView company;
     private TextView volunteering;
     private TextView workHistory;
+    private CircleImageView imageView;
 
     /**
      * FILL
@@ -74,7 +80,6 @@ public class ProfileController extends UIViewController {
     private EditText fillEtWorkHistory;
     private boolean showSelf;
     //TODO: add the reset of the views
-
 
 
     @Override
@@ -116,6 +121,12 @@ public class ProfileController extends UIViewController {
             setLayoutFill(isMentor,user);
             loadData_Fill(id,token);
         }
+
+        imageView = (CircleImageView) findViewById(R.id.profilePicture);
+
+        imageView.setOnClickListener(view -> ImagePicker.pickImage(this,"Pick a new profile picture"));
+
+        Glide.with(this).load(org.tsofen.model.Constants.Routes.getProfilePicture(user.getId()));
     }
 
     /**
@@ -213,6 +224,8 @@ public class ProfileController extends UIViewController {
 
 
     private void applyData(User user){
+        if(user == null) return;
+
         String fullName = user.getFirstName() + " " + user.getLastName();
         this.fullName.setText(fullName);
         this.emailAddress.setText(user.getEmail());
@@ -364,5 +377,25 @@ public class ProfileController extends UIViewController {
         public static final int PROFILE_VIEW=1;
         public static final int PROFILE_FILL=0;
         public static final String VIEW_OTHER = "VIEW_OTHER";
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String path = ImagePicker.getImagePathFromResult(this,requestCode,resultCode,data);
+        Bitmap bitmap = ImagePicker.getImageFromResult(this,requestCode,resultCode,data);
+
+        imageView.setImageBitmap(bitmap);
+
+        DataManager manager = DataManager.getInstance(this);
+        User user = manager.getUser();
+        String token = manager.getToken();
+
+        if(path != null && user != null){
+            File file = new File(path);
+            APIManager.getInstance().uploadProfile(user.getId(),token,file,(res,err)->{});
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

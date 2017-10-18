@@ -24,35 +24,48 @@
 
                 <android.support.v7.widget.CardView style="@style/TableViewSectionItem">
 
+                    <LinearLayout style="@style/TableViewBaseItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profilePicture"
+                            android:src="@drawable/no_profile_image"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            />
+                        <LinearLayout style="@style/TableViewBaseItem">
 
-                    <LinearLayout style="@style/TableViewBaseItem">
+                            <TextView
+                                style="@style/TableViewItemRowHeader"
+                                android:text="@string/fullName" />
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/fullName" />
+                            <TextView
+                                android:id="@+id/tvFullName"
+                                style="@style/TableViewItemRowContent" />
 
-                        <TextView
-                            android:id="@+id/tvFullName"
-                            style="@style/TableViewItemRowContent" />
+                            <TextView
+                                style="@style/TableViewItemRowHeader"
+                                android:text="@string/emailAddress" />
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/emailAddress" />
+                            <TextView
+                                android:id="@+id/tvemailaddress"
+                                style="@style/TableViewItemRowContent" />
 
-                        <TextView
-                            android:id="@+id/tvemailaddress"
-                            style="@style/TableViewItemRowContent" />
+                            <TextView
+                                style="@style/TableViewItemRowHeader"
+                                android:text="@string/phoneNumber" />
 
-                        <TextView
-                            style="@style/TableViewItemRowHeader"
-                            android:text="@string/phoneNumber" />
-
-                        <TextView
-                            android:id="@+id/tvPhoneNumber"
-                            style="@style/TableViewItemRowContent" />
+                            <TextView
+                                android:id="@+id/tvPhoneNumber"
+                                style="@style/TableViewItemRowContent" />
 
 
+                        </LinearLayout>
                     </LinearLayout>
+
                 </android.support.v7.widget.CardView>
             </LinearLayout>
 
