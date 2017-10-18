@@ -318,14 +318,18 @@ public final class APIManager {
      * @param token The session token.
      * @param meetingId The Meeting Id To Confirm .
      * @param action The Status Of Confirming , True Confirm Meeting else false .
+     * @param publicReport The Public massage Of Confirming .
+     * @param privateReport The Public massage Of Confirming .
      * @param callback Callback function.
      */
-    public void confirmMeeting(int id,String token,String meetingId,boolean action,Callbacks.General callback){
+    public void confirmMeeting(int id,String token,String meetingId,boolean action,String publicReport,String privateReport,Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);
         params.put("token",token);
         params.put("meetingId",meetingId);
         params.put("action",action);
+        params.put("publicReport",publicReport);
+        params.put("privateReport",privateReport);
         makeRequest(Constants.Routes.confirmMeeting(), params, (json, ex) -> {
             if(ex==null){
                 ServerResponse response = new ServerResponse(json);
@@ -344,6 +348,14 @@ public final class APIManager {
         });
     }
 
+    /**
+     * This Method Cancel Meeting .
+     * @param id The id of the user.
+     * @param token The session token.
+     * @param meetingId The Meeting Id To Confirm .
+     * @param message
+     * @param callback
+     */
     public void cancelMeeting(int id, String token, String meetingId, String message, Callbacks.General callback){
         Map<String,Object> params=new HashMap<>();
         params.put("id",id);

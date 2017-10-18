@@ -2,6 +2,8 @@ package org.tsofen.mentorim;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +59,52 @@ public class MeetingController extends UIViewController {
         tvNotes=(TextView)findViewById(R.id.tvNotes);
         etSummery=(EditText) findViewById(R.id.etSummery);
         etPrivateSummary=(EditText) findViewById(R.id.etPrivateSummery);
+        etSummery.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(etSummery.getText().toString().isEmpty() || etPrivateSummary.getText().toString().isEmpty()){
+                    btnConfirm.setEnabled(false);
+                }else{
+                    if(!(etSummery.getText().toString().isEmpty()) && !(etPrivateSummary.getText().toString().isEmpty())){
+                        btnConfirm.setEnabled(true);
+                    }
+                }
+            }
+        });
+        etPrivateSummary.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(etSummery.getText().toString().isEmpty() || etPrivateSummary.getText().toString().isEmpty()){
+                    btnConfirm.setEnabled(false);
+                }else{
+                    if(!(etSummery.getText().toString().isEmpty()) && !(etPrivateSummary.getText().toString().isEmpty())){
+                        btnConfirm.setEnabled(true);
+                    }
+                }
+            }
+        });
         btnConfirm=(Button)findViewById(R.id.btnConfirm);
+        btnConfirm.setEnabled(false);
         btnApprove=(Button)findViewById(R.id.btnApprove);
         btnDiscard=(Button)findViewById(R.id.btnDiscard);
         btnDecline=(Button)findViewById(R.id.btnDecline);
@@ -111,17 +158,21 @@ public class MeetingController extends UIViewController {
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
         dialog.show();
-        apiManager.confirmMeeting(id, token, meetingId+"", false, (response, exception) -> {
-            if(exception==null){
-                if(response.isOK()){
-                    dialog.complete(false,true,"Discarding","The Meeting Is Discarded !");
-                }else{
-                    dialog.complete(false,false,"Discarding","The Meeting Wasn't Discarded !");
-                }
-            }else{
-                dialog.complete(false,false,"Discarding","Error Occurred, The Meeting Wasn't Discarded !");
-            }
-        });
+        String publicReport=etSummery.getText().toString();
+        String privateReport=etPrivateSummary.getText().toString();
+                apiManager.confirmMeeting(id, token, meetingId+"", false, publicReport,privateReport,(response, exception) -> {
+                    runOnUiThread(()->{
+                        if(exception==null){
+                            if(response.isOK()){
+                                dialog.complete(false,true,"Discarding","The Meeting Is Discarded !");
+                            }else{
+                                dialog.complete(false,false,"Discarding","The Meeting Wasn't Discarded !");
+                            }
+                        }else{
+                            dialog.complete(false,false,"Discarding","Error Occurred, The Meeting Wasn't Discarded !");
+                        }
+                    });
+                });
     }
     /**
      * this method do The Decline Code When Check The Decline Button
@@ -175,16 +226,20 @@ public class MeetingController extends UIViewController {
         String token=dataManager.getToken();
         final LoadingDialog dialog = new LoadingDialog(this,"Loading...");
         dialog.show();
-        apiManager.confirmMeeting(id, token, meetingId+"", true, (response, exception) -> {
-            if(exception==null){
-                if(response.isOK()){
-                    dialog.complete(false,true,"Confirming","The Meeting Is Confirmed !");
-                }else{
-                    dialog.complete(false,false,"Confirming","The Meeting Wasn't Confirmed !");
-                }
-            }else{
-                dialog.complete(false,false,"Confirming","Error Occurred, The Meeting Wasn't Confirmed !");
-            }
+        String publicReport=etSummery.getText().toString();
+        String privateReport=etPrivateSummary.getText().toString();
+        apiManager.confirmMeeting(id, token, meetingId+"", true,publicReport,privateReport, (response, exception) -> {
+            runOnUiThread(()->{
+                 if(exception==null){
+                     if(response.isOK()){
+                          dialog.complete(false,true,"Confirming","The Meeting Is Confirmed !");
+                     }else{
+                         dialog.complete(false,false,"Confirming","The Meeting Wasn't Confirmed !");
+                     }
+                  }else{
+                        dialog.complete(false,false,"Confirming","Error Occurred, The Meeting Wasn't Confirmed !");
+                 }
+             });
         });
     }
     /**

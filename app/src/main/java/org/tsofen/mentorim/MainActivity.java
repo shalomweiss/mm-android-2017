@@ -31,6 +31,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import org.tsofen.fragments.BaseFragment;
+import org.tsofen.fragments.HistoryFragment;
 import org.tsofen.fragments.PendingFragment;
 import org.tsofen.fragments.UpcomingFragment;
 import org.tsofen.model.APIManager;
@@ -73,7 +74,7 @@ public class MainActivity extends UIViewController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragments = new BaseFragment[]{new PendingFragment(),new UpcomingFragment(),null};
+        fragments = new BaseFragment[]{new PendingFragment(),new UpcomingFragment(),new HistoryFragment()};
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -318,10 +319,8 @@ public class MainActivity extends UIViewController {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
         public PlaceholderFragment() {
         }
-
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -333,7 +332,6 @@ public class MainActivity extends UIViewController {
             fragment.setArguments(args);
             return fragment;
         }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -343,34 +341,26 @@ public class MainActivity extends UIViewController {
             return new View(getContext());//rootView;
         }
     }
-
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-
             Fragment f = fragments[position];
-
             return f != null ? f : PlaceholderFragment.newInstance(position + 1);
         }
-
         @Override
         public int getCount() {
             // Show 3 total pages.
             return 3;
         }
-
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
@@ -384,5 +374,4 @@ public class MainActivity extends UIViewController {
             return null;
         }
     }
-
 }

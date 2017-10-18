@@ -59,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/LinearLayoutsecond"
             android:layout_width="match_parent"
@@ -70,26 +71,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/hint_meeting_activity_summary" />
+                android:hint="@string/hint_meeting_activity_summary"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/etPrivateSummery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/hint_meeting_activity_private_summary" />
+                android:hint="@string/hint_meeting_activity_private_summary"
+                android:inputType="textPersonName" />
 
             <Button
-                style="?attr/buttonStyle"
                 android:id="@+id/btnConfirm"
+                style="?attr/buttonStyle"
                 android:layout_width="match_parent"
                 android:text="@string/confirm_meeting" />
 
             <Button
-                style="?attr/buttonStyle"
                 android:id="@+id/btnDiscard"
+                style="?attr/buttonStyle"
                 android:layout_width="match_parent"
                 android:text="@string/discard_meeting" />
 
