@@ -57,7 +57,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
                             android:maxLines="1"
-                            android:text="Title"
+                            android:text="@string/item_meeting_title"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
                             android:maxLines="1"
-                            android:text="Subtitle"
+                            android:text="@string/item_meeting_subtitle"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -81,7 +81,7 @@
                             android:layout_margin="3dp"
                             style="@style/TextViewBadgeIcon"
                             android:background="@drawable/ui_badge_pending"
-                            android:text="PENDING" />
+                            android:text="@string/item_meeting_pending" />
 
                         <TextView
                             android:id="@+id/badge_upcoming"
@@ -89,7 +89,7 @@
                             android:layout_margin="3dp"
                             style="@style/TextViewBadgeIcon"
                             android:background="@drawable/ui_badge_upcoming"
-                            android:text="UP COMING" />
+                            android:text="@string/item_meeting_upcoming" />
 
                         <TextView
                             android:id="@+id/badge_completed"
@@ -97,7 +97,7 @@
                             android:layout_margin="3dp"
                             style="@style/TextViewBadgeIcon"
                             android:background="@drawable/ui_badge_completed"
-                            android:text="COMPLETED" />
+                            android:text="@string/item_meeting_completed" />
                     </LinearLayout>
 
 
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="DATE FORMAT" />
+                android:text="@string/item_meeting_dateformat" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

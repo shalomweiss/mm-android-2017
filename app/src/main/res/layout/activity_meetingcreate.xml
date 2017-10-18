@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:ems="10"
-                android:hint="Location"
+                android:hint="@string/hint_location"
                 android:inputType="textPersonName" />
 
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:ems="10"
-                android:hint="Meeting subjects"
+                android:hint="@string/hint_meeting_subjects"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -81,7 +81,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="8dp"
                 android:ems="10"
-                android:hint="Notes"
+                android:hint="@string/hint_notes"
                 android:inputType="textMultiLine" />
 
 
@@ -90,7 +90,7 @@
     <Button
         style="?attr/buttonStyle"
         android:id="@+id/btnDone"
-        android:text="Done"
+        android:text="@string/done"
         android:layout_width="match_parent" />
 
 </LinearLayout>

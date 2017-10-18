@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="Summery:(seen by every one)" />
+                android:hint="@string/hint_meeting_activity_summary" />
 
             <EditText
                 android:id="@+id/etPrivateSummery"
@@ -79,19 +79,19 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="Private Summery:(seen  by tsofen only)" />
+                android:hint="@string/hint_meeting_activity_private_summary" />
 
             <Button
                 style="?attr/buttonStyle"
                 android:id="@+id/btnConfirm"
                 android:layout_width="match_parent"
-                android:text="Confirm Meeting Occurred" />
+                android:text="@string/confirm_meeting" />
 
             <Button
                 style="?attr/buttonStyle"
                 android:id="@+id/btnDiscard"
                 android:layout_width="match_parent"
-                android:text="discard meeting" />
+                android:text="@string/discard_meeting" />
 
         </LinearLayout>
 
@@ -106,19 +106,19 @@
                 android:id="@+id/btnApprove"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:text="Approve" />
+                android:text="@string/approve_meeting" />
 
             <Button
                 style="?attr/buttonStyle"
                 android:id="@+id/btnDecline"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:text="Decline" />
+                android:text="@string/decline_meeting" />
         </LinearLayout>
 
         <Button
             style="?attr/buttonStyle"
-            android:text="Cancel"
+            android:text="@string/cancel_meeting"
             android:id="@+id/btnCancel"
             android:layout_width="match_parent" />
 

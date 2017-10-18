@@ -32,7 +32,45 @@
     <string name="pending"> PENDING </string>
     <string name="upcoming"> UPCOMING </string>
     <string name="history"> HISTORY </string>
-
+    <string name="hint_phonenumber"> Press Your Phone Number </string>
+    <string name="hint_major"> Press Your Major </string>
+    <string name="hint_second_major"> Press Your Second Major </string>
+    <string name="hint_remaining_semesters"> Press Your Remaining Semesters </string>
+    <string name="hint_academic_institution"> Press Your University Name </string>
+    <string name="hint_graduation_status"> Press Your Graduation Status</string>
+    <string name="hint_average"> Press Your Average</string>
+    <string name="hint_experience"> Press Your Experience</string>
+    <string name="hint_role"> Press Your Role</string>
+    <string name="hint_company"> Press Your Company Work </string>
+    <string name="hint_volunteering"> Press Your Volunteering</string>
+    <string name="hint_work_history"> Press Your Working History</string>
+    <string name="hint_status"> Press Your Status </string>
+    <string name="hint_gender"> Press Your Gender</string>
+    <string name="hint_address"> Press Your Address</string>
+    <string name="hint_joined_date"> Press Your Joined Date </string>
+    <string name="hint_summary"> Press Your Summary</string>
+    <string name="hint_location"> Location</string>
+    <string name="hint_meeting_subjects"> Meeting Subject</string>
+    <string name="hint_notes"> Notes</string>
+    <string name="done"> Done</string>
+    <string name="hint_meeting_activity_summary"> Summery:(seen by every one)</string>
+    <string name="hint_meeting_activity_private_summary"> Private Summery:(seen  by tsofen only)</string>
+    <string name="confirm_meeting"> Confirm Meeting Occurred</string>
+    <string name="discard_meeting"> Discard Meeting</string>
+    <string name="approve_meeting"> Approve</string>
+    <string name="cancel_meeting"> Cancel</string>
+    <string name="decline_meeting"> Decline</string>
+    <string name="item_meeting_title"> Title</string>
+    <string name="item_meeting_subtitle"> Subtitle</string>
+    <string name="item_meeting_pending"> PENDING</string>
+    <string name="item_meeting_upcoming"> UP COMING</string>
+    <string name="item_meeting_completed"> COMPLETED</string>
+    <string name="item_meeting_dateformat"> DATE FORMAT</string>
+    <string name="menu_tabbed_settings"> Setting</string>
+    <string name="menu_tabbed_profile"> Profile</string>
+    <string name="menu_tabbed_logout"> Logout</string>
+    <string name="profile_menu_save"> Save</string>
+    <string name="profile_menu_edit"> Edit</string>
     <string-array name="Mentees">
         <item>Mentee name</item>
     </string-array>

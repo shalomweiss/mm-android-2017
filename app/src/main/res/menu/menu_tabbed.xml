@@ -5,17 +5,17 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Setting"
+        android:title="@string/menu_tabbed_settings"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_profile"
         android:orderInCategory="100"
-        android:title="Profile"
+        android:title="@string/menu_tabbed_profile"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
-        android:title="Logout"
+        android:title="@string/menu_tabbed_logout"
         app:showAsAction="never" />
 </menu>
